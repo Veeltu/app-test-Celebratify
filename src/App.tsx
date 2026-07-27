@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Venue, BookingRequest, FilterState, AuthUser, OfferPackage } from './types';
+import { Venue, BookingRequest, OfferPackage, FilterState, AuthUser, MenuDishChoiceGroup } from './types';
 import { INITIAL_VENUES, INITIAL_BOOKINGS } from './data/mockVenues';
 import { MobileShell } from './components/mobile/MobileShell';
-import { TabType } from './components/mobile/BottomNav';
+import { TabType, isManagerTab, tabToAdminSection } from './components/mobile/BottomNav';
 import { ToastNotification } from './components/mobile/NotificationBanner';
 import { MobileSearchView } from './components/mobile/views/MobileSearchView';
 import { MobileVenueDetailModal } from './components/mobile/views/MobileVenueDetailModal';
@@ -147,6 +147,25 @@ export function App() {
     showNotification('Cennik zaktualizowany', 'Zapisano nową stawkę za osobę w ofercie ustandaryzowanej.', 'success');
   };
 
+  const handleUpdatePackageMenu = (
+    venueId: string,
+    packageId: string,
+    choiceGroups: MenuDishChoiceGroup[]
+  ) => {
+    setVenues((prev) =>
+      prev.map((v) => {
+        if (v.id !== venueId) return v;
+        return {
+          ...v,
+          packages: v.packages.map((p) =>
+            p.id === packageId ? { ...p, choiceGroups } : p
+          ),
+        };
+      })
+    );
+    showNotification('Menu zaktualizowane', 'Zmiany w karcie dań są widoczne dla klientów.', 'success');
+  };
+
   const handleToggleDateAvailability = (venueId: string, date: string) => {
     setVenues(prev => prev.map(v => {
       if (v.id !== venueId) return v;
@@ -186,6 +205,48 @@ export function App() {
       onDismissNotification={() => setNotification(null)}
       role={role}
       onToggleRole={handleToggleRole}
+      overlay={
+        <>
+          {selectedVenue && (
+            <MobileVenueDetailModal
+              venue={venues.find((v) => v.id === selectedVenue.id) ?? selectedVenue}
+              onClose={() => setSelectedVenue(null)}
+              onStartBooking={handleStartBooking}
+              compareList={compareList}
+              onToggleCompare={handleToggleCompare}
+            />
+          )}
+
+          {bookingModalData && (
+            <MobileBookingModal
+              venue={bookingModalData.venue}
+              initialPackage={bookingModalData.package}
+              initialDate={bookingModalData.date}
+              onClose={() => setBookingModalData(null)}
+              onSubmitBooking={handleSubmitBooking}
+            />
+          )}
+
+          {isAuthModalOpen && (
+            <MobileAuthModal
+              user={user}
+              onLogin={(loggedInUser) => {
+                setUser(loggedInUser);
+                setRole(loggedInUser.role);
+                setIsAuthModalOpen(false);
+                showNotification('Zalogowano pomyślnie', `Witaj ponownie, ${loggedInUser.name}!`, 'success');
+              }}
+              onLogout={() => {
+                setUser(null);
+                setRole('client');
+                setIsAuthModalOpen(false);
+                showNotification('Wylogowano', 'Zostałeś wylogowany z konta.', 'info');
+              }}
+              onClose={() => setIsAuthModalOpen(false)}
+            />
+          )}
+        </>
+      }
     >
       {/* Tab View Switcher */}
       {activeTab === 'search' && (
@@ -228,56 +289,16 @@ export function App() {
         />
       )}
 
-      {activeTab === 'admin' && (
+      {isManagerTab(activeTab) && (
         <MobileVenueAdminView
           venue={currentManagerVenue}
           bookings={bookings}
+          section={tabToAdminSection(activeTab)!}
           onAcceptBooking={handleAcceptBooking}
           onRejectBooking={handleRejectBooking}
           onUpdateVenuePrice={handleUpdateVenuePrice}
+          onUpdatePackageMenu={handleUpdatePackageMenu}
           onToggleDateAvailability={handleToggleDateAvailability}
-        />
-      )}
-
-      {/* Venue Detail Modal */}
-      {selectedVenue && (
-        <MobileVenueDetailModal
-          venue={selectedVenue}
-          onClose={() => setSelectedVenue(null)}
-          onStartBooking={handleStartBooking}
-          compareList={compareList}
-          onToggleCompare={handleToggleCompare}
-        />
-      )}
-
-      {/* Booking Form Sheet */}
-      {bookingModalData && (
-        <MobileBookingModal
-          venue={bookingModalData.venue}
-          initialPackage={bookingModalData.package}
-          initialDate={bookingModalData.date}
-          onClose={() => setBookingModalData(null)}
-          onSubmitBooking={handleSubmitBooking}
-        />
-      )}
-
-      {/* Auth Modal (Google / Apple Simulation) */}
-      {isAuthModalOpen && (
-        <MobileAuthModal
-          user={user}
-          onLogin={(loggedInUser) => {
-            setUser(loggedInUser);
-            setRole(loggedInUser.role);
-            setIsAuthModalOpen(false);
-            showNotification('Zalogowano pomyślnie', `Witaj ponownie, ${loggedInUser.name}!`, 'success');
-          }}
-          onLogout={() => {
-            setUser(null);
-            setRole('client');
-            setIsAuthModalOpen(false);
-            showNotification('Wylogowano', 'Zostałeś wylogowany z konta.', 'info');
-          }}
-          onClose={() => setIsAuthModalOpen(false)}
         />
       )}
     </MobileShell>

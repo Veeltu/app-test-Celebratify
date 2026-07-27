@@ -1,5 +1,6 @@
 ---
-id: galeria-sala-uklad
+id: feature-galeria-sala-uklad
+type: feature
 title: Galeria zdjęć i zakładka „Sala / układ stołów”
 source: doc/sugestions.md
 source_section: "7"

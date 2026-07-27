@@ -6,6 +6,8 @@ import { ShieldCheck, User, Sparkles, Smartphone, Monitor, Scale, Building2 } fr
 
 interface Props {
   children: React.ReactNode;
+  /** Modale / overlay — poza scrollowanym main (unikamy bug layoutu przy długiej liście). */
+  overlay?: React.ReactNode;
   activeTab: TabType;
   onSelectTab: (tab: TabType) => void;
   user: AuthUser | null;
@@ -20,6 +22,7 @@ interface Props {
 
 export const MobileShell: React.FC<Props> = ({
   children,
+  overlay,
   activeTab,
   onSelectTab,
   user,
@@ -76,15 +79,15 @@ export const MobileShell: React.FC<Props> = ({
         </button>
       </div>
 
-      {/* Main Container Phone Shell */}
+      {/* Main Container Phone Shell — flex col + stała wysokość obszaru treści */}
       <div
-        className={`w-full transition-all duration-300 relative ${isSimulatorFrame
-            ? 'max-w-md my-0 lg:my-6 rounded-none lg:rounded-[44px] border-0 lg:border-[10px] lg:border-slate-800 shadow-2xl overflow-hidden bg-slate-50 min-h-screen lg:min-h-[844px] lg:h-[844px]'
-            : 'max-w-md min-h-screen bg-slate-50'
+        className={`w-full transition-all duration-300 relative flex flex-col ${isSimulatorFrame
+            ? 'max-w-md my-0 lg:my-6 rounded-none lg:rounded-[44px] border-0 lg:border-[10px] lg:border-slate-800 shadow-2xl overflow-hidden bg-slate-50 h-[100dvh] max-h-[100dvh] lg:min-h-[844px] lg:h-[844px] lg:max-h-[844px]'
+            : 'max-w-md h-[100dvh] max-h-[100dvh] bg-slate-50 overflow-hidden'
           }`}
       >
         {/* Dynamic Mobile Notch / Island (for desktop simulator) */}
-        <div className="hidden lg:flex items-center justify-between px-7 pt-3 pb-1 bg-white text-slate-800 text-[11px] font-semibold tracking-tight border-b border-slate-200 select-none">
+        <div className="hidden lg:flex flex-none items-center justify-between px-7 pt-3 pb-1 bg-white text-slate-800 text-[11px] font-semibold tracking-tight border-b border-slate-200 select-none">
           <span>{currentTime}</span>
           <div className="w-20 h-4 bg-slate-100 rounded-full border border-slate-200 flex items-center justify-center">
             <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
@@ -96,14 +99,12 @@ export const MobileShell: React.FC<Props> = ({
         </div>
 
         {/* Mobile Header Top Bar */}
-        <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md px-4 py-2.5 border-b border-slate-200/80 flex items-center justify-between shadow-xs">
+        <header className="flex-none z-40 bg-white/90 backdrop-blur-md px-4 py-2.5 border-b border-slate-200/80 flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-500 to-amber-500 flex items-center justify-center shadow-md shadow-brand-500/20 font-black text-white text-sm">
               P
             </div>
             <div>
-              {/* <span className="font-extrabold text-slate-900 text-base tracking-tight flex items-center gap-1"> */}
-              {/* Party<span className="gold-gradient-text">Spot</span> */}
               <span className="font-extrabold text-slate-900 text-base tracking-tight flex items-center gap-1">
                 Celebratify
               </span>
@@ -142,19 +143,24 @@ export const MobileShell: React.FC<Props> = ({
         {/* Notifications Toast Top Banner */}
         <NotificationBanner notification={notification} onDismiss={onDismissNotification} />
 
-        {/* Screen Content Body */}
-        <main className="overflow-y-auto max-w-md mx-auto relative min-h-[calc(100vh-120px)] lg:min-h-[720px] lg:max-h-[720px] no-scrollbar">
-          {children}
-        </main>
+        {/* Treść (scroll) + warstwa overlay (modale) — wspólny relative box o stałej wysokości */}
+        <div className="flex-1 relative min-h-0 w-full max-w-md mx-auto">
+          <main className="absolute inset-0 overflow-y-auto no-scrollbar">
+            {children}
+          </main>
+          {overlay}
+        </div>
 
         {/* Bottom Navigation Bar */}
-        <BottomNav
-          activeTab={activeTab}
-          onSelectTab={onSelectTab}
-          compareCount={compareCount}
-          pendingBookingsCount={pendingBookingsCount}
-          role={role}
-        />
+        <div className="flex-none z-40">
+          <BottomNav
+            activeTab={activeTab}
+            onSelectTab={onSelectTab}
+            compareCount={compareCount}
+            pendingBookingsCount={pendingBookingsCount}
+            role={role}
+          />
+        </div>
       </div>
     </div>
   );

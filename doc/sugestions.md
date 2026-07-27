@@ -16,11 +16,16 @@
 Legenda: **P0** (demo) · **P1** (ważne) · **P2** (później)  
 `in_todo_list: tak` = task wydzielony i gotowy do kodu · `nie` = tylko sugestia w tym pliku
 
+**Nazwy plików tasków** (prefiks = grupa):
+- `feature-<slug>.md` — funkcja produktowa
+- `bug-<slug>.md` — poprawka błędu
+- (opcjonalnie później) `chore-` / `ux-` — utrzymanie / sam UX bez nowej domeny
+
 ---
 
 ## 1. Ustandaryzowane menu — więcej treści i elastyczności
 
-> **Task:** [bogatsze-menu.md](./tasks/bogatsze-menu.md) · `in_todo_list: tak` · `status: done`
+> **Task:** [feature-bogatsze-menu.md](./tasks/feature-bogatsze-menu.md) · `in_todo_list: tak` · `status: done`
 
 **Priorytet:** P0
 
@@ -42,7 +47,7 @@ Zakładka „Menu” jest zbyt uboga: mało miejsca na prezentację dań, brak s
 
 ## 2. Prezentacja lokalu — więcej informacji „sprzedażowych”
 
-> **Task:** [prezentacja-lokalu.md](./tasks/prezentacja-lokalu.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-prezentacja-lokalu.md](./tasks/feature-prezentacja-lokalu.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P0
 
@@ -64,7 +69,7 @@ Opis restauracji jest krótki i mało angażujący. Brakuje elementów budujący
 
 ## 3. Strukturyzowane atrybuty i filtry (udogodnienia)
 
-> **Task:** [atrybuty-filtry.md](./tasks/atrybuty-filtry.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-atrybuty-filtry.md](./tasks/feature-atrybuty-filtry.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P0
 
@@ -87,7 +92,7 @@ Opis restauracji jest krótki i mało angażujący. Brakuje elementów budujący
 
 ## 4. System płatności — jasny model i UX (nawet bez integracji)
 
-> **Task:** [platnosci-ux.md](./tasks/platnosci-ux.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-platnosci-ux.md](./tasks/feature-platnosci-ux.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P1
 
@@ -99,17 +104,19 @@ Niejasne, jak płatności mają działać w produkcie. Użytkownik nie wie, kied
 - [ ] **4.2** W UI rezerwacji: krok „Jak działa płatność?” (timeline 3 kroki) zamiast samego disclaimeru.
 - [ ] **4.3** Po statusie `Potwierdzona`: mock przycisk „Opłać zaliczkę” → ekran z kwotą, terminem, danymi do przelewu (lub „Stripe — wkrótce”).
 - [ ] **4.4** Dla managera: informacja „Zaliczka oczekuje / opłacona” (status płatności obok statusu rezerwacji).
+- [ ] **4.5** **Beta:** w Panelu Lokalu przy rezerwacji `Potwierdzona` — przycisk „Wyślij fakturę” (mock: toast / notatka „Faktura proforma wysłana na e-mail klienta”, badge „Wysłano · beta”). Bez PDF, maila ani KSeF.
 
 ### Sugestie wdrożenia
 - **MVP (jak w opis.md):** brak realnej bramki — tylko **przejrzysta komunikacja** i statusy mock.
 - **v2:** Stripe Connect / PayU — zaliczka % po akceptacji; escrow poza scope MVP.
 - W prototypie wystarczy ekran „Instrukcja płatności” + badge „Płatność poza aplikacją”.
+- „Wyślij fakturę”: tylko UX demo — flaga `invoiceSentAt` (lub boolean) na `BookingRequest`; etykieta **Beta** przy CTA.
 
 ---
 
 ## 5. Kalendarz — zakres dat i wiele dni
 
-> **Task:** [kalendarz-zakres-dat.md](./tasks/kalendarz-zakres-dat.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-kalendarz-zakres-dat.md](./tasks/feature-kalendarz-zakres-dat.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P1
 
@@ -131,7 +138,7 @@ Użytkownik może wybrać tylko jedną datę. Imprezy często szukane są w **ok
 
 ## 6. Lokalizacja + promień wokół miejsca (np. 50 km)
 
-> **Task:** [lokalizacja-promien.md](./tasks/lokalizacja-promien.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-lokalizacja-promien.md](./tasks/feature-lokalizacja-promien.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P1
 
@@ -154,7 +161,7 @@ Filtr „miasto” jest zbyt sztywny. Użytkownik chce: „Leszno + 50 km” alb
 
 ## 7. Galeria zdjęć + zakładka „Sala i układ stołów”
 
-> **Task:** [galeria-sala-uklad.md](./tasks/galeria-sala-uklad.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-galeria-sala-uklad.md](./tasks/feature-galeria-sala-uklad.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P1
 
@@ -177,7 +184,7 @@ Za mało zdjęć; brak wizualizacji sali, stołów i przestrzeni — kluczowe pr
 
 ## 8. Oceny i opinie — prostszy system bez negatywnego nacisku
 
-> **Task:** [oceny-opinie.md](./tasks/oceny-opinie.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-oceny-opinie.md](./tasks/feature-oceny-opinie.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P2
 
@@ -198,4 +205,70 @@ Gwiazdki i opinie wymagają dopracowania: unikać „negatywnego” wrażenia (n
 
 
 ---
+
+## 9. Menu w Panelu Lokalu — widok i funkcje dla właściciela
+
+> **Task:** [feature-menu-panel-lokalu.md](./tasks/done/feature-menu-panel-lokalu.md) · `in_todo_list: tak` · `status: done`
+
+**Priorytet:** P1
+
+### Opis problemu
+Zakładka Menu w szczegółach lokalu jest zoptymalizowana pod **klienta** (wybór dań, dodatki, dopłaty). W Panelu Lokalu menedżer ma tylko „Oferta & Cennik” (cena pakietu) — **nie zarządza kartą dań**. Brakuje widoku właściciela: edycja pozycji, kategorii / `choiceGroups`, tagów, dostępności. Punkt 1.4 z „feature-bogatsze-menu” został odłożony.
+
+### Zadania
+- [ ] **9.1** Nowa zakładka w Panelu Lokalu: **„Menu”** (obok Zapytania / Kalendarz / Oferta & Cennik) — nie kopiować UI klienta 1:1.
+- [ ] **9.2** Lista pakietów → rozwinięcie `choiceGroups` / dań: nazwa, kategoria, tagi, dopłaty dodatków (read + mock edit).
+- [ ] **9.3** Akcje właściciela (mock, lokalny stan): dodaj / edytuj / ukryj danie, zmień kolejność w grupie, włącz/wyłącz dodatek.
+- [ ] **9.4** Jasny podział ról w UI: klient = wybór z menu; manager = zarządzanie kartą (ikony edycji, badge „Widoczne dla gości”).
+- [ ] **9.5** Zmiany w panelu odzwierciedlone w stanie `venues` (ten sam lokal w widoku klienta po przełączeniu roli).
+
+### Sugestie wdrożenia
+- **Nie** reuse’ować accordionów wyboru dań z `MobileVenueDetailModal` — osobny, prostszy layout „lista + edycja”.
+- Wystarczy mock w `MobileVenueAdminView` + callback `onUpdateVenue` / `onUpdatePackageMenu` w `App.tsx`.
+- Bez CMS, uploadu zdjęć ani persystencji — stan w pamięci jak reszta prototypu.
+- Nawiązanie do odłożonego **1.4** z sekcji 1.
+
+---
+
+## 10. Menu — wiele dodatków + opcja „Bez dodatków”
+
+> **Task:** [feature-menu-dodatki-multi.md](./tasks/feature-menu-dodatki-multi.md) · `in_todo_list: tak` · `status: done`
+
+**Priorytet:** P0
+
+### Opis problemu
+W grupach dodatków często można wybrać tylko jedną opcję (`maxSelect: 1`). Użytkownik chce zaznaczyć **kilka dodatków naraz**, ale też mieć opcję **„Bez dodatków”**, która **czyści** pozostałe zaznaczenia (wzajemnie wykluczająca).
+
+### Zadania
+- [ ] **10.1** Model: flaga na opcji (np. `clearsOthers: true` / `exclusive: true`) dla „Bez dodatków”.
+- [ ] **10.2** Logika `toggleModifier`: multi-select do `maxSelect`; wybór exclusive → tylko ta opcja; wybór zwykłego dodatku → usuwa exclusive z selekcji.
+- [ ] **10.3** Mock: w kluczowych grupach (np. `MOD_DODATEK_GLOWNE`, `MOD_DODATKI_EXTRA`) podnieść `maxSelect` i dodać opcję „Bez dodatków”.
+- [ ] **10.4** UI: chip „Bez dodatków” wizualnie odróżniony (np. slate); po wyborze badge „0 dodatków” / brak dopłat.
+
+### Sugestie wdrożenia
+- Dziś `maxSelect` już istnieje — większość grup ma `1`; `MOD_DODATKI_EXTRA` ma `2` bez exclusive.
+- Nie zmieniać wyboru dań w `choiceGroups` — tylko **modifiers**.
+- Test: zaznacz 2 dodatki → klik „Bez dodatków” → lista pusta poza tą opcją; klik ziemniaki → „Bez dodatków” znika z selekcji.
+
+---
+
+## 11. Panel Lokalu — edycja własnej strony (PAGE) lokalu
+
+> **Task:** [feature-edycja-strony-lokalu.md](./tasks/feature-edycja-strony-lokalu.md) · `in_todo_list: tak` · `status: todo`
+
+**Priorytet:** P2 · **uwaga:** v1 podstawowa, **do rozbudowy** później
+
+### Opis problemu
+Menedżer nie ma miejsca, żeby edytować **publiczną stronę lokalu** (to, co klient widzi w szczegółach: nazwa, opis, kontakt, zdjęcia, udogodnienia). Dziś dane są tylko w mocku. Menu i cennik to osobne obszary (sekcje 9 / Cennik); brakuje „mój profil lokalu”.
+
+### Zadania
+- [ ] **11.1** Nowa zakładka w Panelu Lokalu: **„Lokal”** / **„Strona”** (obok Zapytania · Kalendarz · Cennik · Menu).
+- [ ] **11.2** **v1 (podstawowa):** edycja pól tekstowych — `name`, `description`, `address`, `contactPhone`, `contactEmail`, `cancellationPolicy` (mock, stan `venues`).
+- [ ] **11.3** Podgląd „jak widzi klient” (skrót / link do przełączenia roli) po zapisie.
+- [ ] **11.4** **Do rozbudowy (później):** galeria zdjęć (upload / URL), `highlights` / `bestFor` (sekcja 2), atrybuty / features (sekcja 3), sala i układ (sekcja 7), SEO / publikacja.
+
+### Sugestie wdrożenia
+- Nie budować pełnego CMS — jeden formularz + `onUpdateVenue` w `App.tsx`.
+- Zakładka **Lokal** ≠ **Menu** ≠ **Cennik** — osobne joby.
+- W demie wystarczy zapis w pamięci; badge „Wersja podstawowa · rozbudowa wkrótce” przy sekcjach P2.
 

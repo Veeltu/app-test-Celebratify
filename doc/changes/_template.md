@@ -1,13 +1,13 @@
 ---
-id: slug-zadania
-task_file: doc/tasks/slug-zadania.md
+id: feature-slug-zadania
+task_file: doc/tasks/feature-slug-zadania.md
 source_section: "N"
 completed: YYYY-MM-DD
 ---
 
 # CHANGE — Tytuł
 
-> Log wdrożenia. Opis zadania: [`doc/tasks/slug-zadania.md`](../tasks/slug-zadania.md) · sekcja w [`doc/sugestions.md`](../sugestions.md).
+> Log wdrożenia. Opis zadania: [`doc/tasks/feature-slug-zadania.md`](../tasks/feature-slug-zadania.md) · sekcja w [`doc/sugestions.md`](../sugestions.md).
 
 ## Podsumowanie
 

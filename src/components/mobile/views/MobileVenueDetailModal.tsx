@@ -51,7 +51,7 @@ function DishModifiers({
   itemKey: string;
   groups: MenuModifierGroup[];
   selections: Record<string, string[]>;
-  onToggle: (key: string, optionId: string, maxSelect: number) => void;
+  onToggle: (key: string, optionId: string, group: MenuModifierGroup) => void;
   /** np. nazwa dania — nagłówek „Dodatki do: …” */
   title?: string;
 }) {
@@ -59,8 +59,18 @@ function DishModifiers({
 
   const selectedCount = groups.reduce((n, group) => {
     const key = modifierKey(packageId, itemKey, group.id);
-    return n + (selections[key]?.length ?? 0);
+    const selected = selections[key] ?? [];
+    const exclusiveIds = new Set(group.options.filter((o) => o.clearsOthers).map((o) => o.id));
+    const real = selected.filter((id) => !exclusiveIds.has(id));
+    return n + real.length;
   }, 0);
+
+  const onlyExclusive = groups.some((group) => {
+    const key = modifierKey(packageId, itemKey, group.id);
+    const selected = selections[key] ?? [];
+    if (selected.length === 0) return false;
+    return selected.every((id) => group.options.find((o) => o.id === id)?.clearsOthers);
+  });
 
   const headerLabel = title ? `Dodatki do: ${title}` : 'Dodatki';
 
@@ -78,6 +88,11 @@ function DishModifiers({
         <span className="flex-1 min-w-0 text-[10px] font-black uppercase tracking-wider text-slate-600 truncate">
           {headerLabel}
         </span>
+        {onlyExclusive && (
+          <span className="shrink-0 text-[9px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">
+            bez dodatków
+          </span>
+        )}
         {selectedCount > 0 && (
           <span className="shrink-0 text-[9px] font-bold text-brand-700 bg-brand-50 border border-brand-200 px-1.5 py-0.5 rounded">
             {selectedCount} wybrane
@@ -107,18 +122,23 @@ function DishModifiers({
                 <div className="flex flex-wrap gap-1.5">
                   {group.options.map((opt) => {
                     const isOn = selected.includes(opt.id);
+                    const isExclusive = !!opt.clearsOthers;
                     return (
                       <button
                         key={opt.id}
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          onToggle(key, opt.id, max);
+                          onToggle(key, opt.id, group);
                         }}
                         className={`text-[10px] font-bold px-2.5 py-1.5 rounded-lg border transition-colors text-left ${
                           isOn
-                            ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
-                            : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-brand-300'
+                            ? isExclusive
+                              ? 'bg-slate-700 text-white border-slate-700 shadow-sm'
+                              : 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                            : isExclusive
+                              ? 'bg-white text-slate-600 border-slate-300 border-dashed hover:border-slate-400'
+                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-brand-300'
                         }`}
                       >
                         {opt.label}
@@ -153,7 +173,7 @@ function DishChoiceSection({
   onSelect: (dishId: string) => void;
   packageId: string;
   modifierSelections: Record<string, string[]>;
-  onToggleModifier: (key: string, optionId: string, maxSelect: number) => void;
+  onToggleModifier: (key: string, optionId: string, group: MenuModifierGroup) => void;
 }) {
   const [open, setOpen] = useState(false);
   const selectedDish = group.dishes.find((d) => d.id === selectedId) ?? group.dishes[0];
@@ -285,17 +305,37 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
   const [dishChoices, setDishChoices] = useState<Record<string, string>>({});
 
   const isComparing = compareList.includes(venue.id);
-  const menuGroups = groupMenuByCategory(selectedPackage.menu);
-  const choiceGroups = selectedPackage.choiceGroups ?? [];
+  const menuGroups = groupMenuByCategory(selectedPackage.menu.filter((m) => !m.hidden));
+  const choiceGroups = (selectedPackage.choiceGroups ?? [])
+    .map((g) => ({ ...g, dishes: g.dishes.filter((d) => !d.hidden) }))
+    .filter((g) => g.dishes.length > 0);
+
+  useEffect(() => {
+    setSelectedPackage((prev) => {
+      const pkg = venue.packages.find((p) => p.id === prev.id) ?? venue.packages[0];
+      return pkg ?? prev;
+    });
+  }, [venue]);
 
   useEffect(() => {
     const next: Record<string, string> = {};
-    for (const g of selectedPackage.choiceGroups ?? []) {
+    for (const g of (selectedPackage.choiceGroups ?? [])
+      .map((g) => ({ ...g, dishes: g.dishes.filter((d) => !d.hidden) }))
+      .filter((g) => g.dishes.length > 0)) {
       const first = g.dishes[0]?.id;
       if (first) next[g.id] = first;
     }
-    setDishChoices(next);
-  }, [selectedPackage.id]);
+    setDishChoices((prev) => {
+      const merged = { ...next };
+      for (const [gid, dishId] of Object.entries(prev)) {
+        const g = (selectedPackage.choiceGroups ?? []).find((x) => x.id === gid);
+        if (g?.dishes.some((d) => d.id === dishId && !d.hidden)) {
+          merged[gid] = dishId;
+        }
+      }
+      return merged;
+    });
+  }, [selectedPackage]);
 
   const modifiersExtraTotal = useMemo(() => {
     let sum = 0;
@@ -323,7 +363,8 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
       if (!group) continue;
       for (const oid of optionIds) {
         const opt = group.options.find((o) => o.id === oid);
-        if (opt?.priceExtra) sum += opt.priceExtra;
+        if (!opt || opt.clearsOthers) continue;
+        if (opt.priceExtra) sum += opt.priceExtra;
       }
     }
     return sum;
@@ -334,19 +375,33 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
     setActiveTab('menu');
   };
 
-  const toggleModifier = (key: string, optionId: string, maxSelect: number) => {
+  const toggleModifier = (key: string, optionId: string, group: MenuModifierGroup) => {
     setModifierSelections((prev) => {
       const current = prev[key] ?? [];
-      if (maxSelect <= 1) {
-        return { ...prev, [key]: current.includes(optionId) ? [] : [optionId] };
-      }
+      const option = group.options.find((o) => o.id === optionId);
+      const exclusiveIds = new Set(
+        group.options.filter((o) => o.clearsOthers).map((o) => o.id)
+      );
+      const maxSelect = group.maxSelect ?? 1;
+
       if (current.includes(optionId)) {
         return { ...prev, [key]: current.filter((id) => id !== optionId) };
       }
-      if (current.length >= maxSelect) {
-        return { ...prev, [key]: [...current.slice(1), optionId] };
+
+      if (option?.clearsOthers) {
+        return { ...prev, [key]: [optionId] };
       }
-      return { ...prev, [key]: [...current, optionId] };
+
+      let next = current.filter((id) => !exclusiveIds.has(id));
+      if (maxSelect <= 1) {
+        return { ...prev, [key]: [optionId] };
+      }
+      if (next.length >= maxSelect) {
+        next = [...next.slice(1), optionId];
+      } else {
+        next = [...next, optionId];
+      }
+      return { ...prev, [key]: next };
     });
   };
 
@@ -466,14 +521,19 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
               {venue.packages.map((pkg) => {
                 const isSelected = selectedPackage.id === pkg.id;
                 const preview = (pkg.choiceGroups ?? []).flatMap((g) =>
-                  g.dishes.slice(0, 1).map((d) => ({
-                    category: g.title.replace(/^Wybierz\s+/i, ''),
-                    name: d.name,
-                  }))
+                  g.dishes
+                    .filter((d) => !d.hidden)
+                    .slice(0, 1)
+                    .map((d) => ({
+                      category: g.title.replace(/^Wybierz\s+/i, ''),
+                      name: d.name,
+                    }))
                 ).slice(0, 5);
                 const hasMods =
-                  (pkg.choiceGroups?.some((g) => g.dishes.some((d) => d.modifiers?.length)) ?? false) ||
-                  pkg.menu.some((m) => m.modifiers && m.modifiers.length > 0);
+                  (pkg.choiceGroups?.some((g) =>
+                    g.dishes.some((d) => !d.hidden && d.modifiers?.length)
+                  ) ?? false) ||
+                  pkg.menu.some((m) => !m.hidden && m.modifiers && m.modifiers.length > 0);
                 const choiceLabels = (pkg.choiceGroups ?? [])
                   .map((g) => g.title.replace(/^Wybierz\s+/i, ''))
                   .join(' · ');

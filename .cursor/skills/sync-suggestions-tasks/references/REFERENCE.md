@@ -5,7 +5,7 @@
 ```markdown
 ## 9. Krótki tytuł sugestii
 
-> **Task:** [krotki-tytul.md](./tasks/krotki-tytul.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-krotki-tytul.md](./tasks/feature-krotki-tytul.md) · `in_todo_list: tak` · `status: todo`
 
 **Priorytet:** P1
 
@@ -33,9 +33,11 @@
 
 ## Nazewnictwo
 
-- Plik: `doc/tasks/<slug>.md` — **bez** `TASK-01`
-- `id` frontmatter = slug
-- Log wdrożenia: `doc/changes/<slug>.md`
+- Plik: `doc/tasks/<type>-<slug>.md` — **`feature-`** | **`bug-`** (bez `TASK-01`)
+- Frontmatter: `id` = nazwa pliku bez `.md`, `type: feature|bug`
+- Log wdrożenia: `doc/changes/<type>-<slug>.md`
+
+Przykłady: `feature-atrybuty-filtry.md`, `bug-layout-01.md`
 
 ## Aktualizacja po wdrożeniu
 

@@ -1,0 +1,1 @@
+budowanie menu wymaga kompletnego przemyslenia

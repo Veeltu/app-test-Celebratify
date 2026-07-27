@@ -1,13 +1,13 @@
 ---
-id: bogatsze-menu
-task_file: doc/tasks/bogatsze-menu.md
+id: feature-bogatsze-menu
+task_file: doc/tasks/feature-bogatsze-menu.md
 source_section: "1"
 completed: 2026-07-27
 ---
 
 # CHANGE — Bogatsze i czytelniejsze menu pakietów
 
-> Log wdrożenia. Opis zadania: [`doc/tasks/bogatsze-menu.md`](../tasks/bogatsze-menu.md) · sekcja w [`doc/sugestions.md`](../sugestions.md).
+> Log wdrożenia. Opis zadania: [`doc/tasks/feature-bogatsze-menu.md`](../tasks/feature-bogatsze-menu.md) · sekcja w [`doc/sugestions.md`](../sugestions.md).
 
 ## Podsumowanie
 

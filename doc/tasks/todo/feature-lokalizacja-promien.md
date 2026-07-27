@@ -1,5 +1,6 @@
 ---
-id: lokalizacja-promien
+id: feature-lokalizacja-promien
+type: feature
 title: Lokalizacja z promieniem (np. 50 km)
 source: doc/sugestions.md
 source_section: "6"

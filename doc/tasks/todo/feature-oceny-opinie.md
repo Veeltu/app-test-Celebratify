@@ -1,5 +1,6 @@
 ---
-id: oceny-opinie
+id: feature-oceny-opinie
+type: feature
 title: Oceny i opinie — prościej, bez negatywnego nacisku
 source: doc/sugestions.md
 source_section: "8"

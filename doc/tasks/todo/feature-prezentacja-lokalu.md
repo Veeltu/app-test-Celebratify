@@ -1,5 +1,6 @@
 ---
-id: prezentacja-lokalu
+id: feature-prezentacja-lokalu
+type: feature
 title: Lepsza prezentacja lokalu (informacje sprzedażowe)
 source: doc/sugestions.md
 source_section: "2"
