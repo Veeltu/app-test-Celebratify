@@ -2,10 +2,53 @@ export type EventType = 'wesele' | 'chrzciny' | 'komunia' | 'urodziny' | 'firmow
 
 export type BookingStatus = 'Oczekuje' | 'Potwierdzona' | 'Odrzucona' | 'Anulowana';
 
+export type MenuItemTag = 'wege' | 'bezgluten' | 'premium' | 'dla-dzieci' | 'ostre';
+
+export type MenuCategory =
+  | 'Danie Główne'
+  | 'Zupa'
+  | 'Zimna Płyta'
+  | 'Desery & Tort'
+  | 'Napoje'
+  | 'Dania Gorące Nocne';
+
+export interface MenuModifierOption {
+  id: string;
+  label: string;
+  /** Dopłata w zł / os. — 0 lub brak = w cenie pakietu */
+  priceExtra?: number;
+}
+
+/** Grupa wyboru przy daniu (np. dodatek do dania głównego) */
+export interface MenuModifierGroup {
+  id: string;
+  title: string;
+  options: MenuModifierOption[];
+  /** Max wybranych opcji; domyślnie 1 (single choice) */
+  maxSelect?: number;
+}
+
 export interface MenuItem {
-  category: 'Danie Główne' | 'Zupa' | 'Zimna Płyta' | 'Desery & Tort' | 'Napoje' | 'Dania Gorące Nocne';
+  /** Wymagane, gdy danie jest opcją w choiceGroups */
+  id?: string;
+  category: MenuCategory;
   name: string;
   description?: string;
+  tags?: MenuItemTag[];
+  imageUrl?: string;
+  allergens?: string[];
+  /** Opcje modyfikacji proponowane przez restaurację (np. dodatek, sos) */
+  modifiers?: MenuModifierGroup[];
+}
+
+/**
+ * Wybór jednego dania z kilku propozycji restauracji
+ * (np. pieczeń z dodatkami ALBO pierogi z farszem).
+ */
+export interface MenuDishChoiceGroup {
+  id: string;
+  title: string;
+  dishes: MenuItem[];
 }
 
 export interface OfferPackage {
@@ -16,6 +59,8 @@ export interface OfferPackage {
   durationHours: number;
   features: string[]; // e.g. "3 dania gorące", "Napoje bez limitu", "Klimatyzacja", "Miejsce na DJ"
   menu: MenuItem[];
+  /** Wybór dania głównego (lub innej pozycji) — user wybiera jedno z dishes */
+  choiceGroups?: MenuDishChoiceGroup[];
   depositPercent: number; // e.g. 20%
 }
 

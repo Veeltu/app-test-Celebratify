@@ -1,0 +1,58 @@
+---
+description: Konwencje komponentów mobilnych React — layout, modale, Tailwind, props
+globs: src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Komponenty mobilne — konwencje
+
+## Wzorzec komponentu widoku
+
+- Funkcyjne komponenty + `React.FC<Props>` z interfejsem `Props` na górze pliku
+- Typy domenowe importuj z `../../../types` (widoki) lub `../../types` (shell)
+- Ikony wyłącznie z `lucide-react`
+- Teksty UI po **polsku**
+
+## Layout modala / bottom sheet
+
+```tsx
+// Pełnoekranowy modal w ramce telefonu
+<div className="absolute inset-0 z-50 bg-white flex flex-col h-full">
+  <div className="flex-none ..."> {/* header */} </div>
+  <div className="flex-1 overflow-y-auto no-scrollbar"> {/* treść */} </div>
+  <div className="flex-none ..."> {/* sticky CTA na dole */} </div>
+</div>
+```
+
+- Overlay rezerwacji/auth: `absolute inset-0` + wewnętrzny panel `rounded-t-3xl`
+- **Nie używaj** `fixed inset-0` dla modali wewnątrz appki — wychodzą poza symulowany ekran
+
+## Tailwind w tym projekcie
+
+- Kolory marki: `brand-50` … `brand-900` (zdefiniowane w `index.html`)
+- Tło kart: `bg-white border border-slate-200 shadow-sm` lub `shadow-md`
+- CTA: `bg-gradient-to-r from-brand-600 to-brand-500`
+- Małe etykiety: `text-[10px] font-bold uppercase tracking-wider`
+- Przewijanie bez scrollbara: klasa `no-scrollbar` z `index.css`
+
+## Props z App.tsx
+
+Widoki są „głupie” — dostają dane i callbacki, nie mutują globalnego stanu bezpośrednio:
+
+- `venues`, `bookings`, `filters`, `compareList`, `user`, `role`
+- Callbacki: `onSelectVenue`, `onFilterChange`, `onStartBooking`, `onSubmitBooking`, `onToggleCompare`, itd.
+
+Nowa akcja biznesowa → handler w `App.tsx`, potem prop do widoku.
+
+## Mock danych
+
+- Zdjęcia: Unsplash URL w `mockVenues.ts`
+- Daty w formacie `YYYY-MM-DD`, głównie soboty 2026
+- Status rezerwacji: `Oczekuje` | `Potwierdzona` | `Odrzucona` | `Anulowana`
+
+## Czego unikać
+
+- Nowych bibliotek UI (shadcn, MUI) bez prośby
+- `any` — używaj typów z `src/types/index.ts`
+- Ciemnego theme (`bg-slate-900`, `text-white` jako tło główne) w nowych widokach
+- Wyciągania logiki do osobnych hooków/plików — dopóki prototyp jest mały, trzymaj flow w `App.tsx`

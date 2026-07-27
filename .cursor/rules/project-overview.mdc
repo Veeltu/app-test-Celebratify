@@ -1,0 +1,134 @@
+---
+description: Kontekst projektu Celebratify/PartySpot — struktura repo, stack, konwencje i ograniczenia prototypu
+alwaysApply: true
+---
+
+# Celebratify (PartySpot) — kontekst dla agenta
+
+## Czym jest projekt
+
+Mobilny prototyp (mobile-first) do rezerwacji sal i restauracji na imprezy okolicznościowe (wesela, chrzciny, komunie, eventy firmowe). To **demo / koncept dla klienta**, nie produkcyjna aplikacja.
+
+- UI w języku **polskim**
+- Nazwa w nagłówku: **Celebratify** (`MobileShell.tsx`); w `package.json`: `partyspot-mobile-booking`
+- Brak backendu, API, routingu i prawdziwego AI — dane i logika w pamięci przeglądarki
+
+## Stack
+
+- **React 18** + **TypeScript** + **Vite**
+- **Tailwind CSS** przez CDN w `index.html` (kolory `brand-*`, `accent-*` — nie ma `tailwind.config` w repo)
+- **lucide-react** — ikony
+- **firebase** w `package.json`, ale **nieużywany** w `src/` — nie dodawaj integracji Firebase bez wyraźnej prośby
+
+## Struktura katalogów
+
+```
+src/
+  App.tsx              # Cały stan aplikacji (venues, bookings, user, filtry, modale)
+  main.tsx             # Entry point
+  index.css            # Utility classes (glass-nav, no-scrollbar)
+  types/index.ts       # Venue, OfferPackage, BookingRequest, FilterState, AuthUser, ChatMessage
+  data/mockVenues.ts   # INITIAL_VENUES, INITIAL_BOOKINGS — jedyne źródło danych
+  components/mobile/
+    MobileShell.tsx    # Ramka telefonu, header, bottom nav, przełącznik client/manager
+    BottomNav.tsx      # Zakładki: search | compare | chat | bookings | admin
+    NotificationBanner.tsx
+    views/
+      MobileSearchView.tsx       # Lista lokali + filtry
+      MobileVenueDetailModal.tsx # Szczegóły lokalu (modal pełnoekranowy)
+      MobileCompareView.tsx      # Porównywarka 2–3 lokali
+      MobileAIChatView.tsx       # „AI” — mock regex, nie LLM
+      MobileBookingsView.tsx     # Rezerwacje klienta
+      MobileVenueAdminView.tsx   # Panel menedżera lokalu
+      MobileBookingModal.tsx     # Formularz rezerwacji
+      MobileAuthModal.tsx        # Mock logowania Google/Apple
+```
+
+## Architektura stanu
+
+- **Jeden kontener stanu**: `App.tsx` — `useState` + callbacki przekazywane w dół
+- **Brak** React Router, Context API, Redux, zewnętrznego store
+- Nowe dane mock → `src/data/mockVenues.ts`; nowe typy → `src/types/index.ts`
+- Miasta w filtrach: `Wszystkie`, `Kraków`, `Warszawa`, `Gdańsk`, `Wrocław`, `Leszno` — przy dodawaniu miasta aktualizuj też `MobileAIChatView.tsx` (regex `leszn` itd.)
+
+## Role użytkownika
+
+- **client** — przegląda lokale, porównuje, rezerwuje, czat AI
+- **manager** — panel lokalu (`admin` tab): akceptacja/odrzucenie zapytań, kalendarz, cennik
+- Przełącznik roli w `MobileShell` — tylko demo
+
+## UI / motyw
+
+- **Jasny motyw** (`bg-white`, `bg-slate-50`, `text-slate-900`) — nie wracaj do ciemnego `slate-950` w widokach głównych
+- Akcent: `brand-600` (róż/czerwień), drugi: `amber-*`
+- Layout mobile: `max-w-md mx-auto`, symulacja telefonu w `MobileShell`
+- Modale pełnoekranowe: **`absolute inset-0`** wewnątrz shella (nie `fixed` na viewport), układ **`flex flex-col h-full`** — header + scroll body + footer z CTA
+
+## „AI Chat” — ważne
+
+`MobileAIChatView.tsx` to **symulacja**: regex na mieście/gościach/cenie, filtrowanie `venues`, `setTimeout` 1s. Nie podpinaj OpenAI/Firebase Vertex bez prośby użytkownika.
+
+## Zasady edycji
+
+- **Minimalny diff** — nie refaktoryzuj `App.tsx` ani nie dodawaj routera bez prośby
+- **Nie commituj** ani **nie pushuj** bez wyraźnej prośby
+- **Nie twórz** README/docs/infra (terraform, Firebase hosting) bez prośby
+- Nowe lokale: zachowaj strukturę `Venue` + co najmniej jeden `OfferPackage`; ID np. `vL1`, `mgrL1`
+- Po zmianach w TSX sprawdź spójność typów z `src/types/index.ts`
+
+## Komendy
+
+```bash
+npm run dev      # dev server (port 3000 w vite.config.ts)
+npm run build    # tsc && vite build → dist/
+npm run preview  # podgląd buildu
+```
+
+## Typowe flow użytkownika (demo)
+
+1. Szukaj → filtruj → kliknij lokal → `MobileVenueDetailModal`
+2. Wybierz pakiet/termin → „Rezerwuj” → `MobileBookingModal` → status `Oczekuje`
+3. Tryb manager → Panel Lokalu → akceptuj/odrzuć rezerwację
+4. Porównaj — max 3 lokale; Czat AI — szybkie prompty + regex
+
+## Dokumentacja produktu i zadania
+
+**`doc/sugestions.md` jest źródłem sugestii.** Pliki w `doc/tasks/` powstają **na podstawie sekcji** w tym pliku. Sync: skill `.cursor/skills/sync-suggestions-tasks/`.
+
+### Pliki i role
+
+| Plik / folder | Rola |
+|---------------|------|
+| `doc/sugestions.md` | **Źródło prawdy** — sugestie, linki do tasków, plan sprintów |
+| `doc/tasks/<slug>.md` | Opis zadania (wydzielony z sekcji w `sugestions.md`) |
+| `doc/changes/<slug>.md` | Log wdrożenia — lista zmian w kodzie po wykonaniu taska |
+| `doc/tasks/_template.md` | Szablon nowego taska |
+| `doc/changes/_template.md` | Szablon logu wdrożenia |
+| `.cursor/skills/sync-suggestions-tasks/` | Audyt + tworzenie tasków |
+| `.cursor/skills/implement-task/` | Implementacja + zapis `doc/changes/` |
+| `.idea/opis.md` | Wizja produktu (MVP, scope) |
+
+### Frontmatter w `doc/tasks/*.md`
+
+```yaml
+id: atrybuty-filtry          # = nazwa pliku bez .md (bez numerów)
+source: doc/sugestions.md
+source_section: "N"          # numer sekcji w sugestions.md
+in_todo_list: true | false
+status: todo | in_progress | done | blocked
+priority: P0 | P1 | P2
+```
+
+- **`in_todo_list: false`** — sugestia zapisana, nie gotowa do wdrożenia (brak pełnego scope lub decyzji)
+- **`in_todo_list: true`** — gotowe do implementacji (link w sekcji sugestions)
+
+### Ścieżka dla agenta
+
+```
+Nowa sugestia → sekcja w doc/sugestions.md
+  → skill sync-suggestions-tasks → doc/tasks/<slug>.md
+  → kod (skill implement-task)
+  → status done + doc/changes/<slug>.md
+```
+
+Przy „zrób atrybuty-filtry” — czytaj **`doc/tasks/atrybuty-filtry.md`**, po kodzie zapisz **`doc/changes/atrybuty-filtry.md`**.

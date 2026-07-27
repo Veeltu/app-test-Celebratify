@@ -1,4 +1,28 @@
 import { Venue, BookingRequest } from '../types';
+import {
+  MENU_KLASYCZNY,
+  MENU_ZLOTY,
+  MENU_VIP,
+  MENU_MORSKI,
+  MENU_KAMERALNY,
+  MENU_WINO,
+  MENU_BISTRO,
+  MENU_BIESIADNY,
+  MENU_FINE,
+  MENU_BBQ,
+  MENU_JEZIORO,
+  CHOICES_KLASYCZNY,
+  CHOICES_ZLOTY,
+  CHOICES_VIP,
+  CHOICES_MORSKI,
+  CHOICES_KAMERALNY,
+  CHOICES_BIESIADNY,
+  CHOICES_BISTRO,
+  CHOICES_FINE,
+  CHOICES_BBQ,
+  CHOICES_JEZIORO,
+  CHOICES_WINO,
+} from './menuSamples';
 
 export const INITIAL_VENUES: Venue[] = [
   {
@@ -35,13 +59,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 8,
         depositPercent: 20,
         features: ['Obiad 2-daniowy', 'Zimny bufet (6 przekąsek)', 'Napoje ciepłe i zimne bez limitu', 'Klimatyzowana sala', 'Parking dla gości'],
-        menu: [
-          { category: 'Zupa', name: 'Rosół królewski z domowym makaronem' },
-          { category: 'Danie Główne', name: 'Tradcyjna pieczeń wieprzowa w sosie własnym, ziemniaki z koperkiem, bukiet surówek' },
-          { category: 'Zimna Płyta', name: 'Półmisek wędlin staropolskich, deska serów zagrodowych, śledzie w śmietanie' },
-          { category: 'Desery & Tort', name: 'Pucharki lodowe z owocami i bita śmietaną' },
-          { category: 'Napoje', name: 'Soki owocowe, woda mineralna z cytryną, kawa z ekspresu, wybór herbat' }
-        ]
+        menu: MENU_KLASYCZNY,
+        choiceGroups: CHOICES_KLASYCZNY,
       },
       {
         id: 'p1-zloty',
@@ -51,14 +70,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 10,
         depositPercent: 20,
         features: ['Obiad 3-daniowy', 'Zimny bufet Premium', '2 dania gorące nocne', 'Tort weselny/okolicznościowy w cenie', 'Napoje bez limitu + wiejski stół'],
-        menu: [
-          { category: 'Zupa', name: 'Krem z borowików z groszkiem ptysiowym lub rosół' },
-          { category: 'Danie Główne', name: 'Polędwiczki wieprzowe w sosie kurkowym + pierś z kaczki z żurawiną, kopytka, buraczki' },
-          { category: 'Zimna Płyta', name: 'Łosoś w galarecie, tatar wołowy, sałatka jarzynowa, mięsa pieczone, pikle' },
-          { category: 'Dania Gorące Nocne', name: 'Barszcz czerwony z krokietem, płonąca kitka wieprzowa' },
-          { category: 'Desery & Tort', name: 'Tort trzypiętrowy smaku truskawkowym / czekoladowym + candy bar' },
-          { category: 'Napoje', name: 'Soki tłoczone, woda, napoje gazowane, kawa premium, herbaty ziołowe' }
-        ]
+        menu: MENU_ZLOTY,
+        choiceGroups: CHOICES_ZLOTY,
       },
       {
         id: 'p1-platyna',
@@ -68,14 +81,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 12,
         depositPercent: 25,
         features: ['Wszystko z Pakietu Złotego', 'Nocleg dla Pary Młodej / Jubilata gratis', 'Drink bar z barmanem na 4h', 'Ogród z grillem live-cooking'],
-        menu: [
-          { category: 'Zupa', name: 'Konsommé wołowe z pierożkami faszerowanymi dziczyzną' },
-          { category: 'Danie Główne', name: 'Stek z polędwicy wołowej z masełkiem ziołowym i pieczonymi ziemniakami fondant' },
-          { category: 'Zimna Płyta', name: 'Krewetki na maśle czosnkowym, deska wędlin dojrzewających, carpaccio z buraka' },
-          { category: 'Dania Gorące Nocne', name: 'Strogonow wołowy, żurek staropolski na wędzonce' },
-          { category: 'Desery & Tort', name: 'Customized Cake Design + Monodesery artystyczne' },
-          { category: 'Napoje', name: 'Full Open Bar bezalkoholowy i alkoholowy wg ustaleń' }
-        ]
+        menu: MENU_VIP,
+        choiceGroups: CHOICES_VIP,
       }
     ]
   },
@@ -113,13 +120,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 8,
         depositPercent: 20,
         features: ['Wykwintny obiad 3-daniowy', 'Zimna płyta 8 pozycji', 'Open bar bezalkoholowy', 'Strefa foto z tłem ścianki'],
-        menu: [
-          { category: 'Zupa', name: 'Aromatyczna zupa krem z pieczonej papryki i pomidorów z batatami' },
-          { category: 'Danie Główne', name: 'Filet z kurczaka supreme w sosie kurkowym, ziemniaki gratin, baby marchewka' },
-          { category: 'Zimna Płyta', name: 'Tortille z łososiem i szpinakiem, deska serów pleśniowych, minitarty z ciasta francuskiego' },
-          { category: 'Desery & Tort', name: 'Panna cotta z musem malinowym, mini serniczki' },
-          { category: 'Napoje', name: 'Kawa z ekspresu kolbowego, selekcja herbat Richmont, soki 100%' }
-        ]
+        menu: MENU_KLASYCZNY,
+        choiceGroups: CHOICES_KLASYCZNY,
       },
       {
         id: 'p2-zloty',
@@ -129,14 +131,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 10,
         depositPercent: 20,
         features: ['Obiad serwowany 4-daniowy', 'Bogatki bufet zimny & ciepły', '2 dania nocne', 'Prosecco welcome drink dla każdego'],
-        menu: [
-          { category: 'Zupa', name: 'Krem z białych warzyw z oliwą truflową i chipsami z jarmużu' },
-          { category: 'Danie Główne', name: 'Polędwica wieprzowa sous-vide w sosie z zielonego pieprzu, gnocchi szpinakowe' },
-          { category: 'Zimna Płyta', name: 'Carpaccio z łososia, tatar z tuńczyka, szaszłyki z rozmarynem, sałatka cezar z krewetkami' },
-          { category: 'Dania Gorące Nocne', name: 'Boeuf Bourguignon, zupa tajska z kurczakiem' },
-          { category: 'Desery & Tort', name: 'Autorski tort musowy + stół ze słodkościami (Candy Bar)' },
-          { category: 'Napoje', name: 'Soki, napoje gazowane, nielimitowane napoje gorące, powitalny kieliszek Prosecco' }
-        ]
+        menu: MENU_ZLOTY,
+        choiceGroups: CHOICES_ZLOTY,
       }
     ]
   },
@@ -174,13 +170,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 7,
         depositPercent: 15,
         features: ['Menu rybne lub mięsne', 'Grill na tarasie', 'Welcome drink (Lemonade / Spritz)', 'Muzyka z nagłośnienia'],
-        menu: [
-          { category: 'Zupa', name: 'Kremowa zupa rybna z dorszem i nutą trawy cytrynowej' },
-          { category: 'Danie Główne', name: 'Filet z łososia na parze z sos z pieczonego czosnku, pieczone ziemniaczki' },
-          { category: 'Zimna Płyta', name: 'Śledziki po kaszubsku, tartinki z pastą z wędzonego makreli, sałatka grecka' },
-          { category: 'Desery & Tort', name: 'Szarlotka na ciepło z lodami waniliowymi' },
-          { category: 'Napoje', name: 'Domowa lemodada cytrusowa, woda z miętą, kawa i herbata' }
-        ]
+        menu: MENU_MORSKI,
+        choiceGroups: CHOICES_MORSKI,
       },
       {
         id: 'p3-premium',
@@ -190,14 +181,8 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 9,
         depositPercent: 20,
         features: ['Obiad 3-daniowy', 'Bufet owoców morza', 'Live cooking grilla', 'Leżaki i strefa chillout na plaży'],
-        menu: [
-          { category: 'Zupa', name: 'Chłodnik litewski z jajkiem i krewetkami' },
-          { category: 'Danie Główne', name: 'Stek z miętusa w panierce ziołowej + grillowana karkówka w marynacie miodowej' },
-          { category: 'Zimna Płyta', name: 'Deska serów regionalnych pomorskich, kalmary w chrupiącym cieście, sałatka z melonem i prosciutto' },
-          { category: 'Dania Gorące Nocne', name: 'Barszczyk czerwony z pasztecikiem rybnym lub mięsnym' },
-          { category: 'Desery & Tort', name: 'Tort bezowy z malinami i marakują' },
-          { category: 'Napoje', name: 'Open bar bezalkoholowy, kawa, herbaty, soki fresh' }
-        ]
+        menu: MENU_ZLOTY,
+        choiceGroups: CHOICES_ZLOTY,
       }
     ]
   },
@@ -234,14 +219,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 10,
         depositPercent: 20,
         features: ['Obiad 4-daniowy serwowany', 'Pokaz sztucznych ogni / zimnych ogni', 'Czerwony dywan i powitanie Prosecco', 'Opiekun wydarzenia'],
-        menu: [
-          { category: 'Zupa', name: 'Krem z prawdziwków z łezką śmietany i oliwą truflową' },
-          { category: 'Danie Główne', name: 'Pieczone udo kaczki w jabłkach i majeranku, pyzy drożdżowe, modra kapusta' },
-          { category: 'Zimna Płyta', name: 'Pasztet z dzika z konfiturą z żurawiny, wędzone wędliny pałacowe, roladki ze szpinakiem' },
-          { category: 'Dania Gorące Nocne', name: 'Zupa gulaszowa po węgiersku, zrazy wołowe w sosie grzybowym' },
-          { category: 'Desery & Tort', name: 'Tort angielski z dekoracją z żywych róż' },
-          { category: 'Napoje', name: 'Soki tłoczone z pałacowego sadu, woda, kawa, selekcja herbat' }
-        ]
+        menu: MENU_VIP,
+        choiceGroups: CHOICES_VIP,
+      },
+      {
+        id: 'p4-ogrod',
+        name: 'Pakiet Parkowy (Garden)',
+        pricePerPerson: 240,
+        minGuests: 40,
+        durationHours: 8,
+        depositPercent: 20,
+        features: ['Obiad 2-daniowy', 'Bufet w ogrodzie', 'Lemoniada i woda smakowa', 'Strefa chillout przy fontannie'],
+        menu: MENU_BBQ,
+        choiceGroups: CHOICES_BBQ,
       }
     ]
   },
@@ -278,7 +268,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 6,
         depositPercent: 10,
         features: ['Obiad 2-daniowy', 'Deser', 'Napoje ciepłe bez limitu'],
-        menu: []
+        menu: MENU_KAMERALNY,
+        choiceGroups: CHOICES_KAMERALNY,
+      },
+      {
+        id: 'pL1-premium',
+        name: 'Pakiet Celebracja',
+        pricePerPerson: 195,
+        minGuests: 20,
+        durationHours: 7,
+        depositPercent: 15,
+        features: ['Obiad 3-daniowy', 'Opcje wege i bezgluten', 'Tort okolicznościowy', 'Napoje bez limitu'],
+        menu: MENU_ZLOTY,
+        choiceGroups: CHOICES_ZLOTY,
       }
     ]
   },
@@ -314,7 +316,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 5,
         depositPercent: 20,
         features: ['Degustacja 5 win', 'Przekąski tapas', 'Danie główne'],
-        menu: []
+        menu: MENU_WINO,
+        choiceGroups: CHOICES_WINO,
+      },
+      {
+        id: 'pL2-obiad',
+        name: 'Kolacja Slow-Food',
+        pricePerPerson: 180,
+        minGuests: 10,
+        durationHours: 4,
+        depositPercent: 20,
+        features: ['3 dania serwowane', 'Wino do dań (1 butelka / 4 os.)', 'Deser dnia'],
+        menu: MENU_KAMERALNY,
+        choiceGroups: CHOICES_KAMERALNY,
       }
     ]
   },
@@ -350,7 +364,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 4,
         depositPercent: 15,
         features: ['Bufet sałatkowy', '2 dania ciepłe', 'Lemoniada'],
-        menu: []
+        menu: MENU_BISTRO,
+        choiceGroups: CHOICES_BISTRO,
+      },
+      {
+        id: 'pL3-brunch',
+        name: 'Brunch Event',
+        pricePerPerson: 125,
+        minGuests: 12,
+        durationHours: 3,
+        depositPercent: 10,
+        features: ['Bufet śniadaniowy', 'Kawa specialty', 'Soki fresh'],
+        menu: MENU_KAMERALNY,
+        choiceGroups: CHOICES_KAMERALNY,
       }
     ]
   },
@@ -386,7 +412,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 8,
         depositPercent: 10,
         features: ['Obiad staropolski', 'Wiejski stół', 'Ciasta domowe'],
-        menu: []
+        menu: MENU_BIESIADNY,
+        choiceGroups: CHOICES_BIESIADNY,
+      },
+      {
+        id: 'pL4-grill',
+        name: 'Pakiet Grillowy',
+        pricePerPerson: 145,
+        minGuests: 25,
+        durationHours: 6,
+        depositPercent: 10,
+        features: ['Mięsa z grilla', 'Sałatki', 'Lemoniada', 'Plac zabaw w cenie'],
+        menu: MENU_BBQ,
+        choiceGroups: CHOICES_BBQ,
       }
     ]
   },
@@ -422,7 +460,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 5,
         depositPercent: 20,
         features: ['Finger foods', 'Danie główne', 'Barista service'],
-        menu: []
+        menu: MENU_KAMERALNY,
+        choiceGroups: CHOICES_KAMERALNY,
+      },
+      {
+        id: 'pL5-jazz',
+        name: 'Wieczór Jazz & Dinner',
+        pricePerPerson: 210,
+        minGuests: 10,
+        durationHours: 5,
+        depositPercent: 20,
+        features: ['Menu 3-daniowe', 'Live piano', 'Drink powitalny'],
+        menu: MENU_WINO,
+        choiceGroups: CHOICES_WINO,
       }
     ]
   },
@@ -458,7 +508,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 10,
         depositPercent: 10,
         features: ['Dania z grilla', 'Przekąski regionalne', 'Piwo rzemieślnicze'],
-        menu: []
+        menu: MENU_BIESIADNY,
+        choiceGroups: CHOICES_BIESIADNY,
+      },
+      {
+        id: 'pL6-prosiak',
+        name: 'Biesiada z Prosiakiem',
+        pricePerPerson: 150,
+        minGuests: 30,
+        durationHours: 10,
+        depositPercent: 15,
+        features: ['Pieczony prosiak', 'Wiejski stół', 'Muzyka na życzenie'],
+        menu: MENU_BBQ,
+        choiceGroups: CHOICES_BBQ,
       }
     ]
   },
@@ -494,7 +556,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 4,
         depositPercent: 100,
         features: ['Menu 7 dań', 'Pairing win', 'Spotkanie z szefem'],
-        menu: []
+        menu: MENU_FINE,
+        choiceGroups: CHOICES_FINE,
+      },
+      {
+        id: 'pL7-lunch',
+        name: 'Lunch Degustacyjny',
+        pricePerPerson: 280,
+        minGuests: 6,
+        durationHours: 3,
+        depositPercent: 50,
+        features: ['Menu 5 dań', '2 wina', 'Kawa'],
+        menu: MENU_ZLOTY,
+        choiceGroups: CHOICES_ZLOTY,
       }
     ]
   },
@@ -530,7 +604,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 12,
         depositPercent: 25,
         features: ['Bufet BBQ', 'Nocleg dla 10 osób', 'Basen'],
-        menu: []
+        menu: MENU_BBQ,
+        choiceGroups: CHOICES_BBQ,
+      },
+      {
+        id: 'pL8-wesele',
+        name: 'Kameralne Wesele w Willi',
+        pricePerPerson: 240,
+        minGuests: 20,
+        durationHours: 12,
+        depositPercent: 25,
+        features: ['Pełne menu weselne', 'Ogród na wyłączność', 'Apartament dla pary'],
+        menu: MENU_ZLOTY,
+        choiceGroups: CHOICES_ZLOTY,
       }
     ]
   },
@@ -566,7 +652,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 10,
         depositPercent: 15,
         features: ['Pełne menu', 'Dekoracje', 'DJ Service'],
-        menu: []
+        menu: MENU_KLASYCZNY,
+        choiceGroups: CHOICES_KLASYCZNY,
+      },
+      {
+        id: 'pL9-jubileusz',
+        name: 'Jubileusz Firmowy',
+        pricePerPerson: 155,
+        minGuests: 25,
+        durationHours: 6,
+        depositPercent: 15,
+        features: ['Bufet ciepły i zimny', 'Nagłośnienie', 'Obsługa kelnerów'],
+        menu: MENU_BISTRO,
+        choiceGroups: CHOICES_BISTRO,
       }
     ]
   },
@@ -602,7 +700,19 @@ export const INITIAL_VENUES: Venue[] = [
         durationHours: 7,
         depositPercent: 20,
         features: ['Obiad sezonowy', 'Taras na wyłączność', 'Spritz bar'],
-        menu: []
+        menu: MENU_JEZIORO,
+        choiceGroups: CHOICES_JEZIORO,
+      },
+      {
+        id: 'pL10-ryby',
+        name: 'Wieczór nad Jeziorem',
+        pricePerPerson: 210,
+        minGuests: 20,
+        durationHours: 8,
+        depositPercent: 20,
+        features: ['Menu rybne', 'Pomost na toast', 'Open bar bezalkoholowy'],
+        menu: MENU_MORSKI,
+        choiceGroups: CHOICES_MORSKI,
       }
     ]
   },
