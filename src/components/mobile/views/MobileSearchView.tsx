@@ -31,7 +31,7 @@ export const MobileSearchView: React.FC<Props> = ({
     );
   };
 
-  const cities = ['Wszystkie', 'Kraków', 'Warszawa', 'Gdańsk', 'Wrocław'];
+  const cities = ['Wszystkie', 'Kraków', 'Warszawa', 'Gdańsk', 'Wrocław', 'Leszno'];
   const eventTypes: { id: EventType | 'wszystkie'; label: string; emoji: string }[] = [
     { id: 'wszystkie', label: 'Wszystkie', emoji: '✨' },
     { id: 'wesele', label: 'Wesele', emoji: '💍' },

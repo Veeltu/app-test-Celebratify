@@ -13,7 +13,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
     {
       id: 'm0',
       sender: 'assistant',
-      text: 'Cześć! Jestem Twoim Asystentem Imprezowym PartySpot AI. 🤖✨\n\nOpisz, czego szukasz własnymi słowami — np.: „Szukam sali na 80 osób pod Krakowem w sierpniu z budżetem do 250 zł za osobę” lub kliknij jedną z szybkich opcji poniżej!',
+      text: 'Cześć! Jestem Twoim Asystentem Imprezowym PartySpot AI. 🤖✨\n\nOpisz, czego szukasz własnymi słowami — np.: „Szukam kameralnej sali w Lesznie dla 20 osób” lub kliknij jedną z szybkich opcji poniżej!',
       timestamp: 'Teraz'
     }
   ]);
@@ -22,9 +22,9 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickPrompts = [
-    'Szukam sali na 80 osób pod Krakowem w sierpniu do 250 zł/os',
-    'Chrzciny dla 30 osób Gdańsk z ogródkiem i plenerem',
-    'Wesele Warszawa 120 osób z noclegami i pakiem VIP'
+    'Kameralna sala w Lesznie dla 20 osób',
+    'Szukam sali na 80 osób pod Krakowem w sierpniu',
+    'Chrzciny dla 30 osób Gdańsk z ogródkiem'
   ];
 
   const scrollToBottom = () => {
@@ -58,6 +58,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
       else if (lower.includes('warszaw') || lower.includes('stolic')) matchedCity = 'Warszawa';
       else if (lower.includes('gdańsk') || lower.includes('morzem') || lower.includes('trojmiast')) matchedCity = 'Gdańsk';
       else if (lower.includes('wrocław')) matchedCity = 'Wrocław';
+      else if (lower.includes('leszn')) matchedCity = 'Leszno';
 
       let matchedGuests = 0;
       const guestMatch = lower.match(/(\d+)\s*(osób|osob|gości|gosci)/);
