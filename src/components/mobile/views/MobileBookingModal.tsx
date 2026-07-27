@@ -53,41 +53,41 @@ export const MobileBookingModal: React.FC<Props> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md overflow-y-auto max-w-md mx-auto p-3 flex items-end sm:items-center justify-center animate-fade-in">
-      <div className="bg-slate-900 border border-slate-800 rounded-t-3xl sm:rounded-3xl w-full p-5 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-md overflow-y-auto max-w-md mx-auto p-3 flex items-end sm:items-center justify-center animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-t-3xl sm:rounded-3xl w-full p-5 shadow-2xl relative max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full bg-slate-800/50"
+          className="absolute top-4 right-4 text-slate-500 hover:text-slate-900 p-2 rounded-full bg-slate-100 shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="mb-4">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400">Rezerwacja Terminu</span>
-          <h2 className="text-xl font-extrabold text-white">{venue.name}</h2>
-          <p className="text-xs text-slate-400">{venue.city} • {venue.address}</p>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-600">Rezerwacja Terminu</span>
+          <h2 className="text-xl font-extrabold text-slate-900">{venue.name}</h2>
+          <p className="text-xs text-slate-500">{venue.city} • {venue.address}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           {/* Step 1: Package Selection */}
           <div>
-            <label className="font-bold text-slate-300 block mb-1.5">Wybierz Pakiet Menu:</label>
+            <label className="font-bold text-slate-700 block mb-1.5">Wybierz Pakiet Menu:</label>
             <div className="space-y-2">
               {venue.packages.map(pkg => (
                 <div
                   key={pkg.id}
                   onClick={() => setSelectedPackage(pkg)}
-                  className={`p-3 rounded-xl border cursor-pointer flex items-center justify-between transition-all ${
+                  className={`p-3 rounded-xl border cursor-pointer flex items-center justify-between transition-all shadow-sm ${
                     selectedPackage.id === pkg.id
-                      ? 'bg-brand-500/20 border-brand-500 text-brand-300 font-bold'
-                      : 'bg-slate-950 border-slate-800 text-slate-400'
+                      ? 'bg-brand-50 border-brand-500 text-brand-700 font-bold'
+                      : 'bg-slate-50 border-slate-200 text-slate-500 hover:border-slate-300'
                   }`}
                 >
                   <div>
-                    <span className="text-xs text-white block">{pkg.name}</span>
-                    <span className="text-[10px] font-normal text-slate-400">Czas: {pkg.durationHours}h</span>
+                    <span className={`text-xs block ${selectedPackage.id === pkg.id ? 'text-brand-900' : 'text-slate-800'}`}>{pkg.name}</span>
+                    <span className="text-[10px] font-normal text-slate-500">Czas: {pkg.durationHours}h</span>
                   </div>
-                  <span className="text-sm font-extrabold text-brand-400">{pkg.pricePerPerson} zł/os.</span>
+                  <span className={`text-sm font-extrabold ${selectedPackage.id === pkg.id ? 'text-brand-700' : 'text-brand-600'}`}>{pkg.pricePerPerson} zł/os.</span>
                 </div>
               ))}
             </div>
@@ -96,38 +96,38 @@ export const MobileBookingModal: React.FC<Props> = ({
           {/* Step 2: Date & Guests */}
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="font-bold text-slate-300 block mb-1">Data Imprezy:</label>
+              <label className="font-bold text-slate-700 block mb-1">Data Imprezy:</label>
               <select
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white font-medium outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 font-medium outline-none focus:border-brand-500 shadow-sm"
               >
                 {venue.availableDates.map(d => (
-                  <option key={d} value={d} className="bg-slate-900">{d} (Wolny)</option>
+                  <option key={d} value={d} className="bg-white">{d} (Wolny)</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="font-bold text-slate-300 block mb-1">Liczba Gości:</label>
+              <label className="font-bold text-slate-700 block mb-1">Liczba Gości:</label>
               <input
                 type="number"
                 min={selectedPackage.minGuests}
                 max={venue.maxGuests}
                 value={guestsCount}
                 onChange={(e) => setGuestsCount(parseInt(e.target.value) || selectedPackage.minGuests)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white font-medium outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 font-medium outline-none focus:border-brand-500 shadow-sm"
               />
             </div>
           </div>
 
           {/* Event Type */}
           <div>
-            <label className="font-bold text-slate-300 block mb-1">Rodzaj Wydarzenia:</label>
+            <label className="font-bold text-slate-700 block mb-1">Rodzaj Wydarzenia:</label>
             <select
               value={eventType}
               onChange={(e) => setEventType(e.target.value as EventType)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white font-medium outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 font-medium outline-none focus:border-brand-500 shadow-sm"
             >
               <option value="wesele">Wesele</option>
               <option value="chrzciny">Chrzciny</option>
@@ -138,15 +138,15 @@ export const MobileBookingModal: React.FC<Props> = ({
           </div>
 
           {/* Contact Details */}
-          <div className="border-t border-slate-800 pt-3 space-y-2">
-            <span className="font-bold text-slate-300 block">Dane Rezerwującego:</span>
+          <div className="border-t border-slate-200 pt-3 space-y-2">
+            <span className="font-bold text-slate-700 block">Dane Rezerwującego:</span>
             <input
               type="text"
               placeholder="Imię i Nazwisko"
               required
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 outline-none focus:border-brand-500 shadow-sm placeholder-slate-400"
             />
             <div className="grid grid-cols-2 gap-2">
               <input
@@ -155,7 +155,7 @@ export const MobileBookingModal: React.FC<Props> = ({
                 required
                 value={clientEmail}
                 onChange={(e) => setClientEmail(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 outline-none focus:border-brand-500 shadow-sm placeholder-slate-400"
               />
               <input
                 type="tel"
@@ -163,7 +163,7 @@ export const MobileBookingModal: React.FC<Props> = ({
                 required
                 value={clientPhone}
                 onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 outline-none focus:border-brand-500 shadow-sm placeholder-slate-400"
               />
             </div>
             <textarea
@@ -171,23 +171,23 @@ export const MobileBookingModal: React.FC<Props> = ({
               rows={2}
               value={specialRequests}
               onChange={(e) => setSpecialRequests(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 outline-none focus:border-brand-500 shadow-sm placeholder-slate-400"
             />
           </div>
 
           {/* Cost Estimate Summary Card */}
-          <div className="bg-slate-950 border border-brand-500/30 rounded-2xl p-3.5 space-y-1.5">
-            <div className="flex justify-between text-slate-400 text-[11px]">
+          <div className="bg-slate-50 border border-brand-200 rounded-2xl p-3.5 space-y-1.5 shadow-sm">
+            <div className="flex justify-between text-slate-600 text-[11px]">
               <span>Kalkulacja ({guestsCount} os. × {selectedPackage.pricePerPerson} zł):</span>
-              <span className="font-bold text-white">{estimatedTotal.toLocaleString()} zł</span>
+              <span className="font-bold text-slate-900">{estimatedTotal.toLocaleString()} zł</span>
             </div>
-            <div className="flex justify-between text-amber-300 text-xs font-bold">
+            <div className="flex justify-between text-amber-700 text-xs font-bold">
               <span>Wymagana zaliczka ({selectedPackage.depositPercent}%):</span>
               <span>{depositAmount.toLocaleString()} zł</span>
             </div>
 
-            <div className="mt-2 pt-2 border-t border-slate-800 text-[10px] text-slate-400 flex items-start gap-1.5">
-              <Info className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" />
+            <div className="mt-2 pt-2 border-t border-slate-200 text-[10px] text-slate-500 flex items-start gap-1.5">
+              <Info className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" />
               <span>
                 <strong>Brak natychmiastowej opłaty:</strong> Rezerwacja trafia do lokalu z prośbą o akceptację. Zaliczka płatna po potwierdzeniu przez menedżera lokalu.
               </span>

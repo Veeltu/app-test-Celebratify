@@ -50,11 +50,11 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="bg-slate-900 border border-slate-800 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 shadow-2xl relative">
+    <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 shadow-2xl relative">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full bg-slate-800/50"
+          className="absolute top-4 right-4 text-slate-500 hover:text-slate-900 p-2 rounded-full bg-slate-100 shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>
@@ -63,29 +63,29 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-amber-500 mx-auto flex items-center justify-center shadow-lg shadow-brand-500/20 mb-3">
             <ShieldCheck className="w-6 h-6 text-white" />
           </div>
-          <h3 className="text-xl font-bold text-white">Logowanie do PartySpot</h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <h3 className="text-xl font-bold text-slate-900">Logowanie do PartySpot</h3>
+          <p className="text-xs text-slate-500 mt-1">
             Zaloguj się przez Google lub Apple. Prowadzimy rejestr użytkowników.
           </p>
         </div>
 
         {user ? (
           <div className="space-y-4">
-            <div className="bg-slate-800/80 border border-brand-500/30 rounded-2xl p-4 flex items-center gap-3">
+            <div className="bg-slate-50 border border-brand-200 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
               {user.avatar ? (
                 <img src={user.avatar} alt={user.name} className="w-12 h-12 rounded-full object-cover border border-brand-400" />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-brand-500/20 text-brand-400 font-bold flex items-center justify-center text-lg">
+                <div className="w-12 h-12 rounded-full bg-brand-50 text-brand-600 font-bold flex items-center justify-center text-lg">
                   {user.name.charAt(0)}
                 </div>
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <h4 className="font-bold text-white text-sm truncate">{user.name}</h4>
-                  <CheckCircle className="w-4 h-4 text-brand-400 shrink-0" />
+                  <h4 className="font-bold text-slate-900 text-sm truncate">{user.name}</h4>
+                  <CheckCircle className="w-4 h-4 text-brand-600 shrink-0" />
                 </div>
-                <p className="text-xs text-slate-400 truncate">{user.email}</p>
-                <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold bg-brand-500/20 text-brand-300 rounded-md">
+                <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold bg-brand-50 text-brand-700 rounded-md border border-brand-100">
                   Rola: {user.role === 'manager' ? 'Menedżer Lokalu' : 'Organizator Imprezy'}
                 </span>
               </div>
@@ -93,7 +93,7 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
 
             <button
               onClick={onLogout}
-              className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-rose-400 font-semibold rounded-xl text-sm transition-colors"
+              className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-rose-600 font-semibold rounded-xl text-sm transition-colors shadow-sm"
             >
               Wyloguj się
             </button>
@@ -107,7 +107,7 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
             {/* Google Client */}
             <button
               onClick={() => handleGoogleLogin('client')}
-              className="w-full py-3 px-4 bg-white hover:bg-slate-100 text-slate-900 font-semibold rounded-xl text-sm flex items-center justify-between shadow-md transition-transform active:scale-[0.98]"
+              className="w-full py-3 px-4 bg-white hover:bg-slate-50 text-slate-900 font-semibold rounded-xl text-sm flex items-center justify-between shadow-sm border border-slate-200 transition-transform active:scale-[0.98]"
             >
               <div className="flex items-center gap-3">
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -124,7 +124,7 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
             {/* Apple Client */}
             <button
               onClick={() => handleAppleLogin('client')}
-              className="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-sm flex items-center justify-between border border-slate-700 transition-transform active:scale-[0.98]"
+              className="w-full py-3 px-4 bg-slate-900 hover:bg-black text-white font-semibold rounded-xl text-sm flex items-center justify-between transition-transform active:scale-[0.98]"
             >
               <div className="flex items-center gap-3">
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -137,23 +137,23 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
 
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-800" />
+                <div className="w-full border-t border-slate-200" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-slate-900 px-2 text-slate-500 font-semibold">Dla Właściciela Lokalu</span>
+                <span className="bg-white px-2 text-slate-500 font-semibold">Dla Właściciela Lokalu</span>
               </div>
             </div>
 
             {/* Manager Login */}
             <button
               onClick={() => handleGoogleLogin('manager')}
-              className="w-full py-3 px-4 bg-brand-600/20 hover:bg-brand-600/30 text-brand-300 font-semibold rounded-xl text-sm flex items-center justify-between border border-brand-500/40 transition-transform active:scale-[0.98]"
+              className="w-full py-3 px-4 bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold rounded-xl text-sm flex items-center justify-between border border-brand-200 transition-transform active:scale-[0.98] shadow-sm"
             >
               <div className="flex items-center gap-3">
                 <span className="text-base">🏢</span>
                 <span>Zaloguj jako Menedżer Lokalu</span>
               </div>
-              <ArrowRight className="w-4 h-4 text-brand-400" />
+              <ArrowRight className="w-4 h-4 text-brand-600" />
             </button>
           </div>
         )}
