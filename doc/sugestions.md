@@ -1,25 +1,27 @@
-# Celebratify — sugestie i feedback (źródło)
+# Celebratify — sugestie i feedback (archiwum pomysłów)
 
-**Ten plik jest źródłem prawdy dla sugestii.** Wszystko w `doc/tasks/` powstaje **na podstawie sekcji poniżej**.
+**Ten plik to backlog pomysłów / feedback**, nie pipeline wdrożenia.
+
+Nowe zmiany robimy przez **[OpenSpec](https://openspec.dev/)**:
+
+```
+/opsx:explore → /opsx:propose → /opsx:apply → /opsx:archive
+```
+
+Szczegóły: [`doc/add-feature-guide.md`](./add-feature-guide.md) · `openspec/` · reguła `.cursor/rules/workflow-changes.mdc`.
 
 | Krok | Gdzie |
 |------|-------|
-| 1. Nowa sugestia | Dodaj sekcję tutaj (`doc/sugestions.md`) |
-| 2. Wydzielenie taska | Utwórz `doc/tasks/<slug>.md` z tej sekcji (szablon: `_template.md`) |
-| 3. Sync tasków | Skill `/sync-suggestions-tasks` lub agent przy edycji tego pliku |
-| 4. Wdrożenie | Kod (skill `/implement-task`) + `status: done` |
-| 5. Log zmian | Opis wdrożenia w [`doc/changes/`](./changes/) |
+| 1. Pomysł | Sekcja tutaj (opcjonalnie) albo od razu w chat |
+| 2. Proposal | `/opsx:propose <kebab-name>` → `openspec/changes/<name>/` |
+| 3. Kod | `/opsx:apply` |
+| 4. Domknięcie | `/opsx:archive` → `openspec/specs/` + archive |
 
-**Skille:** `/sync-suggestions-tasks` · `/implement-task` (wykonanie taska + `doc/changes/`)  
+`doc/tasks/` i `doc/changes/` to **archiwum** starego flow — nie rozszerzaj.
+
 **Prototyp:** [app-test-celebratify.vercel.app](https://app-test-celebratify.vercel.app/)
 
-Legenda: **P0** (demo) · **P1** (ważne) · **P2** (później)  
-`in_todo_list: tak` = task wydzielony i gotowy do kodu · `nie` = tylko sugestia w tym pliku
-
-**Nazwy plików tasków** (prefiks = grupa):
-- `feature-<slug>.md` — funkcja produktowa
-- `bug-<slug>.md` — poprawka błędu
-- (opcjonalnie później) `chore-` / `ux-` — utrzymanie / sam UX bez nowej domeny
+Legenda: **P0** (demo) · **P1** (ważne) · **P2** (później)
 
 ---
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Venue, FilterState, EventType } from '../../../types';
-import { Search, MapPin, Calendar, Users, DollarSign, Sparkles, Scale, Check, ChevronRight, Star, Heart } from 'lucide-react';
+import { MapPin, Calendar, Users, Sparkles, Scale, Check, ChevronRight, Star, Heart } from 'lucide-react';
+import { getCityCoords } from '../../../data/cityCoords';
+import { RADIUS_PRESETS_KM, distanceKm } from '../../../utils/geo';
 
 interface Props {
   venues: Venue[];
@@ -21,12 +23,11 @@ export const MobileSearchView: React.FC<Props> = ({
   onToggleCompare,
   onOpenAIChat
 }) => {
-  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
 
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setFavorites(prev => 
+    setFavorites(prev =>
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   };
@@ -41,18 +42,35 @@ export const MobileSearchView: React.FC<Props> = ({
     { id: 'firmowa', label: 'Impreza Firmowa', emoji: '🎉' }
   ];
 
-  // Filter logic
-  const filteredVenues = venues.filter(venue => {
-    if (filters.city !== 'Wszystkie' && venue.city !== filters.city) return false;
-    if (filters.guests > 0 && venue.maxGuests < filters.guests) return false;
-    if (filters.maxPricePerGuest > 0 && venue.priceFrom > filters.maxPricePerGuest) return false;
-    if (filters.date && venue.blockedDates.includes(filters.date)) return false;
-    return true;
-  });
+  const origin = filters.city !== 'Wszystkie' ? getCityCoords(filters.city) : null;
+  const radiusActive = Boolean(origin);
+
+  const venueDistanceKm = (venue: Venue): number | null => {
+    if (!origin) return null;
+    return distanceKm(origin, { lat: venue.lat, lng: venue.lng });
+  };
+
+  const filteredVenues = venues
+    .filter(venue => {
+      if (origin) {
+        const d = distanceKm(origin, { lat: venue.lat, lng: venue.lng });
+        if (d > filters.radiusKm) return false;
+      }
+      if (filters.guests > 0 && venue.maxGuests < filters.guests) return false;
+      if (filters.maxPricePerGuest > 0 && venue.priceFrom > filters.maxPricePerGuest) return false;
+      if (filters.date && venue.blockedDates.includes(filters.date)) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      if (!origin) return 0;
+      return (
+        distanceKm(origin, { lat: a.lat, lng: a.lng }) -
+        distanceKm(origin, { lat: b.lat, lng: b.lng })
+      );
+    });
 
   return (
     <div className="pb-24 pt-2">
-      {/* Header Search Banner */}
       <div className="px-4 mb-4">
         <div className="flex items-center justify-between mb-2">
           <div>
@@ -68,10 +86,8 @@ export const MobileSearchView: React.FC<Props> = ({
           </button>
         </div>
 
-        {/* Quick Filter Bar */}
         <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-md space-y-2.5">
           <div className="grid grid-cols-2 gap-2">
-            {/* City selector */}
             <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2 border border-slate-200">
               <MapPin className="w-4 h-4 text-brand-600 shrink-0" />
               <select
@@ -83,7 +99,6 @@ export const MobileSearchView: React.FC<Props> = ({
               </select>
             </div>
 
-            {/* Event Type selector */}
             <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2 border border-slate-200">
               <Users className="w-4 h-4 text-amber-600 shrink-0" />
               <select
@@ -96,7 +111,30 @@ export const MobileSearchView: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Quick Celebration Event Pills */}
+          <div className={`flex items-center gap-1.5 ${radiusActive ? '' : 'opacity-45'}`}>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 shrink-0">
+              Promień
+            </span>
+            {RADIUS_PRESETS_KM.map((km) => {
+              const selected = filters.radiusKm === km;
+              return (
+                <button
+                  key={km}
+                  type="button"
+                  disabled={!radiusActive}
+                  onClick={() => onFilterChange({ ...filters, radiusKm: km })}
+                  className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border transition-all ${
+                    selected && radiusActive
+                      ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                      : 'bg-slate-100 text-slate-700 border-slate-200'
+                  } disabled:cursor-not-allowed`}
+                >
+                  {km} km
+                </button>
+              );
+            })}
+          </div>
+
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5 pb-0.5">
             {eventTypes.map(e => {
               const isSelected = filters.eventType === e.id;
@@ -117,7 +155,6 @@ export const MobileSearchView: React.FC<Props> = ({
             })}
           </div>
 
-          {/* Date & Guests bar */}
           <div className="grid grid-cols-2 gap-2">
             <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2 border border-slate-200">
               <Calendar className="w-4 h-4 text-brand-600 shrink-0" />
@@ -142,9 +179,8 @@ export const MobileSearchView: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* AI Assistant Banner */}
       <div className="px-4 mb-4">
-        <div 
+        <div
           onClick={onOpenAIChat}
           className="bg-gradient-to-r from-amber-50 via-rose-50/60 to-orange-50 border border-amber-200/80 rounded-2xl p-3.5 flex items-center justify-between cursor-pointer hover:border-amber-400 transition-all shadow-xs"
         >
@@ -161,7 +197,6 @@ export const MobileSearchView: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* Results Section */}
       <div className="px-4 mb-2 flex items-center justify-between">
         <span className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">
           Znalezione lokale ({filteredVenues.length})
@@ -173,18 +208,17 @@ export const MobileSearchView: React.FC<Props> = ({
         )}
       </div>
 
-      {/* Venue Cards List */}
       <div className="px-4 space-y-4">
         {filteredVenues.map((venue) => {
           const isComparing = compareList.includes(venue.id);
           const isFav = favorites.includes(venue.id);
+          const dist = venueDistanceKm(venue);
           return (
             <div
               key={venue.id}
               onClick={() => onSelectVenue(venue)}
               className="bg-white border border-slate-200 hover:border-brand-400 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-[0.99] group relative"
             >
-              {/* Image Container */}
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <img
                   src={venue.images[0]}
@@ -193,12 +227,10 @@ export const MobileSearchView: React.FC<Props> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-black/30" />
 
-                {/* Category Badge */}
                 <span className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md border border-slate-700/60 px-2.5 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
                   {venue.category}
                 </span>
 
-                {/* Favorite Button */}
                 <button
                   onClick={(e) => toggleFavorite(venue.id, e)}
                   className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-slate-600 hover:text-rose-600 transition-colors shadow-sm"
@@ -206,20 +238,17 @@ export const MobileSearchView: React.FC<Props> = ({
                   <Heart className={`w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}`} />
                 </button>
 
-                {/* Rating Badge */}
                 <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-200 text-xs font-bold text-amber-700 shadow-sm">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                   <span>{venue.rating}</span>
                   <span className="text-[10px] font-normal text-slate-500">({venue.reviewCount})</span>
                 </div>
 
-                {/* Price Tag */}
                 <div className="absolute bottom-3 right-3 bg-brand-600/90 backdrop-blur-md px-3 py-1 rounded-lg border border-brand-500 text-white font-extrabold text-xs shadow-md">
                   od {venue.priceFrom} zł <span className="text-[10px] font-normal text-brand-100">/ os.</span>
                 </div>
               </div>
 
-              {/* Content Body */}
               <div className="p-4">
                 <div className="flex items-start justify-between">
                   <div>
@@ -230,10 +259,14 @@ export const MobileSearchView: React.FC<Props> = ({
                       <MapPin className="w-3.5 h-3.5 text-brand-600 shrink-0" />
                       <span>{venue.address}</span>
                     </p>
+                    {dist !== null && (
+                      <p className="text-[11px] text-brand-700 font-semibold mt-1">
+                        {Math.round(dist)} km od {filters.city}
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                {/* Capacity & Dates */}
                 <div className="mt-3 flex items-center gap-3 text-xs text-slate-700 border-t border-b border-slate-200 py-2">
                   <div className="flex items-center gap-1">
                     <Users className="w-3.5 h-3.5 text-amber-600" />
@@ -246,7 +279,6 @@ export const MobileSearchView: React.FC<Props> = ({
                   </div>
                 </div>
 
-                {/* Amenities pills */}
                 <div className="mt-2.5 flex flex-wrap gap-1.5">
                   {venue.amenities.slice(0, 3).map((amenity, i) => (
                     <span key={i} className="bg-slate-100 text-slate-700 text-[10px] font-medium px-2 py-0.5 rounded-md border border-slate-200">
@@ -258,9 +290,7 @@ export const MobileSearchView: React.FC<Props> = ({
                   )}
                 </div>
 
-                {/* Action Row */}
                 <div className="mt-3.5 pt-2 flex items-center justify-between gap-2">
-                  {/* Compare Checkbox */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

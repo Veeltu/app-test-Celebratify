@@ -1,12 +1,7 @@
-# Logi wdrożeń (changes)
+# Logi wdrożeń (archiwum)
 
-Po implementacji taska agent zapisuje tu **co zostało zmienione w kodzie**.
+Historyczne logi ze starego pipeline (`doc/sugestions` → `doc/tasks` → kod).
 
-| Plik | Rola |
-|------|------|
-| `_template.md` | Szablon nowego logu |
-| `<slug>.md` | Opis wdrożenia jednego taska (ta sama nazwa co w `doc/tasks/`) |
+**Nowy flow:** [OpenSpec](https://openspec.dev/) — zmiany w `openspec/changes/`, living specs w `openspec/specs/`, archiwum w `openspec/changes/archive/`.
 
-**Flow:** `doc/sugestions.md` → `doc/tasks/<slug>` → kod → **`doc/changes/<slug>`** + `status: done`.
-
-**Bez numeracji** — identyfikator = slug z prefiksem grupy: `feature-…`, `bug-…` (np. `feature-atrybuty-filtry.md`).
+Nie dodawaj tu nowych plików. Po `/opsx:archive` historia ląduje w OpenSpec.

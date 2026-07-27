@@ -34,6 +34,7 @@ export function App() {
   // Search & Filter State
   const [filters, setFilters] = useState<FilterState>({
     city: 'Wszystkie',
+    radiusKm: 50,
     eventType: 'wszystkie',
     date: '',
     guests: 0,

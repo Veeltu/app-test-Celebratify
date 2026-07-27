@@ -1,0 +1,39 @@
+schema: spec-driven
+
+context: |
+  Projekt: Celebratify (package: partyspot-mobile-booking) — mobilny prototyp (demo)
+  do rezerwacji sal/restauracji na imprezy okolicznościowe. Brak backendu i prawdziwego AI.
+
+  Stack: React 18 + TypeScript + Vite; Tailwind przez CDN w index.html (brand-*, accent-*);
+  ikony lucide-react. Firebase w package.json jest nieużywany — nie integruj bez prośby.
+
+  Stan: jeden kontener App.tsx (useState + callbacki). Bez React Router, Context, Redux.
+  Dane mock: src/data/mockVenues.ts; typy: src/types/index.ts.
+  UI: język polski, jasny motyw (bg-white / slate-50), mobile max-w-md w MobileShell.
+  Modale: absolute inset-0 wewnątrz shella (nie fixed), flex flex-col h-full.
+  MobileAIChatView = mock regex, nie LLM.
+
+  Konwencje implementacji:
+  - Minimalny diff — bez refaktoru poza scope zmiany
+  - Kolejność warstw: types → data → App.tsx (tylko gdy trzeba) → views
+  - Sync krzyżowy przy filtrach/miastach: MobileSearchView, MobileCompareView, MobileAIChatView
+  - Nie commit / push / PR bez wyraźnej prośby użytkownika
+  - Feedback produktowy (historyczny): doc/sugestions.md — źródło pomysłów, nie pipeline
+
+  Flow OpenSpec (zamiast starych skilli implement-task / sync-suggestions-tasks):
+  /opsx:explore → /opsx:propose → /opsx:apply → /opsx:archive
+
+rules:
+  proposal:
+    - "Pisanie po polsku (Why / What / Impact), nazwy plików i ID zmian po angielsku (kebab-case)"
+    - "Sekcja Non-goals — co świadomie pomijamy (backend, Firebase, router, prawdziwe AI)"
+    - "Jeśli pomysł pochodzi z doc/sugestions.md — podaj numer sekcji jako kontekst"
+  design:
+    - "Szanuj architekturę: stan tylko w App.tsx; widoki głupie (props + callbacki)"
+    - "Wskaż konkretne pliki w src/ do zmiany"
+  tasks:
+    - "Małe kroki (typy → mocki → UI); każdy checkbox = jedna weryfikowalna zmiana"
+    - "Na końcu: npm run build (tsc + vite)"
+  specs:
+    - "Scenariusze Given/When/Then po polsku lub angielsku — spójnie w ramach zmiany"
+    - "Opisuj zachowanie UI widoczne w demo, nie infrastrukturę"

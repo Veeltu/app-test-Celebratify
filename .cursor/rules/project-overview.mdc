@@ -91,45 +91,26 @@ npm run preview  # podgląd buildu
 3. Tryb manager → Panel Lokalu → akceptuj/odrzuć rezerwację
 4. Porównaj — max 3 lokale; Czat AI — szybkie prompty + regex
 
-## Dokumentacja produktu i zadania
+## Dokumentacja produktu i zmiany (OpenSpec)
 
-**`doc/sugestions.md` jest źródłem sugestii.** Pliki w `doc/tasks/` powstają **na podstawie sekcji** w tym pliku. Sync: skill `.cursor/skills/sync-suggestions-tasks/`.
+Workflow zmian: **[OpenSpec](https://openspec.dev/)** — nie używaj starych skilli `implement-task` / `sync-suggestions-tasks` (usunięte).
+
+```
+/opsx:explore → /opsx:propose → /opsx:apply → /opsx:archive
+```
 
 ### Pliki i role
 
 | Plik / folder | Rola |
 |---------------|------|
-| `doc/sugestions.md` | **Źródło prawdy** — sugestie, linki do tasków, plan sprintów |
-| `doc/tasks/<slug>.md` | Opis zadania (wydzielony z sekcji w `sugestions.md`) |
-| `doc/changes/<slug>.md` | Log wdrożenia — lista zmian w kodzie po wykonaniu taska |
-| `doc/tasks/_template.md` | Szablon nowego taska |
-| `doc/changes/_template.md` | Szablon logu wdrożenia |
-| `.cursor/skills/sync-suggestions-tasks/` | Audyt + tworzenie tasków |
-| `.cursor/skills/implement-task/` | Implementacja + zapis `doc/changes/` |
+| `openspec/specs/` | Living specs — zachowanie systemu |
+| `openspec/changes/` | Aktywne propozycje zmian |
+| `openspec/changes/archive/` | Domknięte zmiany |
+| `openspec/config.yaml` | Kontekst stacku i reguły dla artefaktów |
+| `.cursor/commands/opsx-*.md` | Slash commands Cursor |
+| `.cursor/skills/openspec-*/` | Skille OpenSpec |
 | `.idea/opis.md` | Wizja produktu (MVP, scope) |
+| `doc/sugestions.md` | Historyczny feedback produktowy (opcjonalny input) |
+| `doc/tasks/`, `doc/changes/` | Archiwum starego pipeline — nie rozszerzaj |
 
-### Frontmatter w `doc/tasks/*.md`
-
-```yaml
-id: feature-atrybuty-filtry  # = nazwa pliku bez .md (feature-|bug-)
-type: feature                # feature | bug
-source: doc/sugestions.md
-source_section: "N"          # numer sekcji w sugestions.md
-in_todo_list: true | false
-status: todo | in_progress | done | blocked
-priority: P0 | P1 | P2
-```
-
-- **`in_todo_list: false`** — sugestia zapisana, nie gotowa do wdrożenia (brak pełnego scope lub decyzji)
-- **`in_todo_list: true`** — gotowe do implementacji (link w sekcji sugestions)
-
-### Ścieżka dla agenta
-
-```
-Nowa sugestia → sekcja w doc/sugestions.md
-  → skill sync-suggestions-tasks → doc/tasks/<slug>.md
-  → kod (skill implement-task)
-  → status done + doc/changes/<slug>.md
-```
-
-Przy „zrób feature-atrybuty-filtry” — czytaj **`doc/tasks/feature-atrybuty-filtry.md`**, po kodzie zapisz **`doc/changes/feature-atrybuty-filtry.md`**.
+Przy „zrób X” / nowym featurze → **`/opsx:propose`**, potem **`/opsx:apply`**, na koniec **`/opsx:archive`**.
