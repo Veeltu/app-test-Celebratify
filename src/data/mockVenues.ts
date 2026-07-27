@@ -244,7 +244,368 @@ export const INITIAL_VENUES: Venue[] = [
         ]
       }
     ]
-  }
+  },
+  {
+    id: 'vL1',
+    name: 'Restauracja Zacisze Leszno',
+    category: 'Restauracja & Ogród Zimowy',
+    city: 'Leszno',
+    region: 'Wielkopolskie',
+    address: 'ul. Cicha 4, Leszno',
+    rating: 4.7,
+    reviewCount: 45,
+    maxGuests: 40,
+    minGuests: 15,
+    priceFrom: 160,
+    images: [
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Kameralna restauracja w sercu Leszna, idealna na małe przyjęcia rodzinne i obiady poślubne. Ogród zimowy zapewnia klimat o każdej porze roku.',
+    amenities: ['Ogród zimowy', 'Klimatyzacja', 'Parking', 'Muzyka w tle'],
+    contactPhone: '+48 65 520 12 34',
+    contactEmail: 'kontakt@zaciszeleszno.pl',
+    managerId: 'mgrL1',
+    cancellationPolicy: 'Bezpłatna anulacja do 14 dni przed terminem.',
+    blockedDates: ['2026-08-10'],
+    availableDates: ['2026-08-01', '2026-08-15', '2026-08-22'],
+    packages: [
+      {
+        id: 'pL1-standard',
+        name: 'Pakiet Rodzinny',
+        pricePerPerson: 160,
+        minGuests: 15,
+        durationHours: 6,
+        depositPercent: 10,
+        features: ['Obiad 2-daniowy', 'Deser', 'Napoje ciepłe bez limitu'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL2',
+    name: 'Winiarnia Pod Starą Lipą',
+    category: 'Winiarnia & Bistro',
+    city: 'Leszno',
+    region: 'Wielkopolskie',
+    address: 'ul. Stare Miasto 12, Leszno',
+    rating: 4.9,
+    reviewCount: 32,
+    maxGuests: 25,
+    minGuests: 10,
+    priceFrom: 180,
+    images: [
+      'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Wyjątkowe, piwniczne wnętrza z cegły. Specjalizujemy się w kolacjach degustacyjnych i kameralnych jubileuszach w stylu slow-food.',
+    amenities: ['Klimatyczne piwnice', 'Sommelier na życzenie', 'Catering autorski'],
+    contactPhone: '+48 65 529 88 77',
+    contactEmail: 'wino@podstaralipa.pl',
+    managerId: 'mgrL2',
+    cancellationPolicy: 'Zaliczka bezzwrotna.',
+    blockedDates: [],
+    availableDates: ['2026-08-07', '2026-08-14', '2026-08-21'],
+    packages: [
+      {
+        id: 'pL2-wino',
+        name: 'Wieczór z Winem',
+        pricePerPerson: 220,
+        minGuests: 10,
+        durationHours: 5,
+        depositPercent: 20,
+        features: ['Degustacja 5 win', 'Przekąski tapas', 'Danie główne'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL3',
+    name: 'Bistro Klimat',
+    category: 'Restauracja Nowoczesna',
+    city: 'Rydzyna',
+    region: 'Wielkopolskie',
+    address: 'Rynek 15, Rydzyna',
+    rating: 4.6,
+    reviewCount: 58,
+    maxGuests: 35,
+    minGuests: 12,
+    priceFrom: 145,
+    images: [
+      'https://images.unsplash.com/photo-1550966842-30c29a0d0613?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Nowoczesne bistro tuż przy Zamku w Rydzynie. Jasne wnętrza, dużo roślin i świeże, lokalne produkty.',
+    amenities: ['Widok na zamek', 'Taras letni', 'Wi-Fi'],
+    contactPhone: '+48 65 526 11 22',
+    contactEmail: 'biuro@bistroklimat.pl',
+    managerId: 'mgrL3',
+    cancellationPolicy: 'Możliwość zmiany terminu do 7 dni przed.',
+    blockedDates: ['2026-08-15'],
+    availableDates: ['2026-08-08', '2026-08-22', '2026-08-29'],
+    packages: [
+      {
+        id: 'pL3-bistro',
+        name: 'Lekki Event',
+        pricePerPerson: 145,
+        minGuests: 12,
+        durationHours: 4,
+        depositPercent: 15,
+        features: ['Bufet sałatkowy', '2 dania ciepłe', 'Lemoniada'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL4',
+    name: 'Gościniec Wielkopolski',
+    category: 'Karczma & Noclegi',
+    city: 'Święciechowa',
+    region: 'Wielkopolskie',
+    address: 'ul. Leszczyńska 2, Święciechowa',
+    rating: 4.5,
+    reviewCount: 76,
+    maxGuests: 60,
+    minGuests: 20,
+    priceFrom: 130,
+    images: [
+      'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Tradycyjna gościnność i staropolska kuchnia. Idealne miejsce na chrzciny i komunie w domowej atmosferze.',
+    amenities: ['Noclegi', 'Plac zabaw', 'Duży parking'],
+    contactPhone: '+48 65 533 00 11',
+    contactEmail: 'gosciniec@swieciechowa.pl',
+    managerId: 'mgrL4',
+    cancellationPolicy: 'Zwrot zaliczki przy anulacji 30 dni przed.',
+    blockedDates: ['2026-08-16'],
+    availableDates: ['2026-08-02', '2026-08-09', '2026-08-23'],
+    packages: [
+      {
+        id: 'pL4-tradycja',
+        name: 'Pakiet Biesiadny',
+        pricePerPerson: 130,
+        minGuests: 20,
+        durationHours: 8,
+        depositPercent: 10,
+        features: ['Obiad staropolski', 'Wiejski stół', 'Ciasta domowe'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL5',
+    name: 'Kawiarnia & Restauracja Retro',
+    category: 'Restauracja Stylowa',
+    city: 'Leszno',
+    region: 'Wielkopolskie',
+    address: 'ul. Słowiańska 22, Leszno',
+    rating: 4.8,
+    reviewCount: 67,
+    maxGuests: 30,
+    minGuests: 8,
+    priceFrom: 175,
+    images: [
+      'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Wnętrza inspirowane latami 20. XX wieku. Eleganckie miejsce na kameralne spotkania przy muzyce jazzowej i wykwintnej kawie.',
+    amenities: ['Pianino', 'Klimatyzacja', 'VIP Room'],
+    contactPhone: '+48 65 520 77 66',
+    contactEmail: 'retro@leszno.pl',
+    managerId: 'mgrL5',
+    cancellationPolicy: 'Indywidualne ustalenia.',
+    blockedDates: [],
+    availableDates: ['2026-08-05', '2026-08-12', '2026-08-19'],
+    packages: [
+      {
+        id: 'pL5-retro',
+        name: 'Stylowe Spotkanie',
+        pricePerPerson: 175,
+        minGuests: 8,
+        durationHours: 5,
+        depositPercent: 20,
+        features: ['Finger foods', 'Danie główne', 'Barista service'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL6',
+    name: 'Karczma U Sołtysa',
+    category: 'Restauracja Regionalna',
+    city: 'Wilkowice',
+    region: 'Wielkopolskie',
+    address: 'ul. Główna 45, Wilkowice',
+    rating: 4.4,
+    reviewCount: 89,
+    maxGuests: 50,
+    minGuests: 20,
+    priceFrom: 120,
+    images: [
+      'https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Swojskie jadło w najlepszym wydaniu. Organizujemy biesiady z pieczonym prosiakiem i lokalnymi trunkami.',
+    amenities: ['Altana grillowa', 'Muzyka na żywo', 'Miejsce na ognisko'],
+    contactPhone: '+48 65 528 22 33',
+    contactEmail: 'karczma@wilkowice.pl',
+    managerId: 'mgrL6',
+    cancellationPolicy: 'Elastyczna.',
+    blockedDates: ['2026-08-20'],
+    availableDates: ['2026-08-01', '2026-08-15', '2026-08-29'],
+    packages: [
+      {
+        id: 'pL6-biesiada',
+        name: 'Pakiet Swojski',
+        pricePerPerson: 120,
+        minGuests: 20,
+        durationHours: 10,
+        depositPercent: 10,
+        features: ['Dania z grilla', 'Przekąski regionalne', 'Piwo rzemieślnicze'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL7',
+    name: 'Sekrety Kuchni - Restauracja Butikowa',
+    category: 'Fine Dining',
+    city: 'Leszno',
+    region: 'Wielkopolskie',
+    address: 'ul. Narutowicza 5, Leszno',
+    rating: 4.9,
+    reviewCount: 28,
+    maxGuests: 20,
+    minGuests: 6,
+    priceFrom: 280,
+    images: [
+      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Kameralna restauracja typu fine dining. Tylko kilka stolików, autorskie menu szefa kuchni i najwyższa jakość składników.',
+    amenities: ['Osobisty kelner', 'Menu degustacyjne', 'Selekcja win'],
+    contactPhone: '+48 65 525 44 33',
+    contactEmail: 'sekrety@kuchnia.pl',
+    managerId: 'mgrL7',
+    cancellationPolicy: 'Płatność z góry przy rezerwacji.',
+    blockedDates: [],
+    availableDates: ['2026-08-06', '2026-08-13', '2026-08-20'],
+    packages: [
+      {
+        id: 'pL7-gourmet',
+        name: 'Sekretny Wieczór',
+        pricePerPerson: 350,
+        minGuests: 6,
+        durationHours: 4,
+        depositPercent: 100,
+        features: ['Menu 7 dań', 'Pairing win', 'Spotkanie z szefem'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL8',
+    name: 'Rezydencja Małe Leszno',
+    category: 'Apartamenty & Eventy',
+    city: 'Leszno',
+    region: 'Wielkopolskie',
+    address: 'ul. Leśna 1, Leszno (Grzybowo)',
+    rating: 4.7,
+    reviewCount: 41,
+    maxGuests: 45,
+    minGuests: 15,
+    priceFrom: 190,
+    images: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Elegancka willa położona na obrzeżach miasta. Oferuje prywatność, piękny ogród i luksusowe warunki na wyłączność.',
+    amenities: ['Basen letni', 'Ogród z leżakami', 'Apartamenty', 'Sauna'],
+    contactPhone: '+48 65 527 00 99',
+    contactEmail: 'rezydencja@maleleszno.pl',
+    managerId: 'mgrL8',
+    cancellationPolicy: 'Anulacja do 60 dni bez kosztów.',
+    blockedDates: ['2026-08-08', '2026-08-09'],
+    availableDates: ['2026-08-01', '2026-08-15', '2026-08-22'],
+    packages: [
+      {
+        id: 'pL8-willa',
+        name: 'Garden Party VIP',
+        pricePerPerson: 190,
+        minGuests: 15,
+        durationHours: 12,
+        depositPercent: 25,
+        features: ['Bufet BBQ', 'Nocleg dla 10 osób', 'Basen'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL9',
+    name: 'Smaki Regionu',
+    category: 'Sala Bankietowa Intymna',
+    city: 'Leszno',
+    region: 'Wielkopolskie',
+    address: 'ul. Poznańska 88, Leszno',
+    rating: 4.3,
+    reviewCount: 52,
+    maxGuests: 55,
+    minGuests: 20,
+    priceFrom: 135,
+    images: [
+      'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Nowoczesna, mniejsza sala bankietowa z oddzielnym wejściem. Idealna na kameralne wesela i jubileusze z parkietem do tańca.',
+    amenities: ['Nagłośnienie', 'Efekty świetlne', 'Barek kawowy'],
+    contactPhone: '+48 65 524 11 00',
+    contactEmail: 'biuro@smakiregionu.pl',
+    managerId: 'mgrL9',
+    cancellationPolicy: 'Standardowa.',
+    blockedDates: ['2026-08-22'],
+    availableDates: ['2026-08-01', '2026-08-08', '2026-08-15'],
+    packages: [
+      {
+        id: 'pL9-wesele',
+        name: 'Mini Wesele',
+        pricePerPerson: 165,
+        minGuests: 30,
+        durationHours: 10,
+        depositPercent: 15,
+        features: ['Pełne menu', 'Dekoracje', 'DJ Service'],
+        menu: []
+      }
+    ]
+  },
+  {
+    id: 'vL10',
+    name: 'Restauracja Liliowa',
+    category: 'Restauracja Nad Jeziorem',
+    city: 'Osieczna',
+    region: 'Wielkopolskie',
+    address: 'ul. Jeziorna 3, Osieczna',
+    rating: 4.8,
+    reviewCount: 63,
+    maxGuests: 50,
+    minGuests: 15,
+    priceFrom: 185,
+    images: [
+      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1000&q=80'
+    ],
+    description: 'Malowniczo położona restauracja z widokiem na Jezioro Łoniewskie. Specjalność to kuchnia lekka i sezonowa oraz przyjęcia na tarasie.',
+    amenities: ['Widok na jezioro', 'Pomost', 'Taras', 'Klimatyzacja'],
+    contactPhone: '+48 65 532 55 44',
+    contactEmail: 'biuro@liliowa.pl',
+    managerId: 'mgrL10',
+    cancellationPolicy: 'Możliwość anulacji do 21 dni.',
+    blockedDates: ['2026-08-15'],
+    availableDates: ['2026-08-01', '2026-08-08', '2026-08-22'],
+    packages: [
+      {
+        id: 'pL10-lato',
+        name: 'Letnie Przyjęcie',
+        pricePerPerson: 185,
+        minGuests: 15,
+        durationHours: 7,
+        depositPercent: 20,
+        features: ['Obiad sezonowy', 'Taras na wyłączność', 'Spritz bar'],
+        menu: []
+      }
+    ]
+  },
 ];
 
 export const INITIAL_BOOKINGS: BookingRequest[] = [
