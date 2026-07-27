@@ -1,0 +1,292 @@
+import React, { useState } from 'react';
+import { Venue, BookingRequest, OfferPackage } from '../../../types';
+import { Building2, CheckCircle2, XCircle, Clock, Calendar, DollarSign, Bell, Check, X, ChevronRight, Settings } from 'lucide-react';
+
+interface Props {
+  venue: Venue;
+  bookings: BookingRequest[];
+  onAcceptBooking: (bookingId: string, note?: string) => void;
+  onRejectBooking: (bookingId: string, note?: string) => void;
+  onUpdateVenuePrice: (venueId: string, packageId: string, newPrice: number) => void;
+  onToggleDateAvailability: (venueId: string, date: string) => void;
+}
+
+export const MobileVenueAdminView: React.FC<Props> = ({
+  venue,
+  bookings,
+  onAcceptBooking,
+  onRejectBooking,
+  onUpdateVenuePrice,
+  onToggleDateAvailability
+}) => {
+  const [activeTab, setActiveTab] = useState<'requests' | 'calendar' | 'pricing'>('requests');
+  const [responseNotes, setResponseNotes] = useState<{ [key: string]: string }>({});
+  const [editingPricePkgId, setEditingPricePkgId] = useState<string | null>(null);
+  const [tempPrice, setTempPrice] = useState<number>(0);
+
+  const venueBookings = bookings.filter(b => b.venueId === venue.id);
+  const pendingRequests = venueBookings.filter(b => b.status === 'Oczekuje');
+  const confirmedRequests = venueBookings.filter(b => b.status === 'Potwierdzona');
+
+  const handleAccept = (bookingId: string) => {
+    const note = responseNotes[bookingId] || 'Dziękujemy! Rezerwacja została zaakceptowana. Przesłaliśmy szczegóły płatności zaliczki.';
+    onAcceptBooking(bookingId, note);
+  };
+
+  const handleReject = (bookingId: string) => {
+    const note = responseNotes[bookingId] || 'Przepraszamy, ten termin jest już niedostępny lub sala jest zarezerwowana na inne wydarzenie.';
+    onRejectBooking(bookingId, note);
+  };
+
+  return (
+    <div className="pb-24 pt-2">
+      {/* Admin Header */}
+      <div className="px-4 mb-4 bg-gradient-to-r from-amber-50 via-rose-50/60 to-orange-50 p-4 rounded-2xl border border-amber-200/80 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-300 flex items-center justify-center text-amber-700 font-extrabold text-lg shadow-xs">
+              🏢
+            </div>
+            <div>
+              <span className="text-[10px] font-extrabold uppercase text-amber-800 tracking-wider">Panel Menedżera Lokalu</span>
+              <h2 className="text-base font-extrabold text-slate-900">{venue.name}</h2>
+              <p className="text-[11px] text-slate-600 font-medium">{venue.city} • {venue.address}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Strip */}
+        <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-200 text-center">
+          <div>
+            <span className="text-[10px] text-slate-500 uppercase font-bold">Oczekujące</span>
+            <p className="text-sm font-black text-amber-700">{pendingRequests.length}</p>
+          </div>
+          <div>
+            <span className="text-[10px] text-slate-500 uppercase font-bold">Potwierdzone</span>
+            <p className="text-sm font-black text-emerald-700">{confirmedRequests.length}</p>
+          </div>
+          <div>
+            <span className="text-[10px] text-slate-500 uppercase font-bold">Cena od</span>
+            <p className="text-sm font-black text-slate-900">{venue.priceFrom} zł</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Admin Tabs */}
+      <div className="px-4 flex border-b border-slate-200 mb-4">
+        <button
+          onClick={() => setActiveTab('requests')}
+          className={`flex-1 py-2.5 text-xs font-bold border-b-2 text-center transition-colors relative ${
+            activeTab === 'requests' ? 'border-brand-600 text-brand-600' : 'border-transparent text-slate-500'
+          }`}
+        >
+          Zapytania ({pendingRequests.length})
+          {pendingRequests.length > 0 && (
+            <span className="ml-1 w-2 h-2 rounded-full bg-amber-500 inline-block" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab('calendar')}
+          className={`flex-1 py-2.5 text-xs font-bold border-b-2 text-center transition-colors ${
+            activeTab === 'calendar' ? 'border-brand-600 text-brand-600' : 'border-transparent text-slate-500'
+          }`}
+        >
+          Kalendarz Terminów
+        </button>
+        <button
+          onClick={() => setActiveTab('pricing')}
+          className={`flex-1 py-2.5 text-xs font-bold border-b-2 text-center transition-colors ${
+            activeTab === 'pricing' ? 'border-brand-600 text-brand-600' : 'border-transparent text-slate-500'
+          }`}
+        >
+          Oferta & Cennik
+        </button>
+      </div>
+
+      {/* Tab 1: Requests Management */}
+      {activeTab === 'requests' && (
+        <div className="px-4 space-y-4">
+          {pendingRequests.length === 0 ? (
+            <div className="text-center py-10 text-slate-600 text-xs bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+              <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+              Brak nowych oczekujących zapytań! Wszystkie zgłoszenia zostały obsłużone.
+            </div>
+          ) : (
+            pendingRequests.map((b) => (
+              <div key={b.id} className="bg-white border border-amber-300 rounded-2xl p-4 shadow-md space-y-3 relative">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="text-[10px] uppercase font-extrabold text-amber-800 tracking-wider">
+                      Nowe Zapytanie • {b.eventType}
+                    </span>
+                    <h3 className="text-sm font-extrabold text-slate-900 mt-0.5">{b.clientName}</h3>
+                    <p className="text-xs text-slate-500 font-medium">{b.clientEmail} • {b.clientPhone}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs font-extrabold text-slate-900 block">{b.date}</span>
+                    <span className="text-[10px] text-amber-800 font-bold">{b.guestsCount} osób</span>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs flex justify-between">
+                  <div>
+                    <span className="text-[10px] text-slate-500 font-bold block">Pakiet:</span>
+                    <span className="font-bold text-slate-900">{b.packageName}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] text-slate-500 font-bold block">Wartość:</span>
+                    <span className="font-black text-brand-600">{b.estimatedTotal.toLocaleString()} zł</span>
+                  </div>
+                </div>
+
+                {b.specialRequests && (
+                  <div className="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <strong className="text-slate-500 text-[10px] uppercase font-bold block">Uwagi klienta:</strong>
+                    „{b.specialRequests}”
+                  </div>
+                )}
+
+                {/* Response note input */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Wpisz opcjonalną treść odpowiedzi do klienta..."
+                    value={responseNotes[b.id] || ''}
+                    onChange={(e) => setResponseNotes({ ...responseNotes, [b.id]: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900 outline-none focus:border-brand-500"
+                  />
+                </div>
+
+                {/* Accept / Reject Buttons */}
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => handleReject(b.id)}
+                    className="py-2.5 px-3 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                    <span>Odrzuć termin</span>
+                  </button>
+
+                  <button
+                    onClick={() => handleAccept(b.id)}
+                    className="py-2.5 px-3 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1 shadow-md shadow-brand-600/20 transition-transform active:scale-98"
+                  >
+                    <Check className="w-4 h-4" />
+                    <span>Akceptuj Rezerwację</span>
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+
+          {/* Confirmed list */}
+          {confirmedRequests.length > 0 && (
+            <div className="pt-4 border-t border-slate-200 space-y-3">
+              <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">
+                Historia Potwierdzonych Rezerwacji ({confirmedRequests.length})
+              </h4>
+              {confirmedRequests.map((b) => (
+                <div key={b.id} className="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between shadow-xs">
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900">{b.clientName} ({b.eventType})</h4>
+                    <p className="text-[11px] text-slate-500 font-medium">{b.date} • {b.guestsCount} osób • {b.estimatedTotal} zł</p>
+                  </div>
+                  <span className="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+                    Potwierdzona
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tab 2: Calendar */}
+      {activeTab === 'calendar' && (
+        <div className="px-4 space-y-3">
+          <div className="text-xs text-slate-600 font-medium mb-2">
+            Zarządzaj dostępnością wolnych terminów. Kliknij, aby zablokować lub odblokować sobotę:
+          </div>
+
+          <div className="space-y-2">
+            {['2026-08-01', '2026-08-08', '2026-08-15', '2026-08-22', '2026-08-29', '2026-09-05', '2026-09-12'].map((d) => {
+              const isBlocked = venue.blockedDates.includes(d);
+              return (
+                <div
+                  key={d}
+                  onClick={() => onToggleDateAvailability(venue.id, d)}
+                  className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                    isBlocked
+                      ? 'bg-slate-100 border-slate-200 text-slate-500'
+                      : 'bg-emerald-50 border-emerald-300 text-emerald-900 font-bold'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    <span className="text-xs">Sobota, {d}</span>
+                  </div>
+                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${
+                    isBlocked ? 'bg-rose-100 text-rose-800 border border-rose-200' : 'bg-emerald-100 text-emerald-800'
+                  }`}>
+                    {isBlocked ? 'Zajęty / Zablokowany' : 'WOLNY TERMIN'}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Tab 3: Offer & Pricing Editor */}
+      {activeTab === 'pricing' && (
+        <div className="px-4 space-y-3">
+          <div className="text-xs text-slate-600 font-medium mb-2">
+            Edycja cennika ustandaryzowanego dla lokalu:
+          </div>
+
+          {venue.packages.map((pkg) => (
+            <div key={pkg.id} className="bg-white border border-slate-200 rounded-xl p-3 space-y-2 shadow-xs">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="font-extrabold text-slate-900 text-xs">{pkg.name}</h4>
+                  <span className="text-[10px] text-slate-500 font-medium">{pkg.features.length} składników w cenie</span>
+                </div>
+
+                {editingPricePkgId === pkg.id ? (
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      value={tempPrice}
+                      onChange={(e) => setTempPrice(parseInt(e.target.value) || 0)}
+                      className="w-16 bg-slate-50 border border-brand-500 rounded p-1 text-xs text-slate-900 text-right font-bold"
+                    />
+                    <button
+                      onClick={() => {
+                        onUpdateVenuePrice(venue.id, pkg.id, tempPrice);
+                        setEditingPricePkgId(null);
+                      }}
+                      className="p-1 bg-brand-600 text-white rounded"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      setEditingPricePkgId(pkg.id);
+                      setTempPrice(pkg.pricePerPerson);
+                    }}
+                    className="text-right cursor-pointer group"
+                  >
+                    <span className="text-sm font-black text-brand-600 group-hover:underline">{pkg.pricePerPerson} zł</span>
+                    <span className="text-[9px] text-slate-500 block font-medium">/ osoba (kliknij edytuj)</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
