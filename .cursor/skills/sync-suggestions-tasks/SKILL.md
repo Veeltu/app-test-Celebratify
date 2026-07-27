@@ -14,7 +14,9 @@ paths:
 
 Agent skill: utrzymuj spójność między `doc/sugestions.md` (źródło) a `doc/tasks/<slug>.md` (zadania).
 
-**Identyfikator taska = slug pliku** (np. `atrybuty-filtry`), **bez** numerów `TASK-01`.
+**Identyfikator taska = slug pliku z prefiksem grupy** (np. `feature-atrybuty-filtry`, `bug-layout-01`), **bez** numerów `TASK-01`.
+
+Grupy: `feature-` | `bug-` (opcjonalnie `chore-`). Frontmatter: `type: feature|bug`.
 
 ## When to Use
 
@@ -44,13 +46,14 @@ JSON: dodaj `--json`. Exit `1` = są luki do naprawy.
 
 Dla każdej sekcji **bez** pliku taska:
 
-1. Slug z tytułu sekcji: małe litery, myślniki, bez polskich znaków (np. `push-powiadomienia.md`).
+1. Slug z tytułu sekcji: **`feature-`** + małe litery, myślniki, bez polskich znaków (np. `feature-push-powiadomienia.md`). Bugi: `bug-<slug>.md`.
 2. `id` w frontmatter = slug (bez `.md`) — **nie** używaj `TASK-01` ani numerów.
-3. Skopiuj strukturę z `doc/tasks/_template.md` i wzór jakości z `doc/tasks/atrybuty-filtry.md`.
+3. Skopiuj strukturę z `doc/tasks/_template.md` i wzór jakości z `doc/tasks/feature-atrybuty-filtry.md`.
 4. Frontmatter:
 
 ```yaml
-id: push-powiadomienia
+id: feature-push-powiadomienia
+type: feature
 title: <tytuł z sekcji>
 source: doc/sugestions.md
 source_section: "N"
@@ -72,7 +75,7 @@ created: YYYY-MM-DD
 Bezpośrednio pod `## N. Tytuł` dodaj lub popraw blockquote:
 
 ```markdown
-> **Task:** [push-powiadomienia.md](./tasks/push-powiadomienia.md) · `in_todo_list: tak` · `status: todo`
+> **Task:** [feature-push-powiadomienia.md](./tasks/feature-push-powiadomienia.md) · `in_todo_list: tak` · `status: todo`
 ```
 
 Nie duplikuj pełnego opisu w `sugestions.md` — szczegóły tylko w pliku taska.
@@ -80,14 +83,14 @@ Nie duplikuj pełnego opisu w `sugestions.md` — szczegóły tylko w pliku task
 ### 4. Zweryfikuj i podsumuj
 
 - Uruchom ponownie skrypt audytu lub ręcznie potwierdź: każda sekcja N ↔ jeden plik taska.
-- W odpowiedzi: co było brakujące, jakie pliki utworzono, co dalej (np. `/implement-task` na `atrybuty-filtry`).
+- W odpowiedzi: co było brakujące, jakie pliki utworzono, co dalej (np. `/implement-task` na `feature-atrybuty-filtry`).
 
 ## Constraints
 
 - **Tylko dokumentacja** — ten skill nie implementuje kodu aplikacji.
 - **Nie commituj** bez prośby użytkownika.
 - Jedna sekcja numerowana = jeden plik `doc/tasks/<slug>.md`.
-- **Bez numeracji w nazwach tasków** — slug tylko.
+- **Bez numeracji `TASK-01`** — slug z prefiksem `feature-` / `bug-`.
 - Po wdrożeniu kodu (skill `implement-task`): `status: done` w tasku + blockquote + **`doc/changes/<slug>.md`**.
 
 ## Related files
@@ -96,5 +99,5 @@ Nie duplikuj pełnego opisu w `sugestions.md` — szczegóły tylko w pliku task
 |------|------|
 | `doc/sugestions.md` | Źródło sugestii |
 | `doc/tasks/_template.md` | Szablon nowego taska |
-| `doc/tasks/atrybuty-filtry.md` | Wzorzec jakości |
+| `doc/tasks/feature-atrybuty-filtry.md` | Wzorzec jakości |
 | `.cursor/rules/workflow-changes.mdc` | Pipeline po utworzeniu taska → kod |

@@ -114,8 +114,8 @@ function main() {
         section: s.num,
         title: s.title,
         line: s.line,
-        suggestedId: slug,
-        suggestedFile: `${slug}.md`,
+        suggestedId: `feature-${slug}`,
+        suggestedFile: `feature-${slug}.md`,
       });
       continue;
     }
@@ -127,9 +127,12 @@ function main() {
   }
 
   const sectionNums = new Set(sections.map((s) => s.num));
-  const orphaned = tasks.filter(
-    (t) => t.source_section && !sectionNums.has(t.source_section)
-  );
+  const orphaned = tasks.filter((t) => {
+    if (!t.source_section || t.source_section === 'null' || t.source_section === '—') {
+      return false; // bugi / taski ad-hoc bez sekcji sugestii
+    }
+    return !sectionNums.has(t.source_section);
+  });
 
   const ok =
     !missing.length && !missingLinks.length && !mismatches.length && !orphaned.length;

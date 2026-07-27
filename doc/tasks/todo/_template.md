@@ -1,5 +1,6 @@
 ---
-id: slug-zadania
+id: feature-slug-zadania
+type: feature   # feature | bug | chore
 title: Krótki tytuł sugestii
 source: doc/sugestions.md
 source_section: "X"          # numer sekcji w sugestions.md
@@ -44,7 +45,9 @@ Dowolne uwagi przed wrzuceniem do TODO-list.
 
 ---
 
+**Nazewnictwo pliku:** `feature-<slug>.md` | `bug-<slug>.md` (grupy w `doc/tasks/`).
+
 **Promocja do TODO-list:**
 1. Uzupełnij sekcję w `doc/sugestions.md` (jeśli jeszcze nie ma).
-2. W tym pliku: `in_todo_list: true`, `id: slug-zadania` (= nazwa pliku bez `.md`), `status: todo`.
+2. W tym pliku: `in_todo_list: true`, `id` = nazwa pliku bez `.md`, `status: todo`, `type: feature|bug`.
 3. Dodaj link do taska w sekcji `doc/sugestions.md` (skill `sync-suggestions-tasks`).

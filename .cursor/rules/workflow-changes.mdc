@@ -28,7 +28,7 @@ Nowa sugestia → sekcja w doc/sugestions.md
 - sync: `.cursor/skills/sync-suggestions-tasks/`  
 - wykonanie: `.cursor/skills/implement-task/` — typy→data→views, AC, build, potem **zawsze** `doc/changes/`
 
-**Nazewnictwo:** task = **slug** (np. `atrybuty-filtry.md`), **bez** numerów `TASK-01`.
+**Nazewnictwo:** task = **`feature-<slug>`** lub **`bug-<slug>`** (np. `feature-atrybuty-filtry.md`), **bez** numerów `TASK-01`. Frontmatter: `type: feature|bug`.
 
 ## Jak wydzielać taski ze spostrzeżeń
 
@@ -84,7 +84,7 @@ Po zakończeniu implementacji zaktualizuj:
 - Backend, Firebase, prawdziwe AI, router
 - Duży refactor `App.tsx`
 
-## Gdy użytkownik mówi „zrób atrybuty-filtry” / „zrób z sugestii”
+## Gdy użytkownik mówi „zrób feature-atrybuty-filtry” / „zrób z sugestii”
 
 1. Skill `implement-task` (lub sync, jeśli brak pliku taska)
 2. Otwórz `doc/tasks/<slug>.md` — implementuj według AC

@@ -17,6 +17,8 @@ export interface MenuModifierOption {
   label: string;
   /** Dopłata w zł / os. — 0 lub brak = w cenie pakietu */
   priceExtra?: number;
+  /** Wybór kasuje pozostałe w grupie (np. „Bez dodatków”); nie liczy się do dopłat */
+  clearsOthers?: boolean;
 }
 
 /** Grupa wyboru przy daniu (np. dodatek do dania głównego) */
@@ -39,6 +41,8 @@ export interface MenuItem {
   allergens?: string[];
   /** Opcje modyfikacji proponowane przez restaurację (np. dodatek, sos) */
   modifiers?: MenuModifierGroup[];
+  /** Ukryte przed klientem (panel menedżera) */
+  hidden?: boolean;
 }
 
 /**

@@ -30,11 +30,18 @@ const DESSERT_IMG = {
 };
 
 /** Wspólne grupy dodatków — restauracja proponuje wybór przy daniu */
+const OPT_BEZ_DODATKOW = {
+  id: 'bez-dodatkow',
+  label: 'Bez dodatków',
+  clearsOthers: true as const,
+};
+
 export const MOD_DODATEK_GLOWNE: MenuModifierGroup = {
   id: 'dodatek-glowne',
   title: 'Dodatek do dania głównego',
-  maxSelect: 1,
+  maxSelect: 2,
   options: [
+    OPT_BEZ_DODATKOW,
     { id: 'ziemniaki', label: 'Ziemniaki z koperkiem' },
     { id: 'kopytka', label: 'Kopytka domowe' },
     { id: 'kasza', label: 'Kasza gryczana' },
@@ -48,6 +55,7 @@ export const MOD_SOS: MenuModifierGroup = {
   title: 'Wybierz sos',
   maxSelect: 1,
   options: [
+    { id: 'bez-sosu', label: 'Bez sosu', clearsOthers: true },
     { id: 'wlasny', label: 'Sos własny (w cenie)' },
     { id: 'grzybowy', label: 'Sos grzybowy', priceExtra: 6 },
     { id: 'pieprzowy', label: 'Sos z zielonego pieprzu', priceExtra: 8 },
@@ -58,8 +66,9 @@ export const MOD_SOS: MenuModifierGroup = {
 export const MOD_DODATKI_EXTRA: MenuModifierGroup = {
   id: 'extra',
   title: 'Dodatkowe opcje',
-  maxSelect: 2,
+  maxSelect: 3,
   options: [
+    OPT_BEZ_DODATKOW,
     { id: 'surówka', label: 'Dodatkowa surówka', priceExtra: 4 },
     { id: 'salatka', label: 'Sałatka cezar mini', priceExtra: 9 },
     { id: 'chleb', label: 'Pieczywo rzemieślnicze', priceExtra: 3 },
@@ -69,8 +78,9 @@ export const MOD_DODATKI_EXTRA: MenuModifierGroup = {
 export const MOD_RYBA: MenuModifierGroup = {
   id: 'dodatek-ryba',
   title: 'Dodatek do ryby',
-  maxSelect: 1,
+  maxSelect: 2,
   options: [
+    OPT_BEZ_DODATKOW,
     { id: 'ziemniaki', label: 'Ziemniaki pieczone' },
     { id: 'puree', label: 'Puree z kalafiora' },
     { id: 'ryz', label: 'Ryż jaśminowy' },
@@ -316,9 +326,9 @@ const choiceGlowne = (id: string, dishes: MenuItem[]) =>
 export const MOD_ZUPA_DODATEK: MenuModifierGroup = {
   id: 'zupa-dodatek',
   title: 'Dodatek do zupy',
-  maxSelect: 1,
+  maxSelect: 2,
   options: [
-    { id: 'bez', label: 'Bez dodatków' },
+    { id: 'bez', label: 'Bez dodatków', clearsOthers: true },
     { id: 'grzanki', label: 'Grzanki czosnkowe', priceExtra: 3 },
     { id: 'smietana', label: 'Śmietana', priceExtra: 2 },
     { id: 'ziola', label: 'Świeże zioła' },
@@ -352,6 +362,7 @@ export const MOD_ZIMNA: MenuModifierGroup = {
   title: 'Uzupełnienie bufetu',
   maxSelect: 2,
   options: [
+    OPT_BEZ_DODATKOW,
     { id: 'oliwki', label: 'Oliwki', priceExtra: 4 },
     { id: 'pieczywo', label: 'Pieczywo dodatkowe', priceExtra: 3 },
     { id: 'maslo', label: 'Masło ziołowe', priceExtra: 2 },
@@ -361,8 +372,9 @@ export const MOD_ZIMNA: MenuModifierGroup = {
 export const MOD_NOCNE: MenuModifierGroup = {
   id: 'nocne-opcja',
   title: 'Dodatek do dania nocnego',
-  maxSelect: 1,
+  maxSelect: 2,
   options: [
+    OPT_BEZ_DODATKOW,
     { id: 'chleb', label: 'Chleb wiejski' },
     { id: 'chrzan', label: 'Chrzan / musztarda' },
     { id: 'surówka', label: 'Surówka', priceExtra: 3 },

@@ -1,5 +1,6 @@
 ---
-id: atrybuty-filtry
+id: feature-atrybuty-filtry
+type: feature
 title: Ustrukturyzowane atrybuty lokalu i filtry
 source: doc/sugestions.md
 source_section: "3"

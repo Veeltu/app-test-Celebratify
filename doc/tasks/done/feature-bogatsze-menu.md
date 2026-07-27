@@ -1,5 +1,6 @@
 ---
-id: bogatsze-menu
+id: feature-bogatsze-menu
+type: feature
 title: Bogatsze i czytelniejsze menu pakietów
 source: doc/sugestions.md
 source_section: "1"

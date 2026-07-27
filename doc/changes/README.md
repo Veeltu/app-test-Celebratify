@@ -9,4 +9,4 @@ Po implementacji taska agent zapisuje tu **co zostało zmienione w kodzie**.
 
 **Flow:** `doc/sugestions.md` → `doc/tasks/<slug>` → kod → **`doc/changes/<slug>`** + `status: done`.
 
-**Bez numeracji** — identyfikator = slug (np. `atrybuty-filtry.md`).
+**Bez numeracji** — identyfikator = slug z prefiksem grupy: `feature-…`, `bug-…` (np. `feature-atrybuty-filtry.md`).

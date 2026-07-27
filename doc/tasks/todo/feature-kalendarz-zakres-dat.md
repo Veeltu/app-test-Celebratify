@@ -1,5 +1,6 @@
 ---
-id: kalendarz-zakres-dat
+id: feature-kalendarz-zakres-dat
+type: feature
 title: Kalendarz — zakres dat i wiele terminów
 source: doc/sugestions.md
 source_section: "5"

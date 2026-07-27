@@ -5,7 +5,7 @@ description: >-
   best practices (types → data → App → views, light mobile UI, minimal diff),
   then marks the task done and writes doc/changes/<slug>.md. Use when the user
   says zrób, zaimplementuj, wykonaj, implement, or complete a task by slug
-  (e.g. atrybuty-filtry, bogatsze-menu, platnosci-ux).
+  (e.g. feature-atrybuty-filtry, feature-bogatsze-menu, feature-platnosci-ux).
 paths:
   - doc/tasks/**
   - doc/changes/**
@@ -18,8 +18,8 @@ Wykonaj **wskazany** task zgodnie z AC i konwencjami tego prototypu. Po kodzie *
 
 ## When to Use
 
-- „zrób atrybuty-filtry”, „zaimplementuj bogatsze-menu”, „wykonaj platnosci-ux”
-- `/implement-task` + slug
+- „zrób feature-atrybuty-filtry”, „zaimplementuj feature-bogatsze-menu”, „wykonaj feature-platnosci-ux”
+- `/implement-task` + slug (`feature-…` / `bug-…`)
 - User wskazuje plik w `doc/tasks/`
 
 Jeśli brak pliku taska → najpierw skill `sync-suggestions-tasks`, potem wróć tutaj.
@@ -123,12 +123,12 @@ Szczegóły UI: [references/REPO-PRACTICES.md](references/REPO-PRACTICES.md) · 
 | Nowe lib UI (MUI, shadcn) | Stack fixed |
 | Ciemny theme w głównych widokach | Demo jasne |
 | Refaktor poza scope | Minimalny diff |
-| Numeracja `TASK-01` | Id = slug |
+| Numeracja `TASK-01` | Id = `feature-…` / `bug-…` |
 
 ## Przykłady wywołań
 
 | User | Plik taska | Log |
 |------|------------|-----|
-| zrób atrybuty-filtry | `doc/tasks/atrybuty-filtry.md` | `doc/changes/atrybuty-filtry.md` |
-| zaimplementuj bogatsze-menu | `doc/tasks/bogatsze-menu.md` | `doc/changes/bogatsze-menu.md` |
-| /implement-task lokalizacja-promien | `doc/tasks/lokalizacja-promien.md` | `doc/changes/lokalizacja-promien.md` |
+| zrób feature-atrybuty-filtry | `doc/tasks/feature-atrybuty-filtry.md` | `doc/changes/feature-atrybuty-filtry.md` |
+| zaimplementuj feature-bogatsze-menu | `doc/tasks/feature-bogatsze-menu.md` | `doc/changes/feature-bogatsze-menu.md` |
+| /implement-task feature-lokalizacja-promien | `doc/tasks/feature-lokalizacja-promien.md` | `doc/changes/feature-lokalizacja-promien.md` |

@@ -1,5 +1,6 @@
 ---
-id: platnosci-ux
+id: feature-platnosci-ux
+type: feature
 title: Jasny model płatności (UX bez bramki w MVP)
 source: doc/sugestions.md
 source_section: "4"
@@ -27,7 +28,7 @@ Użytkownik rozumie ścieżkę: rezerwacja → akceptacja lokalu → zaliczka (n
 
 ## Sugestie
 
-**MVP:** bez Stripe/PayU — komunikacja i statusy mock. Ekran „Jak działa płatność?” w `MobileBookingModal`. Po `Potwierdzona` — mock „Opłać zaliczkę”. **v2:** Stripe Connect / PayU.
+**MVP:** bez Stripe/PayU — komunikacja i statusy mock. Ekran „Jak działa płatność?” w `MobileBookingModal`. Po `Potwierdzona` — mock „Opłać zaliczkę”. W Panelu Lokalu: mock **„Wyślij fakturę”** (beta). **v2:** Stripe Connect / PayU + ewentualnie fakturowanie.
 
 ## Zakres techniczny
 
@@ -38,9 +39,12 @@ Użytkownik rozumie ścieżkę: rezerwacja → akceptacja lokalu → zaliczka (n
 - Timeline płatności widoczny przy rezerwacji.
 - Po potwierdzeniu widać kwotę zaliczki i następny krok.
 - Brak wrażenia natychmiastowej płatności kartą w MVP.
+- Manager przy `Potwierdzona` ma mock CTA **„Wyślij fakturę”** (beta) — bez prawdziwego PDF/maila.
 
 ## Checklist
 
 - [ ] Opis flow v1 w dokumencie
 - [ ] UI timeline w modalu rezerwacji
 - [ ] Mock ekran / stan zaliczki po Potwierdzona
+- [ ] Status zaliczki u managera (4.4)
+- [ ] Beta: „Wyślij fakturę” w Panelu Lokalu (4.5)
