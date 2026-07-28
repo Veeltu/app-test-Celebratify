@@ -34,6 +34,7 @@ export function App() {
   // Search & Filter State
   const [filters, setFilters] = useState<FilterState>({
     city: 'Wszystkie',
+    radiusKm: 50,
     eventType: 'wszystkie',
     date: '',
     guests: 0,
@@ -189,6 +190,13 @@ export function App() {
     }
   };
 
+  const handleTabChange = (tab: TabType) => {
+    setSelectedVenue(null);
+    setBookingModalData(null);
+    setIsAuthModalOpen(false);
+    setActiveTab(tab);
+  };
+
   const currentManagerVenue = venues.find(v => v.id === (user?.managedVenueId || 'v1')) || venues[0];
   const compareVenues = venues.filter(v => compareList.includes(v.id));
   const pendingBookingsCount = bookings.filter(b => b.venueId === currentManagerVenue.id && b.status === 'Oczekuje').length;
@@ -196,7 +204,7 @@ export function App() {
   return (
     <MobileShell
       activeTab={activeTab}
-      onSelectTab={setActiveTab}
+      onSelectTab={handleTabChange}
       user={user}
       onOpenAuthModal={() => setIsAuthModalOpen(true)}
       compareCount={compareList.length}
@@ -257,7 +265,7 @@ export function App() {
           onSelectVenue={setSelectedVenue}
           compareList={compareList}
           onToggleCompare={handleToggleCompare}
-          onOpenAIChat={() => setActiveTab('chat')}
+          onOpenAIChat={() => handleTabChange('chat')}
         />
       )}
 
@@ -276,7 +284,7 @@ export function App() {
           onSelectVenue={setSelectedVenue}
           onApplyFilters={(newFilters) => {
             setFilters(prev => ({ ...prev, ...newFilters }));
-            setActiveTab('search');
+            handleTabChange('search');
           }}
         />
       )}
@@ -285,7 +293,7 @@ export function App() {
         <MobileBookingsView
           bookings={bookings}
           onCancelBooking={handleCancelBooking}
-          onExploreVenues={() => setActiveTab('search')}
+          onExploreVenues={() => handleTabChange('search')}
         />
       )}
 

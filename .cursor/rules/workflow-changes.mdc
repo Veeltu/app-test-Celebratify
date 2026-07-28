@@ -1,93 +1,66 @@
 ---
-description: Proces wprowadzania zmian — od spostrzeżeń i sugestii do tasków i implementacji
+description: Proces wprowadzania zmian — OpenSpec (propose → apply → archive)
 alwaysApply: true
 ---
 
-# Proces wprowadzania zmian
+# Proces wprowadzania zmian (OpenSpec)
 
-## Źródła wymagań
+Źródło workflow: [OpenSpec](https://openspec.dev/) — `openspec/` w repo + slash commands `/opsx:*` w Cursor.
 
-1. **`doc/sugestions.md`** — **źródło prawdy** dla sugestii i feedbacku; sekcje mapują na pliki w `doc/tasks/`
-2. **Opis produktu** — `.idea/opis.md` (MVP, role, flow)
-3. **Bezpośrednia prośba w czacie** — konkretna zmiana w kodzie
+**Stary pipeline** (`doc/sugestions.md` → skill `sync-suggestions-tasks` → `doc/tasks/` → skill `implement-task` → `doc/changes/`) **jest wycofany**. Skille `implement-task` i `sync-suggestions-tasks` nie istnieją. `doc/sugestions.md` i historyczne taski mogą służyć jako feedback produktowy, ale **nie** jako ścieżka agenta.
 
-Nie implementuj od razu całego feedbacku — najpierw **sekcja w `sugestions.md`**, potem **wydzielenie taska**.
-
-## Pipeline: sugestia → task → kod
+## Pipeline
 
 ```
-Nowa sugestia → sekcja w doc/sugestions.md
-    → skill sync-suggestions-tasks (agent: audyt + plik <slug>.md)
-    → in_todo_list: true + link w sekcji sugestions
-    → implementacja (skill implement-task, mały diff)
-    → status done w tasku + blockquote w sugestions
-    → log wdrożenia w doc/changes/<slug>.md
+/opsx:explore (opcjonalnie)
+  → /opsx:propose <zmiana>
+  → review artifacts w openspec/changes/<name>/
+  → /opsx:apply
+  → /opsx:archive
 ```
 
-**Skille:**  
-- sync: `.cursor/skills/sync-suggestions-tasks/`  
-- wykonanie: `.cursor/skills/implement-task/` — typy→data→views, AC, build, potem **zawsze** `doc/changes/`
+| Komenda | Rola |
+|---------|------|
+| `/opsx:explore` | Zrozumieć problem / kod przed decyzją |
+| `/opsx:propose` | Utworzyć `proposal.md`, `design.md`, `tasks.md`, delta specs |
+| `/opsx:apply` | Implementować wg `tasks.md` |
+| `/opsx:update` | Doprecyzować artefakty w trakcie |
+| `/opsx:sync` | Synchronizacja specs |
+| `/opsx:archive` | Domknięcie — merge delta → `openspec/specs/`, archiwum change |
 
-**Nazewnictwo:** task = **`feature-<slug>`** lub **`bug-<slug>`** (np. `feature-atrybuty-filtry.md`), **bez** numerów `TASK-01`. Frontmatter: `type: feature|bug`.
+CLI (terminal): `npx openspec …` — `list`, `show`, `validate`, `archive`, `status`.
 
-## Jak wydzielać taski ze spostrzeżeń
+## Gdzie żyją wymagania
 
-Jedna sugestia = **jeden plik** w `doc/tasks/` z sekcjami: Problem, Kontekst, Cel, Sugestie, Zakres techniczny, Kryteria akceptacji, Checklist.
+| Ścieżka | Rola |
+|---------|------|
+| `openspec/specs/<domain>/spec.md` | Living specs — jak system **działa teraz** |
+| `openspec/changes/<name>/` | Aktywna zmiana (proposal, design, tasks, deltas) |
+| `openspec/changes/archive/` | Domknięte zmiany |
+| `openspec/config.yaml` | Kontekst projektu + reguły artefaktów |
+| `.idea/opis.md` | Wizja produktu (MVP) |
+| `doc/sugestions.md` | Historyczny feedback — opcjonalny input do explore/propose |
 
-**Zasady dzielenia:**
-- Jeden plik = jeden obszar produktu (menu, filtry, płatności UX — osobno)
-- Jedna funkcja na wielu ekranach → jeden plik taska
-- UI teraz + backend później → osobne pliki, drugi z `priority: P2` lub `blocked`
+## Kolejność implementacji w kodzie (przy `/opsx:apply`)
 
-## Gdzie zapisywać
+1. `src/types/index.ts`
+2. `src/data/*`
+3. `App.tsx` — tylko jeśli potrzebne
+4. `src/components/mobile/views/*`
+5. Sync: `MobileSearchView`, `MobileAIChatView`, `MobileCompareView` gdy dotyczy
 
-| Plik | Rola | `in_todo_list` |
-|------|------|----------------|
-| `doc/sugestions.md` | **Źródło sugestii** — sekcje z linkami do tasków | — |
-| `doc/tasks/<slug>.md` | Opis zadania + status | `true` / `false` |
-| `doc/changes/<slug>.md` | **Log wdrożenia** — co zmieniono w kodzie | — |
-| `.cursor/skills/sync-suggestions-tasks/` | Audyt + tworzenie brakujących tasków | — |
-| `.cursor/skills/implement-task/` | Implementacja + zapis change logu | — |
-| `.idea/opis.md` | Wizja produktu | — |
-
-**Nowa sugestia:** dodaj sekcję w `doc/sugestions.md`.  
-**Wydzielenie taska:** zastosuj skill `sync-suggestions-tasks`.  
-**Gotowe do kodu:** `in_todo_list: true`, link w sekcji sugestii.  
-**Nie** duplikuj pełnych opisów — szczegóły w pliku taska, w `sugestions.md` tylko skrót + link.
-
-## Kolejność implementacji w repo
-
-1. `src/types/index.ts` — typy domenowe
-2. `src/data/*` — mocki (`mockVenues.ts`, słowniki np. `venueFeatures.ts`)
-3. `App.tsx` — stan i handlery (tylko jeśli potrzebne)
-4. `src/components/mobile/views/*` — UI
-5. Synchronizacja: filtry (`MobileSearchView`), AI regex (`MobileAIChatView`), compare (`MobileCompareView`)
-
-**Minimalny diff** — nie refaktoryzuj poza scope taska.
-
-## Statusy tasków
-
-- `todo` — opisane, nie ruszane
-- `in_progress` — aktywna praca (jeden task na raz, jeśli możliwe)
-- `done` — spełnione kryteria akceptacji, checklist odhaczona
-- `blocked` — czeka na decyzję (np. model płatności, backend)
-
-Po zakończeniu implementacji zaktualizuj:
-1. **frontmatter + checklist** w `doc/tasks/<slug>.md` → `status: done`
-2. **blockquote** w sekcji `doc/sugestions.md` (`status: done`)
-3. **`doc/changes/<slug>.md`** — opis zmian (szablon: `doc/changes/_template.md`) — **obowiązkowe**
+**Minimalny diff** — nie refaktoryzuj poza scope zmiany.
 
 ## Czego nie robić bez prośby
 
 - Commit / push / PR
-- Nowe dokumenty poza `doc/tasks/`, `doc/changes/` i aktualizacją `sugestions.md`
 - Backend, Firebase, prawdziwe AI, router
 - Duży refactor `App.tsx`
+- Przywracanie skilli `implement-task` / `sync-suggestions-tasks`
 
-## Gdy użytkownik mówi „zrób feature-atrybuty-filtry” / „zrób z sugestii”
+## Gdy użytkownik mówi „zrób X” / „dodaj feature”
 
-1. Skill `implement-task` (lub sync, jeśli brak pliku taska)
-2. Otwórz `doc/tasks/<slug>.md` — implementuj według AC
-3. Odhacz checklist, `status: done`, blockquote w sugestions
-4. Zapisz log w `doc/changes/<slug>.md` (pliki, decyzje, smoke test)
-5. W odpowiedzi podaj link do pliku w `doc/changes/`
+1. Jeśli brak aktywnej zmiany OpenSpec → `/opsx:propose` (lub skill `openspec-propose`)
+2. Po akceptacji planu → `/opsx:apply`
+3. Po AC i buildzie → `/opsx:archive`
+4. W odpowiedzi wskaż folder `openspec/changes/…` (lub archive)

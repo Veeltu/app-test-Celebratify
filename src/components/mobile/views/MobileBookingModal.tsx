@@ -53,7 +53,7 @@ export const MobileBookingModal: React.FC<Props> = ({
   };
 
   return (
-    <div className="absolute inset-0 z-50 bg-white/80 backdrop-blur-md overflow-y-auto p-3 flex items-end justify-center animate-fade-in">
+    <div className="absolute inset-0 z-40 bg-white/80 backdrop-blur-md overflow-y-auto p-3 flex items-end justify-center animate-fade-in">
       <div className="bg-white border border-slate-200 rounded-t-3xl w-full p-5 shadow-2xl relative max-h-[90%] overflow-y-auto">
         <button
           onClick={onClose}

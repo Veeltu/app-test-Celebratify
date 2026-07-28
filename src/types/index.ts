@@ -75,6 +75,9 @@ export interface Venue {
   city: string;
   region: string;
   address: string;
+  /** Współrzędne do filtra promienia (mock) */
+  lat: number;
+  lng: number;
   rating: number;
   reviewCount: number;
   maxGuests: number;
@@ -116,6 +119,8 @@ export interface BookingRequest {
 
 export interface FilterState {
   city: string;
+  /** Promień w km od miasta; ignorowany gdy city === 'Wszystkie' */
+  radiusKm: number;
   eventType: EventType | 'wszystkie';
   date: string;
   guests: number;

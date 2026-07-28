@@ -406,7 +406,7 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
   };
 
   return (
-    <div className="absolute inset-0 z-50 bg-white flex flex-col animate-fade-in h-full">
+    <div className="absolute inset-0 z-40 bg-white flex flex-col animate-fade-in h-full">
       <div className="flex-none bg-white/95 backdrop-blur-md px-4 py-3 border-b border-slate-200 flex items-center justify-between z-30">
         <button
           onClick={onClose}

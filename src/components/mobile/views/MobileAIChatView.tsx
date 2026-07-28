@@ -1,11 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage, Venue, FilterState } from '../../../types';
-import { Bot, Send, Sparkles, User, MapPin, ChevronRight, Scale } from 'lucide-react';
+import { Bot, Send, Sparkles, MapPin, ChevronRight } from 'lucide-react';
+import { getCityCoords } from '../../../data/cityCoords';
+import { distanceKm, snapRadiusKm } from '../../../utils/geo';
 
 interface Props {
   venues: Venue[];
   onSelectVenue: (venue: Venue) => void;
   onApplyFilters: (filters: Partial<FilterState>) => void;
+}
+
+function matchCityFromText(lower: string): string {
+  if (lower.includes('krakow') || lower.includes('krakowem') || lower.includes('krakowa')) return 'Kraków';
+  if (lower.includes('warszaw') || lower.includes('stolic')) return 'Warszawa';
+  if (lower.includes('gdańsk') || lower.includes('gdansk') || lower.includes('morzem') || lower.includes('trojmiast')) return 'Gdańsk';
+  if (lower.includes('wrocław') || lower.includes('wroclaw')) return 'Wrocław';
+  if (lower.includes('leszn')) return 'Leszno';
+  return 'Wszystkie';
 }
 
 export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApplyFilters }) => {
@@ -24,6 +35,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
   const quickPrompts = [
     'Kameralna sala w Lesznie dla 20 osób',
     'Szukam sali na 80 osób pod Krakowem w sierpniu',
+    'Wesele w promieniu 30 km od Leszna',
     'Chrzciny dla 30 osób Gdańsk z ogródkiem'
   ];
 
@@ -50,15 +62,23 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
     if (!textToSend) setInputText('');
     setIsTyping(true);
 
-    // AI logic simulation
     setTimeout(() => {
       const lower = text.toLowerCase();
-      let matchedCity = 'Wszystkie';
-      if (lower.includes('krakow') || lower.includes('krakowem')) matchedCity = 'Kraków';
-      else if (lower.includes('warszaw') || lower.includes('stolic')) matchedCity = 'Warszawa';
-      else if (lower.includes('gdańsk') || lower.includes('morzem') || lower.includes('trojmiast')) matchedCity = 'Gdańsk';
-      else if (lower.includes('wrocław')) matchedCity = 'Wrocław';
-      else if (lower.includes('leszn')) matchedCity = 'Leszno';
+      const matchedCity = matchCityFromText(lower);
+
+      const vicinity =
+        /\bpod\b/.test(lower) ||
+        lower.includes('w okolicy') ||
+        lower.includes('okolicach') ||
+        lower.includes('w okolice');
+
+      const radiusMatch = lower.match(/w promieniu\s+(\d+)\s*km/);
+      let matchedRadius = 50;
+      if (radiusMatch) {
+        matchedRadius = snapRadiusKm(parseInt(radiusMatch[1], 10));
+      } else if (vicinity && matchedCity !== 'Wszystkie') {
+        matchedRadius = 50;
+      }
 
       let matchedGuests = 0;
       const guestMatch = lower.match(/(\d+)\s*(osób|osob|gości|gosci)/);
@@ -72,9 +92,13 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         matchedPrice = parseInt(priceMatch[1]);
       }
 
-      // Filter venues
+      const origin = matchedCity !== 'Wszystkie' ? getCityCoords(matchedCity) : null;
+
       const matches = venues.filter(v => {
-        if (matchedCity !== 'Wszystkie' && v.city !== matchedCity) return false;
+        if (origin) {
+          const d = distanceKm(origin, { lat: v.lat, lng: v.lng });
+          if (d > matchedRadius) return false;
+        }
         if (matchedGuests > 0 && v.maxGuests < matchedGuests) return false;
         if (matchedPrice > 0 && v.priceFrom > matchedPrice + 50) return false;
         return true;
@@ -82,9 +106,21 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
 
       const recommendedIds = matches.map(m => m.id);
 
+      const applied: Partial<FilterState> = {
+        city: matchedCity,
+        radiusKm: matchedRadius,
+        guests: matchedGuests,
+        maxPricePerGuest: matchedPrice
+      };
+      onApplyFilters(applied);
+
       let replyText = `Przeanalizowałem Twoje zapytanie! `;
       if (matches.length > 0) {
-        replyText += `Oto najlepsze lokale pasujące do Twoich kryteriów (${matchedCity !== 'Wszystkie' ? `Lokalizacja: ${matchedCity}, ` : ''}${matchedGuests > 0 ? `Goście: ~${matchedGuests}, ` : ''}${matchedPrice > 0 ? `Budżet: do ${matchedPrice} zł/os.` : ''}):`;
+        const locPart =
+          matchedCity !== 'Wszystkie'
+            ? `Lokalizacja: ${matchedCity} · promień ${matchedRadius} km, `
+            : '';
+        replyText += `Oto najlepsze lokale pasujące do Twoich kryteriów (${locPart}${matchedGuests > 0 ? `Goście: ~${matchedGuests}, ` : ''}${matchedPrice > 0 ? `Budżet: do ${matchedPrice} zł/os.` : ''}):`;
       } else {
         replyText += `Nie znalazłem idealnego dopasowania przy ścisłych parametrach, ale sprawdź nasze najbardziej polecane sale na ten rodzaj wydarzenia:`;
       }
@@ -95,11 +131,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         text: replyText,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         recommendedVenueIds: recommendedIds.length > 0 ? recommendedIds : [venues[0].id, venues[1].id],
-        appliedFilters: {
-          city: matchedCity,
-          guests: matchedGuests,
-          maxPricePerGuest: matchedPrice
-        }
+        appliedFilters: applied
       };
 
       setMessages(prev => [...prev, botMsg]);
@@ -109,7 +141,6 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
 
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] max-w-md mx-auto bg-slate-50">
-      {/* Header */}
       <div className="px-4 py-3 bg-white/90 border-b border-slate-200 flex items-center gap-3 shadow-sm">
         <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-brand-500 flex items-center justify-center text-white shadow-md">
           <Bot className="w-5 h-5" />
@@ -123,7 +154,6 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         </div>
       </div>
 
-      {/* Messages Scroll Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar">
         {messages.map((msg) => {
           const isBot = msg.sender === 'assistant';
@@ -148,7 +178,6 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
                   <p className="whitespace-pre-line">{msg.text}</p>
                 </div>
 
-                {/* Recommended Venues Cards inside Chat */}
                 {recVenues.length > 0 && (
                   <div className="space-y-2 pt-1">
                     {recVenues.map((rec) => (
@@ -193,7 +222,6 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Prompts Chips */}
       <div className="px-4 py-2 bg-white flex gap-2 overflow-x-auto no-scrollbar border-t border-slate-200 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
         {quickPrompts.map((prompt, i) => (
           <button
@@ -206,7 +234,6 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         ))}
       </div>
 
-      {/* Input Bar */}
       <div className="p-3 bg-white border-t border-slate-200 flex items-center gap-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
         <input
           type="text"

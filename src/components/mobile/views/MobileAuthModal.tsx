@@ -50,7 +50,7 @@ export const MobileAuthModal: React.FC<Props> = ({ user, onLogin, onLogout, onCl
   };
 
   return (
-    <div className="absolute inset-0 z-50 bg-white/80 backdrop-blur-md flex items-end justify-center p-0 animate-fade-in">
+    <div className="absolute inset-0 z-40 bg-white/80 backdrop-blur-md flex items-end justify-center p-0 animate-fade-in">
       <div className="bg-white border border-slate-200 rounded-t-3xl w-full p-6 shadow-2xl relative">
         <button
           onClick={onClose}
