@@ -36,11 +36,17 @@ When ready to implement, run /opsx:apply
 
    **IMPORTANT**: Do NOT proceed without understanding what the user wants to build.
 
-2. **Create the change directory**
+2. **Create the change directory & feature branch**
    ```bash
    openspec new change "<name>"
    ```
    This creates a scaffolded change in the planning home resolved by the CLI with `.openspec.yaml`.
+
+   **Branch Handling**: Create a dedicated git branch for this change lifecycle:
+   ```bash
+   git checkout -b "feature/<name>"
+   ```
+   If the branch already exists, switch to it with `git checkout "feature/<name>"`.
 
 3. **Get the artifact build order**
    ```bash

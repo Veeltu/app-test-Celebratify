@@ -93,6 +93,9 @@ export interface Venue {
   contactEmail: string;
   managerId: string;
   cancellationPolicy: string;
+  highlights: string[];
+  bestFor: string[];
+  atmosphere: string;
 }
 
 export interface BookingRequest {

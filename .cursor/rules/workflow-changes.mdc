@@ -15,20 +15,28 @@ alwaysApply: true
 /opsx:explore (opcjonalnie)
   → /opsx:propose <zmiana>
   → review artifacts w openspec/changes/<name>/
+  → git checkout -b feature/<name>  (NOWY KROK: dedykowany branch)
   → /opsx:apply
   → /opsx:archive
+  → merge branch & cleanup
 ```
 
 | Komenda | Rola |
 |---------|------|
 | `/opsx:explore` | Zrozumieć problem / kod przed decyzją |
 | `/opsx:propose` | Utworzyć `proposal.md`, `design.md`, `tasks.md`, delta specs |
-| `/opsx:apply` | Implementować wg `tasks.md` |
+| `/opsx:apply` | Implementować wg `tasks.md` (wymaga brancha `feature/<name>`) |
 | `/opsx:update` | Doprecyzować artefakty w trakcie |
 | `/opsx:sync` | Synchronizacja specs |
-| `/opsx:archive` | Domknięcie — merge delta → `openspec/specs/`, archiwum change |
+| `/opsx:archive` | Domknięcie — merge delta → `openspec/specs/`, archiwum change, merge brancha |
 
-CLI (terminal): `npx openspec …` — `list`, `show`, `validate`, `archive`, `status`.
+## Zarządzanie branchami (Git)
+
+Każda zmiana OpenSpec musi mieć swój dedykowany branch o nazwie `feature/<change-name>`.
+
+1. **Start**: Zanim zaczniesz implementację (`/opsx:apply`), utwórz branch: `git checkout -b feature/<name>`.
+2. **Push**: Używaj `/push-change` do regularnego pushowania zmian na ten branch.
+3. **Koniec**: Przy `/opsx:archive` scal zmiany do głównej gałęzi i usuń feature branch.
 
 ## Gdzie żyją wymagania
 
