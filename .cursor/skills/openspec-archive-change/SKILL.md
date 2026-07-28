@@ -69,7 +69,7 @@ Archive a completed change in the experimental workflow.
 
    If user chooses sync, use Task tool (subagent_type: "general-purpose", prompt: "Use Skill tool to invoke openspec-sync-specs for change '<name>'. Delta spec analysis: <include the analyzed delta spec summary>"). Proceed to archive regardless of choice.
 
-5. **Perform the archive**
+5. **Perform the archive & final commit**
 
    Create an `archive` directory under `planningHome.changesDir` if it doesn't exist:
    ```bash
@@ -86,7 +86,13 @@ Archive a completed change in the experimental workflow.
    mv "<changeRoot>" "<planningHome.changesDir>/archive/YYYY-MM-DD-<name>"
    ```
 
-6. **Display summary**
+6. **Branch Lifecycle Finalization (Git)**
+   
+   Po zarchiwizowaniu zmiany i zsynchronizowaniu specyfikacji:
+   - Commituj i zrób push finałowych zmian na gałęzi `feature/<name>` (używając `/push-change` lub `git add . && git commit -m "archive: <name>" && git push`).
+   - Poinformuj użytkownika, że gałąź `feature/<name>` zawiera pełne zarchiwizowane zmiany i jest gotowa do sczytania/scolenia (merge) do gałęzi głównej.
+
+7. **Display summary**
 
    Show archive completion summary including:
    - Change name
