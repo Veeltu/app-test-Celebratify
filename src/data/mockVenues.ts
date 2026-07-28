@@ -50,6 +50,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'rezerwacje@dworparkowy.pl',
     managerId: 'mgr1',
     cancellationPolicy: 'Bezpłatna anulacja do 30 dni przed terminem imprezy.',
+    highlights: ['Zabytkowy Park', 'Polska Kuchnia', 'Noclegi'],
+    bestFor: ['Wesela', 'Komunie', 'Jubileusze'],
+    atmosphere: 'Elegancki dwór otoczony starym parkiem, idealny na klasyczne, rodzinne uroczystości.',
     blockedDates: ['2026-08-01', '2026-08-15'],
     availableDates: ['2026-08-08', '2026-08-22', '2026-08-29', '2026-09-05', '2026-09-12', '2026-09-19', '2026-10-03'],
     packages: [
@@ -113,6 +116,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'eventy@cristalhotel.pl',
     managerId: 'mgr2',
     cancellationPolicy: 'Zaliczka zwrotna do 45 dni przed wydarzeniem.',
+    highlights: ['Szklane Ściany', 'Kryształowe Żyrandole', 'Strefa Spa'],
+    bestFor: ['Gale firmowe', 'Ekskluzywne wesela'],
+    atmosphere: 'Nowoczesny luksus z oszałamiającym widokiem, idealny na prestiżowe wydarzenia.',
     blockedDates: ['2026-08-08', '2026-08-22'],
     availableDates: ['2026-08-01', '2026-08-15', '2026-08-29', '2026-09-05', '2026-09-12', '2026-09-26'],
     packages: [
@@ -165,6 +171,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'kontakt@willamarina.pl',
     managerId: 'mgr3',
     cancellationPolicy: 'Elastyczne warunki anulacji z możliwością przełożenia terminu.',
+    highlights: ['Widok na morze', 'Boho styl', 'Taras zachodów słońca'],
+    bestFor: ['Wesela na plaży', 'Przyjęcia boho', 'Obiady poślubne'],
+    atmosphere: 'Relaksujący, nadmorski klimat z szumem fal w tle, z dala od zgiełku miasta.',
     blockedDates: ['2026-08-15'],
     availableDates: ['2026-08-01', '2026-08-08', '2026-08-22', '2026-08-29', '2026-09-05', '2026-09-12'],
     packages: [
@@ -216,6 +225,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'biuro@palacpodrozami.pl',
     managerId: 'mgr4',
     cancellationPolicy: 'Anulacja zgodnie z warunkami umowy pałacowej.',
+    highlights: ['Francuski Park', 'Lądowisko', 'Zabytkowe wnętrza'],
+    bestFor: ['Bajkowe wesela', 'Gale', 'Eventy Premium'],
+    atmosphere: 'Królewska elegancja i splendor XIX-wiecznego pałacu, miejsce na wyjątkowe chwile.',
     blockedDates: ['2026-08-01', '2026-08-08'],
     availableDates: ['2026-08-15', '2026-08-22', '2026-08-29', '2026-09-05', '2026-09-12'],
     packages: [
@@ -267,6 +279,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'kontakt@zaciszeleszno.pl',
     managerId: 'mgrL1',
     cancellationPolicy: 'Bezpłatna anulacja do 14 dni przed terminem.',
+    highlights: ['Ogród zimowy', 'Kameralny klimat', 'Centrum miasta'],
+    bestFor: ['Obiady poślubne', 'Chrzciny', 'Małe jubileusze'],
+    atmosphere: 'Ciepłe i przytulne wnętrze, gdzie każdy gość czuje się jak w domu.',
     blockedDates: ['2026-08-10'],
     availableDates: ['2026-08-01', '2026-08-15', '2026-08-22'],
     packages: [
@@ -317,6 +332,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'wino@podstaralipa.pl',
     managerId: 'mgrL2',
     cancellationPolicy: 'Zaliczka bezzwrotna.',
+    highlights: ['Ceglane piwnice', 'Slow-food', 'Sommelier'],
+    bestFor: ['Kolacje degustacyjne', 'Jubileusze', 'Eventy winiarskie'],
+    atmosphere: 'Intymna, ceglana piwnica z historią, idealna dla koneserów dobrego smaku.',
     blockedDates: [],
     availableDates: ['2026-08-07', '2026-08-14', '2026-08-21'],
     packages: [
@@ -367,6 +385,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'biuro@bistroklimat.pl',
     managerId: 'mgrL3',
     cancellationPolicy: 'Możliwość zmiany terminu do 7 dni przed.',
+    highlights: ['Widok na zamek', 'Lokalne produkty', 'Nowoczesny design'],
+    bestFor: ['Brunch', 'Nowoczesne eventy', 'Spotkania biznesowe'],
+    atmosphere: 'Jasne, pełne roślin wnętrze z widokiem na historyczny Zamek w Rydzynie.',
     blockedDates: ['2026-08-15'],
     availableDates: ['2026-08-08', '2026-08-22', '2026-08-29'],
     packages: [
@@ -417,6 +438,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'gosciniec@swieciechowa.pl',
     managerId: 'mgrL4',
     cancellationPolicy: 'Zwrot zaliczki przy anulacji 30 dni przed.',
+    highlights: ['Wiejski stół', 'Plac zabaw', 'Tradycyjna gościnność'],
+    bestFor: ['Chrzciny', 'Komunie', 'Tradycyjne wesela'],
+    atmosphere: 'Swojska, domowa atmosfera z najlepszą kuchnią wielkopolską.',
     blockedDates: ['2026-08-16'],
     availableDates: ['2026-08-02', '2026-08-09', '2026-08-23'],
     packages: [
@@ -467,6 +491,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'retro@leszno.pl',
     managerId: 'mgrL5',
     cancellationPolicy: 'Indywidualne ustalenia.',
+    highlights: ['Styl lat 20.', 'Muzyka jazzowa', 'Pianino'],
+    bestFor: ['Stylowe spotkania', 'Kameralne przyjęcia', 'Wieczory autorskie'],
+    atmosphere: 'Wyjątkowy klimat retro, który przenosi gości do złotej ery jazzu.',
     blockedDates: [],
     availableDates: ['2026-08-05', '2026-08-12', '2026-08-19'],
     packages: [
@@ -517,6 +544,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'karczma@wilkowice.pl',
     managerId: 'mgrL6',
     cancellationPolicy: 'Elastyczna.',
+    highlights: ['Pieczony prosiak', 'Muzyka na żywo', 'Ognisko'],
+    bestFor: ['Biesiady', 'Imprezy integracyjne', 'Wesela z przytupem'],
+    atmosphere: 'Rustykalna karczma, gdzie biesiada trwa do białego rana.',
     blockedDates: ['2026-08-20'],
     availableDates: ['2026-08-01', '2026-08-15', '2026-08-29'],
     packages: [
@@ -567,6 +597,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'sekrety@kuchnia.pl',
     managerId: 'mgrL7',
     cancellationPolicy: 'Płatność z góry przy rezerwacji.',
+    highlights: ['Menu 7 dań', 'Pairing win', 'Fine Dining'],
+    bestFor: ['Ekskluzywne kolacje', 'Zaręczyny', 'Małe eventy VIP'],
+    atmosphere: 'Najwyższa kultura kulinarna w kameralnym i eleganckim wydaniu.',
     blockedDates: [],
     availableDates: ['2026-08-06', '2026-08-13', '2026-08-20'],
     packages: [
@@ -617,6 +650,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'rezydencja@maleleszno.pl',
     managerId: 'mgrL8',
     cancellationPolicy: 'Anulacja do 60 dni bez kosztów.',
+    highlights: ['Basen letni', 'Prywatność', 'Luksusowa willa'],
+    bestFor: ['Garden Party', 'Luksusowe wesela', 'Prywatne eventy'],
+    atmosphere: 'Oaza spokoju i luksusu na wyłączność, gdzie poczujesz się wyjątkowo.',
     blockedDates: ['2026-08-08', '2026-08-09'],
     availableDates: ['2026-08-01', '2026-08-15', '2026-08-22'],
     packages: [
@@ -667,6 +703,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'biuro@smakiregionu.pl',
     managerId: 'mgrL9',
     cancellationPolicy: 'Standardowa.',
+    highlights: ['Nagłośnienie', 'Parkiet', 'Nowoczesna sala'],
+    bestFor: ['Mini wesela', 'Jubileusze', 'Osiemnastki'],
+    atmosphere: 'Nowoczesna przestrzeń idealnie skrojona pod mniejsze, taneczne imprezy.',
     blockedDates: ['2026-08-22'],
     availableDates: ['2026-08-01', '2026-08-08', '2026-08-15'],
     packages: [
@@ -717,6 +756,9 @@ export const INITIAL_VENUES: Venue[] = [
     contactEmail: 'biuro@liliowa.pl',
     managerId: 'mgrL10',
     cancellationPolicy: 'Możliwość anulacji do 21 dni.',
+    highlights: ['Widok na jezioro', 'Pomost', 'Taras letni'],
+    bestFor: ['Letnie przyjęcia', 'Wesela nad wodą', 'Eventy sezonowe'],
+    atmosphere: 'Malownicze otoczenie jeziora i lekka kuchnia, która zachwyca świeżością.',
     blockedDates: ['2026-08-15'],
     availableDates: ['2026-08-01', '2026-08-08', '2026-08-22'],
     packages: [

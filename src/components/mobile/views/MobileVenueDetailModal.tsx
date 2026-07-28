@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Venue, OfferPackage, MenuItem, MenuModifierGroup, MenuDishChoiceGroup } from '../../../types';
-import { Star, MapPin, Check, Scale, ChevronRight, ChevronDown, Utensils, Plus } from 'lucide-react';
+import { Star, MapPin, Check, Scale, ChevronRight, ChevronDown, Utensils, Plus, CheckCircle2, Trees, Hotel, Info, Music, Sparkles } from 'lucide-react';
 import { groupMenuByCategory, MENU_TAG_LABELS } from '../../../data/menuSamples';
 
 interface Props {
@@ -461,7 +461,15 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
             <span className="text-xs text-slate-500 font-medium">miasto {venue.city}</span>
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900 mt-1">{venue.name}</h2>
-          <p className="text-xs text-slate-600 flex items-center gap-1 mt-1 font-medium">
+          <div className="flex flex-wrap gap-1.5 mt-1">
+            <span className="text-[10px] font-bold text-slate-500 uppercase">Idealny na:</span>
+            {venue.bestFor.map((item, i) => (
+              <span key={i} className="text-[10px] font-extrabold text-brand-600 uppercase tracking-tight bg-brand-50 px-1.5 py-0.5 rounded">
+                {item}
+              </span>
+            ))}
+          </div>
+          <p className="text-xs text-slate-600 flex items-center gap-1 mt-2 font-medium">
             <MapPin className="w-3.5 h-3.5 text-brand-600 shrink-0" />
             <span>{venue.address}</span>
           </p>
@@ -763,6 +771,43 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
 
           {activeTab === 'about' && (
             <div className="space-y-4 text-xs text-slate-700">
+              <div className="bg-gradient-to-br from-brand-50 to-white p-4 rounded-2xl border border-brand-100 shadow-sm relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-brand-500" />
+                    <h4 className="font-extrabold text-slate-900 text-[10px] uppercase tracking-wider">Klimat i Atmosfera</h4>
+                  </div>
+                  <p className="text-slate-800 font-bold leading-relaxed italic text-sm">
+                    "{venue.atmosphere}"
+                  </p>
+                </div>
+                <div className="absolute top-0 right-0 p-2 opacity-5">
+                  <Sparkles className="w-12 h-12 text-brand-600" />
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-extrabold text-slate-900 text-[10px] uppercase tracking-wider mb-2">Dlaczego ten lokal?</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {venue.highlights.map((h, i) => {
+                    let Icon = CheckCircle2;
+                    if (h.toLowerCase().includes('park') || h.toLowerCase().includes('ogród')) Icon = Trees;
+                    if (h.toLowerCase().includes('nocleg') || h.toLowerCase().includes('apartament')) Icon = Hotel;
+                    if (h.toLowerCase().includes('muzyka') || h.toLowerCase().includes('jazz') || h.toLowerCase().includes('nagłośnienie')) Icon = Music;
+                    if (h.toLowerCase().includes('kuchnia') || h.toLowerCase().includes('food')) Icon = Utensils;
+                    
+                    return (
+                      <div key={i} className="bg-white p-3 rounded-xl border border-slate-100 flex items-center gap-2.5 shadow-sm">
+                        <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+                          <Icon className="w-4 h-4 text-amber-600" />
+                        </div>
+                        <span className="text-[11px] font-bold text-slate-800 leading-tight">{h}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
               <p className="leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100 shadow-sm font-medium">
                 {venue.description}
               </p>

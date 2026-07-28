@@ -255,6 +255,16 @@ export const MobileSearchView: React.FC<Props> = ({
                     <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-600 transition-colors">
                       {venue.name}
                     </h3>
+                    <div className="flex flex-wrap gap-x-1.5 gap-y-0.5 mt-0.5 mb-1">
+                      {venue.highlights.slice(0, 3).map((h, i) => (
+                        <React.Fragment key={i}>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tight">{h}</span>
+                          {i < Math.min(venue.highlights.length, 3) - 1 && (
+                            <span className="text-[10px] text-slate-300 self-center">•</span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
                     <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5 font-medium">
                       <MapPin className="w-3.5 h-3.5 text-brand-600 shrink-0" />
                       <span>{venue.address}</span>
