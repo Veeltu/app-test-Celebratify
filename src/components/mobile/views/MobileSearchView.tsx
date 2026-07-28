@@ -33,13 +33,13 @@ export const MobileSearchView: React.FC<Props> = ({
   };
 
   const cities = ['Wszystkie', 'Kraków', 'Warszawa', 'Gdańsk', 'Wrocław', 'Leszno'];
-  const eventTypes: { id: EventType | 'wszystkie'; label: string; emoji: string }[] = [
-    { id: 'wszystkie', label: 'Wszystkie', emoji: '✨' },
-    { id: 'wesele', label: 'Wesele', emoji: '💍' },
-    { id: 'chrzciny', label: 'Chrzciny', emoji: '👶' },
-    { id: 'komunia', label: 'Komunia', emoji: '🕊️' },
-    { id: 'urodziny', label: 'Urodziny / Rocznica', emoji: '🎂' },
-    { id: 'firmowa', label: 'Impreza Firmowa', emoji: '🎉' }
+  const eventTypes: { id: EventType | 'wszystkie'; label: string }[] = [
+    { id: 'wszystkie', label: 'Wszystkie'},
+    { id: 'wesele', label: 'Wesele'},
+    { id: 'chrzciny', label: 'Chrzciny'},
+    { id: 'komunia', label: 'Komunia'},
+    { id: 'urodziny', label: 'Urodziny / Rocznica'},
+    { id: 'firmowa', label: 'Impreza Firmowa'}
   ];
 
   const origin = filters.city !== 'Wszystkie' ? getCityCoords(filters.city) : null;
@@ -106,7 +106,7 @@ export const MobileSearchView: React.FC<Props> = ({
                 onChange={(e) => onFilterChange({ ...filters, eventType: e.target.value as any })}
                 className="bg-transparent text-xs font-semibold text-slate-800 w-full outline-none cursor-pointer"
               >
-                {eventTypes.map(e => <option key={e.id} value={e.id} className="bg-white text-slate-800">{e.emoji} {e.label}</option>)}
+                {eventTypes.map(e => <option key={e.id} value={e.id} className="bg-white text-slate-800">{e.label}</option>)}
               </select>
             </div>
           </div>
@@ -134,7 +134,7 @@ export const MobileSearchView: React.FC<Props> = ({
               );
             })}
           </div>
-
+{/* 
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5 pb-0.5">
             {eventTypes.map(e => {
               const isSelected = filters.eventType === e.id;
@@ -153,7 +153,7 @@ export const MobileSearchView: React.FC<Props> = ({
                 </button>
               );
             })}
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-2 gap-2">
             <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2 border border-slate-200">

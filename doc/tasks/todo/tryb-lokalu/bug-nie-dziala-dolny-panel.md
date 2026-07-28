@@ -1,0 +1,2 @@
+nie dziala dolny panel .
+Po wyobraniu konkretnej restuaracji , po kliknieciu na restauracji otwiera sie karta danej restaracji ktora zakrywa to co jest pod spodem ? czyli jak ta karta z restaracja jest otwarta nie dziala ( nie widac jak klikne) dolny panel przyciskow.

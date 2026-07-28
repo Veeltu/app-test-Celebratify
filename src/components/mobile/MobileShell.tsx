@@ -99,7 +99,7 @@ export const MobileShell: React.FC<Props> = ({
         </div>
 
         {/* Mobile Header Top Bar */}
-        <header className="flex-none z-40 bg-white/90 backdrop-blur-md px-4 py-2.5 border-b border-slate-200/80 flex items-center justify-between shadow-xs">
+        <header className="flex-none z-50 bg-white/90 backdrop-blur-md px-4 py-2.5 border-b border-slate-200/80 flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-500 to-amber-500 flex items-center justify-center shadow-md shadow-brand-500/20 font-black text-white text-sm">
               P
@@ -152,7 +152,7 @@ export const MobileShell: React.FC<Props> = ({
         </div>
 
         {/* Bottom Navigation Bar */}
-        <div className="flex-none z-40">
+        <div className="flex-none z-50">
           <BottomNav
             activeTab={activeTab}
             onSelectTab={onSelectTab}
