@@ -135,34 +135,34 @@ export const MobileVenueAdminView: React.FC<Props> = ({
 
   return (
     <div className="pb-24 pt-2">
-      <div className="px-4 mb-4 bg-gradient-to-r from-amber-50 via-rose-50/60 to-orange-50 p-4 rounded-2xl border border-amber-200/80 shadow-sm">
+      <div className="px-4 mb-4 bg-gradient-to-r from-amber-950/80 via-rose-950/50 to-orange-950/60 p-4 rounded-2xl border border-amber-600/50 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-300 flex items-center justify-center text-amber-700 font-extrabold text-lg shadow-xs">
+          <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-600/50 flex items-center justify-center text-amber-400 font-extrabold text-lg shadow-xs">
             🏢
           </div>
           <div>
-            <span className="text-[10px] font-extrabold uppercase text-amber-800 tracking-wider">
+            <span className="text-[10px] font-extrabold uppercase text-amber-300 tracking-wider">
               Panel Menedżera Lokalu
             </span>
-            <h2 className="text-base font-extrabold text-slate-900">{venue.name}</h2>
-            <p className="text-[11px] text-slate-600 font-medium">
+            <h2 className="text-base font-extrabold text-slate-100">{venue.name}</h2>
+            <p className="text-[11px] text-slate-400 font-medium">
               {venue.city} • {venue.address}
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-200 text-center">
+        <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-700 text-center">
           <div>
-            <span className="text-[10px] text-slate-500 uppercase font-bold">Oczekujące</span>
-            <p className="text-sm font-black text-amber-700">{pendingRequests.length}</p>
+            <span className="text-[10px] text-slate-400 uppercase font-bold">Oczekujące</span>
+            <p className="text-sm font-black text-amber-400">{pendingRequests.length}</p>
           </div>
           <div>
-            <span className="text-[10px] text-slate-500 uppercase font-bold">Potwierdzone</span>
-            <p className="text-sm font-black text-emerald-700">{confirmedRequests.length}</p>
+            <span className="text-[10px] text-slate-400 uppercase font-bold">Potwierdzone</span>
+            <p className="text-sm font-black text-emerald-300">{confirmedRequests.length}</p>
           </div>
           <div>
-            <span className="text-[10px] text-slate-500 uppercase font-bold">Cena od</span>
-            <p className="text-sm font-black text-slate-900">{venue.priceFrom} zł</p>
+            <span className="text-[10px] text-slate-400 uppercase font-bold">Cena od</span>
+            <p className="text-sm font-black text-slate-100">{venue.priceFrom} zł</p>
           </div>
         </div>
       </div>
@@ -170,7 +170,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
       {activeTab === 'requests' && (
         <div className="px-4 space-y-4">
           {pendingRequests.length === 0 ? (
-            <div className="text-center py-10 text-slate-600 text-xs bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+            <div className="text-center py-10 text-slate-400 text-xs bg-slate-900 rounded-2xl border border-slate-700 p-6 shadow-xs">
               <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
               Brak nowych oczekujących zapytań! Wszystkie zgłoszenia zostały obsłużone.
             </div>
@@ -178,31 +178,31 @@ export const MobileVenueAdminView: React.FC<Props> = ({
             pendingRequests.map((b) => (
               <div
                 key={b.id}
-                className="bg-white border border-amber-300 rounded-2xl p-4 shadow-md space-y-3 relative"
+                className="bg-slate-900 border border-amber-600/50 rounded-2xl p-4 shadow-md space-y-3 relative"
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="text-[10px] uppercase font-extrabold text-amber-800 tracking-wider">
+                    <span className="text-[10px] uppercase font-extrabold text-amber-300 tracking-wider">
                       Nowe Zapytanie • {b.eventType}
                     </span>
-                    <h3 className="text-sm font-extrabold text-slate-900 mt-0.5">{b.clientName}</h3>
-                    <p className="text-xs text-slate-500 font-medium">
+                    <h3 className="text-sm font-extrabold text-slate-100 mt-0.5">{b.clientName}</h3>
+                    <p className="text-xs text-slate-400 font-medium">
                       {b.clientEmail} • {b.clientPhone}
                     </p>
                   </div>
                   <div className="text-right">
-                    <span className="text-xs font-extrabold text-slate-900 block">{b.date}</span>
-                    <span className="text-[10px] text-amber-800 font-bold">{b.guestsCount} osób</span>
+                    <span className="text-xs font-extrabold text-slate-100 block">{b.date}</span>
+                    <span className="text-[10px] text-amber-300 font-bold">{b.guestsCount} osób</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs flex justify-between">
+                <div className="bg-slate-800/60 p-2.5 rounded-xl border border-slate-700 text-xs flex justify-between">
                   <div>
-                    <span className="text-[10px] text-slate-500 font-bold block">Pakiet:</span>
-                    <span className="font-bold text-slate-900">{b.packageName}</span>
+                    <span className="text-[10px] text-slate-400 font-bold block">Pakiet:</span>
+                    <span className="font-bold text-slate-100">{b.packageName}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-slate-500 font-bold block">Wartość:</span>
+                    <span className="text-[10px] text-slate-400 font-bold block">Wartość:</span>
                     <span className="font-black text-brand-600">
                       {b.estimatedTotal.toLocaleString()} zł
                     </span>
@@ -210,8 +210,8 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                 </div>
 
                 {b.specialRequests && (
-                  <div className="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    <strong className="text-slate-500 text-[10px] uppercase font-bold block">
+                  <div className="text-xs text-slate-300 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700">
+                    <strong className="text-slate-400 text-[10px] uppercase font-bold block">
                       Uwagi klienta:
                     </strong>
                     „{b.specialRequests}”
@@ -226,7 +226,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                     onChange={(e) =>
                       setResponseNotes({ ...responseNotes, [b.id]: e.target.value })
                     }
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900 outline-none focus:border-brand-500"
+                    className="w-full bg-slate-800/60 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-100 outline-none focus:border-brand-500"
                   />
                 </div>
 
@@ -234,7 +234,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                   <button
                     type="button"
                     onClick={() => handleReject(b.id)}
-                    className="py-2.5 px-3 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1 transition-colors"
+                    className="py-2.5 px-3 bg-rose-900/40 hover:bg-rose-100 text-rose-200 border border-rose-700/50 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1 transition-colors"
                   >
                     <X className="w-4 h-4" />
                     <span>Odrzuć termin</span>
@@ -253,24 +253,24 @@ export const MobileVenueAdminView: React.FC<Props> = ({
           )}
 
           {confirmedRequests.length > 0 && (
-            <div className="pt-4 border-t border-slate-200 space-y-3">
-              <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">
+            <div className="pt-4 border-t border-slate-700 space-y-3">
+              <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">
                 Historia Potwierdzonych Rezerwacji ({confirmedRequests.length})
               </h4>
               {confirmedRequests.map((b) => (
                 <div
                   key={b.id}
-                  className="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between shadow-xs"
+                  className="bg-slate-900 border border-slate-700 rounded-xl p-3 flex items-center justify-between shadow-xs"
                 >
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">
+                    <h4 className="text-xs font-bold text-slate-100">
                       {b.clientName} ({b.eventType})
                     </h4>
-                    <p className="text-[11px] text-slate-500 font-medium">
+                    <p className="text-[11px] text-slate-400 font-medium">
                       {b.date} • {b.guestsCount} osób • {b.estimatedTotal} zł
                     </p>
                   </div>
-                  <span className="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="bg-emerald-900/40 text-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-700/50">
                     Potwierdzona
                   </span>
                 </div>
@@ -282,7 +282,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
 
       {activeTab === 'calendar' && (
         <div className="px-4 space-y-3">
-          <div className="text-xs text-slate-600 font-medium mb-2">
+          <div className="text-xs text-slate-400 font-medium mb-2">
             Zarządzaj dostępnością wolnych terminów. Kliknij, aby zablokować lub odblokować sobotę:
           </div>
           <div className="space-y-2">
@@ -302,8 +302,8 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                   onClick={() => onToggleDateAvailability(venue.id, d)}
                   className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                     isBlocked
-                      ? 'bg-slate-100 border-slate-200 text-slate-500'
-                      : 'bg-emerald-50 border-emerald-300 text-emerald-900 font-bold'
+                      ? 'bg-slate-800 border-slate-700 text-slate-400'
+                      : 'bg-emerald-900/40 border-emerald-700/50 text-emerald-900 font-bold'
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -313,8 +313,8 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                   <span
                     className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${
                       isBlocked
-                        ? 'bg-rose-100 text-rose-800 border border-rose-200'
-                        : 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-rose-100 text-rose-200 border border-rose-700/50'
+                        : 'bg-emerald-100 text-emerald-200'
                     }`}
                   >
                     {isBlocked ? 'Zajęty / Zablokowany' : 'WOLNY TERMIN'}
@@ -328,18 +328,18 @@ export const MobileVenueAdminView: React.FC<Props> = ({
 
       {activeTab === 'pricing' && (
         <div className="px-4 space-y-3">
-          <div className="text-xs text-slate-600 font-medium mb-2">
+          <div className="text-xs text-slate-400 font-medium mb-2">
             Edycja cennika pakietów (cena / osoba). Kartę dań edytujesz w zakładce Menu.
           </div>
           {venue.packages.map((pkg) => (
             <div
               key={pkg.id}
-              className="bg-white border border-slate-200 rounded-xl p-3 space-y-2 shadow-xs"
+              className="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2 shadow-xs"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-extrabold text-slate-900 text-xs">{pkg.name}</h4>
-                  <span className="text-[10px] text-slate-500 font-medium">
+                  <h4 className="font-extrabold text-slate-100 text-xs">{pkg.name}</h4>
+                  <span className="text-[10px] text-slate-400 font-medium">
                     {pkg.features.length} składników w cenie
                   </span>
                 </div>
@@ -349,7 +349,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                       type="number"
                       value={tempPrice}
                       onChange={(e) => setTempPrice(parseInt(e.target.value) || 0)}
-                      className="w-16 bg-slate-50 border border-brand-500 rounded p-1 text-xs text-slate-900 text-right font-bold"
+                      className="w-16 bg-slate-800/60 border border-brand-500 rounded p-1 text-xs text-slate-100 text-right font-bold"
                     />
                     <button
                       type="button"
@@ -374,7 +374,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                     <span className="text-sm font-black text-brand-600 group-hover:underline">
                       {pkg.pricePerPerson} zł
                     </span>
-                    <span className="text-[9px] text-slate-500 block font-medium">
+                    <span className="text-[9px] text-slate-400 block font-medium">
                       / osoba (edytuj)
                     </span>
                   </button>
@@ -387,16 +387,16 @@ export const MobileVenueAdminView: React.FC<Props> = ({
 
       {activeTab === 'menu' && (
         <div className="px-4 space-y-3">
-          <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-3">
-            <UtensilsCrossed className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-            <p className="text-[11px] text-amber-900 font-medium leading-snug">
+          <div className="flex items-start gap-2 bg-amber-900/40 border border-amber-700/50 rounded-xl p-3">
+            <UtensilsCrossed className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <p className="text-[11px] text-amber-200 font-medium leading-snug">
               Zarządzanie kartą dań — edycja, ukrywanie i dodawanie pozycji. Klient widzi tylko
               dania oznaczone jako widoczne.
             </p>
           </div>
 
           <div>
-            <span className="text-[10px] font-extrabold uppercase text-slate-500 tracking-wider block mb-1.5">
+            <span className="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider block mb-1.5">
               Pakiet
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -412,7 +412,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                   className={`text-[10px] font-bold px-2.5 py-1.5 rounded-lg border transition-colors ${
                     menuPackage?.id === pkg.id
                       ? 'bg-brand-600 text-white border-brand-600'
-                      : 'bg-white text-slate-700 border-slate-200'
+                      : 'bg-slate-900 text-slate-300 border-slate-700'
                   }`}
                 >
                   {pkg.name}
@@ -422,7 +422,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
           </div>
 
           {!menuPackage || choiceGroups.length === 0 ? (
-            <div className="text-center py-8 text-slate-500 text-xs bg-white rounded-2xl border border-slate-200 p-4">
+            <div className="text-center py-8 text-slate-400 text-xs bg-slate-900 rounded-2xl border border-slate-700 p-4">
               Ten pakiet nie ma jeszcze grup wyboru dań (`choiceGroups`).
             </div>
           ) : (
@@ -431,18 +431,18 @@ export const MobileVenueAdminView: React.FC<Props> = ({
               return (
                 <div
                   key={group.id}
-                  className="bg-white border border-slate-200 rounded-xl shadow-xs overflow-hidden"
+                  className="bg-slate-900 border border-slate-700 rounded-xl shadow-xs overflow-hidden"
                 >
                   <button
                     type="button"
                     onClick={() =>
                       setExpandedGroupId((prev) => (prev === group.id ? null : group.id))
                     }
-                    className="w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-slate-50"
+                    className="w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-slate-800/60"
                   >
                     <div>
-                      <h4 className="text-xs font-extrabold text-slate-900">{group.title}</h4>
-                      <span className="text-[10px] text-slate-500 font-medium">
+                      <h4 className="text-xs font-extrabold text-slate-100">{group.title}</h4>
+                      <span className="text-[10px] text-slate-400 font-medium">
                         {group.dishes.length} pozycji ·{' '}
                         {group.dishes.filter((d) => !d.hidden).length} widocznych
                       </span>
@@ -453,7 +453,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                   </button>
 
                   {isOpen && (
-                    <div className="border-t border-slate-100 px-3 pb-3 space-y-2 pt-2">
+                    <div className="border-t border-slate-700 px-3 pb-3 space-y-2 pt-2">
                       {group.dishes.map((dish) => {
                         const dishKey = `${group.id}::${dish.id}`;
                         const isEditing = editingDishKey === dishKey;
@@ -462,8 +462,8 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                             key={dish.id ?? dish.name}
                             className={`rounded-xl border p-2.5 ${
                               dish.hidden
-                                ? 'bg-slate-50 border-slate-200 opacity-80'
-                                : 'bg-white border-slate-200'
+                                ? 'bg-slate-800/60 border-slate-700 opacity-80'
+                                : 'bg-slate-900 border-slate-700'
                             }`}
                           >
                             <div className="flex items-start gap-2">
@@ -473,7 +473,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                                     <input
                                       value={editDishName}
                                       onChange={(e) => setEditDishName(e.target.value)}
-                                      className="flex-1 bg-slate-50 border border-brand-400 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-900 outline-none"
+                                      className="flex-1 bg-slate-800/60 border border-brand-400 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-100 outline-none"
                                       autoFocus
                                     />
                                     <button
@@ -485,19 +485,19 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                                     </button>
                                   </div>
                                 ) : (
-                                  <p className="text-xs font-extrabold text-slate-900 truncate">
+                                  <p className="text-xs font-extrabold text-slate-100 truncate">
                                     {dish.name}
                                   </p>
                                 )}
                                 <div className="flex flex-wrap gap-1 mt-1">
-                                  <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500">
+                                  <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
                                     {dish.category}
                                   </span>
                                   <span
                                     className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${
                                       dish.hidden
-                                        ? 'bg-slate-100 text-slate-600 border-slate-200'
-                                        : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                        ? 'bg-slate-800 text-slate-400 border-slate-700'
+                                        : 'bg-emerald-900/40 text-emerald-200 border-emerald-700/50'
                                     }`}
                                   >
                                     {dish.hidden ? 'Ukryte' : 'Widoczne dla gości'}
@@ -505,7 +505,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                                   {(dish.tags ?? []).slice(0, 2).map((t) => (
                                     <span
                                       key={t}
-                                      className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-brand-50 text-brand-700 border border-brand-100"
+                                      className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-brand-900/40 text-brand-300 border border-brand-700/50"
                                     >
                                       {t}
                                     </span>
@@ -521,7 +521,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                                     setEditingDishKey(dishKey);
                                     setEditDishName(dish.name);
                                   }}
-                                  className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+                                  className="p-1.5 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800/60"
                                 >
                                   <Pencil className="w-3.5 h-3.5" />
                                 </button>
@@ -531,8 +531,8 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                                   onClick={() => toggleDishHidden(group.id, dish)}
                                   className={`p-1.5 rounded-lg border ${
                                     dish.hidden
-                                      ? 'border-slate-300 text-slate-500 bg-slate-100'
-                                      : 'border-emerald-200 text-emerald-700 bg-emerald-50'
+                                      ? 'border-slate-600 text-slate-400 bg-slate-800'
+                                      : 'border-emerald-700/50 text-emerald-300 bg-emerald-900/40'
                                   }`}
                                 >
                                   {dish.hidden ? (
@@ -550,7 +550,7 @@ export const MobileVenueAdminView: React.FC<Props> = ({
                       <button
                         type="button"
                         onClick={() => addDish(group.id)}
-                        className="w-full py-2 rounded-xl border border-dashed border-brand-300 text-brand-700 text-[11px] font-bold flex items-center justify-center gap-1.5 hover:bg-brand-50 transition-colors"
+                        className="w-full py-2 rounded-xl border border-dashed border-brand-600/50 text-brand-300 text-[11px] font-bold flex items-center justify-center gap-1.5 hover:bg-brand-900/40 transition-colors"
                       >
                         <Plus className="w-3.5 h-3.5" />
                         Dodaj danie do grupy

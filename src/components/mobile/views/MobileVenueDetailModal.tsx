@@ -12,11 +12,11 @@ interface Props {
 }
 
 const TAG_STYLES: Record<string, string> = {
-  wege: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  bezgluten: 'bg-sky-50 text-sky-700 border-sky-200',
-  premium: 'bg-amber-50 text-amber-800 border-amber-200',
-  'dla-dzieci': 'bg-violet-50 text-violet-700 border-violet-200',
-  ostre: 'bg-rose-50 text-rose-700 border-rose-200',
+  wege: 'bg-emerald-900/40 text-emerald-300 border-emerald-700/50',
+  bezgluten: 'bg-sky-900/40 text-sky-300 border-sky-700/50',
+  premium: 'bg-amber-900/40 text-amber-300 border-amber-700/50',
+  'dla-dzieci': 'bg-violet-900/40 text-violet-300 border-violet-700/50',
+  ostre: 'bg-rose-900/40 text-rose-300 border-rose-700/50',
 };
 
 function MenuTagBadges({ tags }: { tags?: MenuItem['tags'] }) {
@@ -26,7 +26,7 @@ function MenuTagBadges({ tags }: { tags?: MenuItem['tags'] }) {
       {tags.map((tag) => (
         <span
           key={tag}
-          className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded border ${TAG_STYLES[tag] ?? 'bg-slate-50 text-slate-600 border-slate-200'}`}
+          className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded border ${TAG_STYLES[tag] ?? 'bg-slate-800/60 text-slate-400 border-slate-700'}`}
         >
           {MENU_TAG_LABELS[tag]}
         </span>
@@ -75,26 +75,26 @@ function DishModifiers({
   const headerLabel = title ? `Dodatki do: ${title}` : 'Dodatki';
 
   return (
-    <div className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden">
+    <div className="border border-slate-700 rounded-xl bg-slate-900 shadow-sm overflow-hidden">
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           setOpen((v) => !v);
         }}
-        className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-slate-800/60 transition-colors"
       >
         <Plus className="w-3.5 h-3.5 text-brand-600 shrink-0" />
-        <span className="flex-1 min-w-0 text-[10px] font-black uppercase tracking-wider text-slate-600 truncate">
+        <span className="flex-1 min-w-0 text-[10px] font-black uppercase tracking-wider text-slate-400 truncate">
           {headerLabel}
         </span>
         {onlyExclusive && (
-          <span className="shrink-0 text-[9px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">
+          <span className="shrink-0 text-[9px] font-bold text-slate-400 bg-slate-800 border border-slate-700 px-1.5 py-0.5 rounded">
             bez dodatków
           </span>
         )}
         {selectedCount > 0 && (
-          <span className="shrink-0 text-[9px] font-bold text-brand-700 bg-brand-50 border border-brand-200 px-1.5 py-0.5 rounded">
+          <span className="shrink-0 text-[9px] font-bold text-brand-300 bg-brand-900/40 border border-brand-700/50 px-1.5 py-0.5 rounded">
             {selectedCount} wybrane
           </span>
         )}
@@ -104,7 +104,7 @@ function DishModifiers({
       </button>
 
       {open && (
-        <div className="px-3 pb-3 space-y-2.5 border-t border-slate-100 pt-2.5">
+        <div className="px-3 pb-3 space-y-2.5 border-t border-slate-700 pt-2.5">
           {groups.map((group) => {
             const key = modifierKey(packageId, itemKey, group.id);
             const selected = selections[key] ?? [];
@@ -112,7 +112,7 @@ function DishModifiers({
             return (
               <div key={group.id}>
                 <div className="flex items-center gap-1 mb-1.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-600">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
                     {group.title}
                   </span>
                   {max > 1 && (
@@ -137,8 +137,8 @@ function DishModifiers({
                               ? 'bg-slate-700 text-white border-slate-700 shadow-sm'
                               : 'bg-brand-600 text-white border-brand-600 shadow-sm'
                             : isExclusive
-                              ? 'bg-white text-slate-600 border-slate-300 border-dashed hover:border-slate-400'
-                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-brand-300'
+                              ? 'bg-slate-900 text-slate-400 border-slate-600 border-dashed hover:border-slate-400'
+                              : 'bg-slate-800/60 text-slate-300 border-slate-700 hover:border-brand-600/50'
                         }`}
                       >
                         {opt.label}
@@ -180,28 +180,28 @@ function DishChoiceSection({
 
   return (
     <div className="space-y-2">
-      <div className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden">
+      <div className="border border-slate-700 rounded-xl bg-slate-900 shadow-sm overflow-hidden">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-slate-50 transition-colors"
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-slate-800/60 transition-colors"
         >
           {selectedDish?.imageUrl ? (
             <img
               src={selectedDish.imageUrl}
               alt=""
-              className="w-11 h-11 rounded-lg object-cover shrink-0 bg-slate-100"
+              className="w-11 h-11 rounded-lg object-cover shrink-0 bg-slate-800"
             />
           ) : (
-            <div className="w-11 h-11 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+            <div className="w-11 h-11 rounded-lg bg-brand-900/40 flex items-center justify-center shrink-0">
               <Utensils className="w-4 h-4 text-brand-600" />
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <div className="text-[10px] font-black uppercase tracking-wider text-brand-700">
+            <div className="text-[10px] font-black uppercase tracking-wider text-brand-300">
               {group.title}
             </div>
-            <div className="text-xs font-extrabold text-slate-900 truncate mt-0.5">
+            <div className="text-xs font-extrabold text-slate-100 truncate mt-0.5">
               {selectedDish?.name ?? 'Wybierz danie'}
             </div>
             {!open && (
@@ -216,8 +216,8 @@ function DishChoiceSection({
         </button>
 
         {open && (
-          <div className="border-t border-slate-100 px-2.5 pb-2.5 pt-2 space-y-2">
-            <p className="text-[11px] text-slate-500 font-medium px-0.5">
+          <div className="border-t border-slate-700 px-2.5 pb-2.5 pt-2 space-y-2">
+            <p className="text-[11px] text-slate-400 font-medium px-0.5">
               Wybierz jedno danie — lista zwinie się po wyborze.
             </p>
             {group.dishes.map((dish) => {
@@ -232,8 +232,8 @@ function DishChoiceSection({
                   }}
                   className={`w-full text-left rounded-xl border overflow-hidden transition-all ${
                     isOn
-                      ? 'border-brand-500 bg-brand-50 ring-1 ring-brand-500/30 shadow-sm'
-                      : 'border-slate-200 bg-white hover:border-brand-300'
+                      ? 'border-brand-500 bg-brand-900/40 ring-1 ring-brand-500/30 shadow-sm'
+                      : 'border-slate-700 bg-slate-900 hover:border-brand-600/50'
                   }`}
                 >
                   <div className="flex">
@@ -241,14 +241,14 @@ function DishChoiceSection({
                       <img
                         src={dish.imageUrl}
                         alt={dish.name}
-                        className="w-20 h-20 object-cover shrink-0 bg-slate-100"
+                        className="w-20 h-20 object-cover shrink-0 bg-slate-800"
                       />
                     )}
                     <div className="p-3 flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
                         <h4
                           className={`text-xs font-extrabold leading-snug ${
-                            isOn ? 'text-brand-900' : 'text-slate-900'
+                            isOn ? 'text-brand-200' : 'text-slate-100'
                           }`}
                         >
                           {dish.name}
@@ -260,7 +260,7 @@ function DishChoiceSection({
                         )}
                       </div>
                       {dish.description && (
-                        <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">
+                        <p className="text-[11px] text-slate-400 mt-1 font-medium leading-relaxed">
                           {dish.description}
                         </p>
                       )}
@@ -406,19 +406,19 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
   };
 
   return (
-    <div className="absolute inset-0 z-40 bg-white flex flex-col animate-fade-in h-full">
-      <div className="flex-none bg-white/95 backdrop-blur-md px-4 py-3 border-b border-slate-200 flex items-center justify-between z-30">
+    <div className="absolute inset-0 z-40 bg-slate-900 flex flex-col animate-fade-in h-full">
+      <div className="flex-none bg-slate-900/95 backdrop-blur-md px-4 py-3 border-b border-slate-700 flex items-center justify-between z-30">
         <button
           onClick={onClose}
-          className="flex items-center gap-1 text-slate-700 hover:text-slate-900 text-xs font-semibold bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm active:scale-95"
+          className="flex items-center gap-1 text-slate-300 hover:text-slate-100 text-xs font-semibold bg-slate-900 px-3 py-1.5 rounded-full border border-slate-700 shadow-sm active:scale-95"
         >
           ✕ Zamknij
         </button>
-        <span className="text-xs font-bold text-slate-800 truncate max-w-[150px]">{venue.name}</span>
+        <span className="text-xs font-bold text-slate-200 truncate max-w-[150px]">{venue.name}</span>
         <button
           onClick={() => onToggleCompare(venue.id)}
           className={`p-2 rounded-full border text-xs transition-colors ${
-            isComparing ? 'bg-amber-50 border-amber-500 text-amber-600' : 'bg-white border-slate-200 text-slate-500 shadow-sm'
+            isComparing ? 'bg-amber-900/40 border-amber-500 text-amber-400' : 'bg-slate-900 border-slate-700 text-slate-400 shadow-sm'
           }`}
         >
           <Scale className="w-4 h-4" />
@@ -426,13 +426,13 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
       </div>
 
       <div className="flex-1 overflow-y-auto no-scrollbar pb-10">
-        <div className="relative h-64 w-full bg-slate-100 flex-none">
+        <div className="relative h-64 w-full bg-slate-800 flex-none">
           <img
             src={venue.images[activeImageIdx]}
             alt={venue.name}
             className="w-full h-full object-cover transition-opacity duration-300"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
 
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
             {venue.images.map((_, idx) => (
@@ -446,50 +446,50 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
             ))}
           </div>
 
-          <div className="absolute bottom-3 left-4 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-600 flex items-center gap-1 shadow-sm border border-slate-100">
+          <div className="absolute bottom-3 left-4 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 shadow-sm border border-slate-700">
             <Star className="w-3.5 h-3.5 fill-amber-400" />
             <span>{venue.rating}</span>
-            <span className="text-slate-500 font-normal">({venue.reviewCount} opinii)</span>
+            <span className="text-slate-400 font-normal">({venue.reviewCount} opinii)</span>
           </div>
         </div>
 
         <div className="p-4">
           <div className="flex items-center gap-2">
-            <span className="bg-brand-50 text-brand-700 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md border border-brand-200">
+            <span className="bg-brand-900/40 text-brand-300 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md border border-brand-700/50">
               {venue.category}
             </span>
-            <span className="text-xs text-slate-500 font-medium">miasto {venue.city}</span>
+            <span className="text-xs text-slate-400 font-medium">miasto {venue.city}</span>
           </div>
-          <h2 className="text-2xl font-extrabold text-slate-900 mt-1">{venue.name}</h2>
+          <h2 className="text-2xl font-extrabold text-slate-100 mt-1">{venue.name}</h2>
           <div className="flex flex-wrap gap-1.5 mt-1">
-            <span className="text-[10px] font-bold text-slate-500 uppercase">Idealny na:</span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase">Idealny na:</span>
             {venue.bestFor.map((item, i) => (
-              <span key={i} className="text-[10px] font-extrabold text-brand-600 uppercase tracking-tight bg-brand-50 px-1.5 py-0.5 rounded">
+              <span key={i} className="text-[10px] font-extrabold text-brand-600 uppercase tracking-tight bg-brand-900/40 px-1.5 py-0.5 rounded">
                 {item}
               </span>
             ))}
           </div>
-          <p className="text-xs text-slate-600 flex items-center gap-1 mt-2 font-medium">
+          <p className="text-xs text-slate-400 flex items-center gap-1 mt-2 font-medium">
             <MapPin className="w-3.5 h-3.5 text-brand-600 shrink-0" />
             <span>{venue.address}</span>
           </p>
 
           <div className="grid grid-cols-3 gap-2 my-4">
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 text-center shadow-sm">
-              <span className="text-[10px] text-slate-500 uppercase font-bold text-center block tracking-tight">Cena od</span>
-              <p className="text-xs font-extrabold text-brand-700 mt-0.5 whitespace-nowrap">{venue.priceFrom} zł <span className="text-[8px] font-normal text-slate-500">/ os.</span></p>
+            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-2.5 text-center shadow-sm">
+              <span className="text-[10px] text-slate-400 uppercase font-bold text-center block tracking-tight">Cena od</span>
+              <p className="text-xs font-extrabold text-brand-300 mt-0.5 whitespace-nowrap">{venue.priceFrom} zł <span className="text-[8px] font-normal text-slate-400">/ os.</span></p>
             </div>
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 text-center shadow-sm">
-              <span className="text-[10px] text-slate-500 uppercase font-bold text-center block tracking-tight">Pojemność</span>
-              <p className="text-xs font-extrabold text-amber-700 mt-0.5">do {venue.maxGuests} os.</p>
+            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-2.5 text-center shadow-sm">
+              <span className="text-[10px] text-slate-400 uppercase font-bold text-center block tracking-tight">Pojemność</span>
+              <p className="text-xs font-extrabold text-amber-400 mt-0.5">do {venue.maxGuests} os.</p>
             </div>
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 text-center shadow-sm">
-              <span className="text-[10px] text-slate-500 uppercase font-bold text-center block tracking-tight">Zaliczka</span>
-              <p className="text-xs font-extrabold text-slate-800 mt-0.5">{selectedPackage.depositPercent}%</p>
+            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-2.5 text-center shadow-sm">
+              <span className="text-[10px] text-slate-400 uppercase font-bold text-center block tracking-tight">Zaliczka</span>
+              <p className="text-xs font-extrabold text-slate-200 mt-0.5">{selectedPackage.depositPercent}%</p>
             </div>
           </div>
 
-          <div className="flex border-b border-slate-200 mb-4 sticky top-0 bg-white z-20 pt-1">
+          <div className="flex border-b border-slate-700 mb-4 sticky top-0 bg-slate-900 z-20 pt-1">
             <button
               onClick={() => setActiveTab('packages')}
               className={`flex-1 py-2 text-[11px] font-bold border-b-2 text-center transition-colors ${
@@ -551,34 +551,34 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                     onClick={() => setSelectedPackage(pkg)}
                     className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-brand-50 border-brand-500 shadow-md ring-1 ring-brand-500/30'
-                        : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
+                        ? 'bg-brand-900/40 border-brand-500 shadow-md ring-1 ring-brand-500/30'
+                        : 'bg-slate-900 border-slate-700 hover:border-slate-600 shadow-sm'
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h4 className={`font-extrabold text-sm flex items-center gap-2 ${isSelected ? 'text-brand-900' : 'text-slate-900'}`}>
+                        <h4 className={`font-extrabold text-sm flex items-center gap-2 ${isSelected ? 'text-brand-200' : 'text-slate-100'}`}>
                           {pkg.name}
                           {isSelected && <span className="bg-brand-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded">WYBRANY</span>}
                         </h4>
-                        <p className={`text-[11px] mt-0.5 font-medium ${isSelected ? 'text-brand-700' : 'text-slate-500'}`}>Czas: {pkg.durationHours}h • Min. {pkg.minGuests} osób</p>
+                        <p className={`text-[11px] mt-0.5 font-medium ${isSelected ? 'text-brand-300' : 'text-slate-400'}`}>Czas: {pkg.durationHours}h • Min. {pkg.minGuests} osób</p>
                       </div>
                       <div className="text-right ml-2">
-                        <span className={`text-base font-black ${isSelected ? 'text-brand-800' : 'text-brand-600'}`}>{pkg.pricePerPerson} zł</span>
-                        <span className={`block text-[9px] font-bold ${isSelected ? 'text-brand-700' : 'text-slate-500'}`}>/ os.</span>
+                        <span className={`text-base font-black ${isSelected ? 'text-brand-200' : 'text-brand-600'}`}>{pkg.pricePerPerson} zł</span>
+                        <span className={`block text-[9px] font-bold ${isSelected ? 'text-brand-300' : 'text-slate-400'}`}>/ os.</span>
                       </div>
                     </div>
 
-                    <ul className={`mt-3 space-y-1.5 text-[11px] border-t pt-2.5 ${isSelected ? 'text-brand-800 border-brand-200' : 'text-slate-700 border-slate-100'}`}>
+                    <ul className={`mt-3 space-y-1.5 text-[11px] border-t pt-2.5 ${isSelected ? 'text-brand-200 border-brand-700/50' : 'text-slate-300 border-slate-700'}`}>
                       {pkg.features.map((feat, i) => (
                         <li key={i} className="flex items-center gap-2">
-                          <Check className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-brand-700' : 'text-brand-600'}`} />
+                          <Check className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-brand-300' : 'text-brand-600'}`} />
                           <span className="font-medium">{feat}</span>
                         </li>
                       ))}
                       {hasMods && (
                         <li className="flex items-center gap-2">
-                          <Plus className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-brand-700' : 'text-brand-600'}`} />
+                          <Plus className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-brand-300' : 'text-brand-600'}`} />
                           <span className="font-medium">
                             {choiceLabels
                               ? `Wybór w kategoriach: ${choiceLabels}`
@@ -589,19 +589,19 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                     </ul>
 
                     {preview.length > 0 && (
-                      <div className={`mt-3 pt-2.5 border-t ${isSelected ? 'border-brand-200' : 'border-slate-100'}`}>
+                      <div className={`mt-3 pt-2.5 border-t ${isSelected ? 'border-brand-700/50' : 'border-slate-700'}`}>
                         <div className="flex items-center gap-1.5 mb-2">
-                          <Utensils className={`w-3.5 h-3.5 ${isSelected ? 'text-brand-700' : 'text-slate-500'}`} />
-                          <span className={`text-[10px] font-black uppercase tracking-wider ${isSelected ? 'text-brand-800' : 'text-slate-500'}`}>
+                          <Utensils className={`w-3.5 h-3.5 ${isSelected ? 'text-brand-300' : 'text-slate-400'}`} />
+                          <span className={`text-[10px] font-black uppercase tracking-wider ${isSelected ? 'text-brand-200' : 'text-slate-400'}`}>
                             Skrót menu
                           </span>
                         </div>
                         <ul className="space-y-1">
                           {preview.map((item, i) => (
-                            <li key={i} className={`text-[11px] font-medium flex items-start gap-1.5 ${isSelected ? 'text-brand-900' : 'text-slate-700'}`}>
+                            <li key={i} className={`text-[11px] font-medium flex items-start gap-1.5 ${isSelected ? 'text-brand-200' : 'text-slate-300'}`}>
                               <span className="text-slate-400 shrink-0">•</span>
                               <span>
-                                <span className="text-slate-500 font-bold text-[9px] uppercase">{item.category}: </span>
+                                <span className="text-slate-400 font-bold text-[9px] uppercase">{item.category}: </span>
                                 {item.name}
                               </span>
                             </li>
@@ -614,7 +614,7 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                             openFullMenu(pkg);
                           }}
                           className={`mt-2.5 text-[11px] font-bold flex items-center gap-1 ${
-                            isSelected ? 'text-brand-700' : 'text-brand-600'
+                            isSelected ? 'text-brand-300' : 'text-brand-600'
                           }`}
                         >
                           Pełne menu pakietu
@@ -630,12 +630,12 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
 
           {activeTab === 'menu' && (
             <div className="space-y-4">
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between shadow-sm">
-                <span className="text-[11px] text-slate-700 font-bold uppercase tracking-tight">Pakiet: {selectedPackage.name}</span>
+              <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-3 flex items-center justify-between shadow-sm">
+                <span className="text-[11px] text-slate-300 font-bold uppercase tracking-tight">Pakiet: {selectedPackage.name}</span>
                 <div className="text-right">
-                  <span className="text-xs font-black text-brand-700 block">{selectedPackage.pricePerPerson} zł/os.</span>
+                  <span className="text-xs font-black text-brand-300 block">{selectedPackage.pricePerPerson} zł/os.</span>
                   {modifiersExtraTotal > 0 && (
-                    <span className="text-[9px] font-bold text-amber-700">+ dodatki ~{modifiersExtraTotal} zł/os.</span>
+                    <span className="text-[9px] font-bold text-amber-400">+ dodatki ~{modifiersExtraTotal} zł/os.</span>
                   )}
                 </div>
               </div>
@@ -650,7 +650,7 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                       className={`shrink-0 px-3 py-1.5 rounded-full text-[10px] font-bold border transition-colors ${
                         selectedPackage.id === pkg.id
                           ? 'bg-brand-600 text-white border-brand-600'
-                          : 'bg-white text-slate-600 border-slate-200'
+                          : 'bg-slate-900 text-slate-400 border-slate-700'
                       }`}
                     >
                       {pkg.name.replace(/Pakiet\s+/i, '')}
@@ -660,7 +660,7 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
               )}
 
               {choiceGroups.length === 0 && menuGroups.length === 0 && (
-                <p className="text-xs text-slate-500 font-medium text-center py-6">Brak pozycji menu dla tego pakietu.</p>
+                <p className="text-xs text-slate-400 font-medium text-center py-6">Brak pozycji menu dla tego pakietu.</p>
               )}
 
               {choiceGroups.map((group) => (
@@ -679,7 +679,7 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
 
               {menuGroups.map(({ category, items }) => (
                 <div key={category}>
-                  <h3 className="text-[10px] font-black uppercase tracking-wider text-amber-700 mb-2 flex items-center gap-1.5">
+                  <h3 className="text-[10px] font-black uppercase tracking-wider text-amber-400 mb-2 flex items-center gap-1.5">
                     <Utensils className="w-3.5 h-3.5" />
                     {category}
                   </h3>
@@ -687,19 +687,19 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                     {items.map((item, idx) => {
                       const itemKey = `${category}-${idx}`;
                       return (
-                        <div key={itemKey} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <div key={itemKey} className="bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-sm">
                           <div className="flex">
                             {item.imageUrl && (
                               <img
                                 src={item.imageUrl}
                                 alt={item.name}
-                                className="w-20 h-20 object-cover shrink-0 bg-slate-100"
+                                className="w-20 h-20 object-cover shrink-0 bg-slate-800"
                               />
                             )}
                             <div className="p-3 flex-1 min-w-0">
-                              <h4 className="text-xs font-extrabold text-slate-900 leading-snug">{item.name}</h4>
+                              <h4 className="text-xs font-extrabold text-slate-100 leading-snug">{item.name}</h4>
                               {item.description && (
-                                <p className="text-[11px] text-slate-500 mt-1 font-medium leading-relaxed">{item.description}</p>
+                                <p className="text-[11px] text-slate-400 mt-1 font-medium leading-relaxed">{item.description}</p>
                               )}
                               <MenuTagBadges tags={item.tags} />
                               {item.allergens && item.allergens.length > 0 && (
@@ -741,11 +741,11 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                       onClick={() => setSelectedDate(d)}
                       className={`p-3 rounded-xl border text-left transition-all shadow-sm ${
                         isDateSelected
-                          ? 'bg-brand-50 border-brand-500 text-brand-700 font-bold'
-                          : 'bg-white border-slate-200 text-slate-700 hover:border-brand-400'
+                          ? 'bg-brand-900/40 border-brand-500 text-brand-300 font-bold'
+                          : 'bg-slate-900 border-slate-700 text-slate-300 hover:border-brand-400'
                       }`}
                     >
-                      <div className="text-[9px] text-slate-500 font-bold uppercase tracking-tight">Sobota</div>
+                      <div className="text-[9px] text-slate-400 font-bold uppercase tracking-tight">Sobota</div>
                       <div className="text-xs mt-0.5 font-bold">{d}</div>
                     </button>
                   );
@@ -753,13 +753,13 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
               </div>
 
               {venue.blockedDates.length > 0 && (
-                <div className="mt-4 pt-3 border-t border-slate-200">
+                <div className="mt-4 pt-3 border-t border-slate-700">
                   <span className="text-[9px] uppercase font-black text-rose-600 tracking-wider block mb-2">
                     Terminy Zajęte
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {venue.blockedDates.map(bd => (
-                      <span key={bd} className="bg-slate-50 text-slate-400 line-through text-[10px] px-2.5 py-1 rounded-lg border border-slate-200 font-bold">
+                      <span key={bd} className="bg-slate-800/60 text-slate-400 line-through text-[10px] px-2.5 py-1 rounded-lg border border-slate-700 font-bold">
                         {bd}
                       </span>
                     ))}
@@ -770,14 +770,14 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
           )}
 
           {activeTab === 'about' && (
-            <div className="space-y-4 text-xs text-slate-700">
-              <div className="bg-gradient-to-br from-brand-50 to-white p-4 rounded-2xl border border-brand-100 shadow-sm relative overflow-hidden">
+            <div className="space-y-4 text-xs text-slate-300">
+              <div className="bg-gradient-to-br from-brand-950/80 to-slate-900 p-4 rounded-2xl border border-brand-700/50 shadow-sm relative overflow-hidden">
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="w-4 h-4 text-brand-500" />
-                    <h4 className="font-extrabold text-slate-900 text-[10px] uppercase tracking-wider">Klimat i Atmosfera</h4>
+                    <h4 className="font-extrabold text-slate-100 text-[10px] uppercase tracking-wider">Klimat i Atmosfera</h4>
                   </div>
-                  <p className="text-slate-800 font-bold leading-relaxed italic text-sm">
+                  <p className="text-slate-200 font-bold leading-relaxed italic text-sm">
                     "{venue.atmosphere}"
                   </p>
                 </div>
@@ -787,7 +787,7 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
               </div>
 
               <div>
-                <h4 className="font-extrabold text-slate-900 text-[10px] uppercase tracking-wider mb-2">Dlaczego ten lokal?</h4>
+                <h4 className="font-extrabold text-slate-100 text-[10px] uppercase tracking-wider mb-2">Dlaczego ten lokal?</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {venue.highlights.map((h, i) => {
                     let Icon = CheckCircle2;
@@ -797,28 +797,28 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
                     if (h.toLowerCase().includes('kuchnia') || h.toLowerCase().includes('food')) Icon = Utensils;
                     
                     return (
-                      <div key={i} className="bg-white p-3 rounded-xl border border-slate-100 flex items-center gap-2.5 shadow-sm">
-                        <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                          <Icon className="w-4 h-4 text-amber-600" />
+                      <div key={i} className="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-2.5 shadow-sm">
+                        <div className="w-8 h-8 rounded-lg bg-amber-900/40 flex items-center justify-center shrink-0">
+                          <Icon className="w-4 h-4 text-amber-400" />
                         </div>
-                        <span className="text-[11px] font-bold text-slate-800 leading-tight">{h}</span>
+                        <span className="text-[11px] font-bold text-slate-200 leading-tight">{h}</span>
                       </div>
                     );
                   })}
                 </div>
               </div>
 
-              <p className="leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100 shadow-sm font-medium">
+              <p className="leading-relaxed bg-slate-800/60 p-3.5 rounded-xl border border-slate-700 shadow-sm font-medium">
                 {venue.description}
               </p>
 
               <div>
-                <h4 className="font-extrabold text-slate-900 text-[10px] uppercase tracking-wider mb-2">Wyposażenie i udogodnienia</h4>
+                <h4 className="font-extrabold text-slate-100 text-[10px] uppercase tracking-wider mb-2">Wyposażenie i udogodnienia</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {venue.amenities.map((am, idx) => (
-                    <div key={idx} className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center gap-2 shadow-sm">
+                    <div key={idx} className="bg-slate-900 p-2.5 rounded-xl border border-slate-700 flex items-center gap-2 shadow-sm">
                       <Check className="w-3.5 h-3.5 text-brand-600 shrink-0" />
-                      <span className="text-[11px] font-bold text-slate-800">{am}</span>
+                      <span className="text-[11px] font-bold text-slate-200">{am}</span>
                     </div>
                   ))}
                 </div>
@@ -828,15 +828,15 @@ export const MobileVenueDetailModal: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className="flex-none bg-white p-3 border-t border-slate-200 flex items-center gap-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-40">
+      <div className="flex-none bg-slate-900 p-3 border-t border-slate-700 flex items-center gap-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-40">
         <div className="flex-1 min-w-0">
-          <span className="text-[9px] text-slate-500 uppercase font-black block truncate">Pakiet: {selectedPackage.name}</span>
-          <div className="text-lg font-black text-slate-900 flex items-baseline gap-1">
+          <span className="text-[9px] text-slate-400 uppercase font-black block truncate">Pakiet: {selectedPackage.name}</span>
+          <div className="text-lg font-black text-slate-100 flex items-baseline gap-1">
             <span>{selectedPackage.pricePerPerson + modifiersExtraTotal} zł</span>
-            <span className="text-[10px] font-bold text-slate-500">/ os.</span>
+            <span className="text-[10px] font-bold text-slate-400">/ os.</span>
           </div>
           {modifiersExtraTotal > 0 && (
-            <span className="text-[9px] text-amber-700 font-bold">w tym dodatki +{modifiersExtraTotal} zł</span>
+            <span className="text-[9px] text-amber-400 font-bold">w tym dodatki +{modifiersExtraTotal} zł</span>
           )}
         </div>
 

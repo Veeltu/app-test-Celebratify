@@ -114,7 +114,7 @@ export const BottomNav: React.FC<Props> = ({
   const tabs = role === 'manager' ? managerTabs : clientTabs;
 
   return (
-    <nav className="relative z-40 w-full glass-nav px-2 py-2 border-t border-slate-200 bg-white/95 backdrop-blur-md">
+    <nav className="relative z-40 w-full glass-nav px-2 py-2 border-t border-slate-700 bg-slate-900/95 backdrop-blur-md">
       <div className="flex items-center justify-around">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -126,10 +126,10 @@ export const BottomNav: React.FC<Props> = ({
               onClick={() => onSelectTab(tab.id)}
               className={`relative flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all duration-200 min-w-0 flex-1 ${
                 isActive
-                  ? 'text-brand-600 font-semibold scale-105'
+                  ? 'text-brand-500 font-semibold scale-105'
                   : role === 'manager'
-                    ? 'text-amber-800/70 hover:text-amber-900'
-                    : 'text-slate-500 hover:text-slate-900'
+                    ? 'text-amber-500/70 hover:text-amber-400'
+                    : 'text-slate-400 hover:text-slate-100'
               }`}
             >
               <div className="relative">
@@ -152,7 +152,7 @@ export const BottomNav: React.FC<Props> = ({
               </div>
               <span
                 className={`text-[10px] mt-1 tracking-tight truncate max-w-full ${
-                  isActive ? 'text-brand-600 font-extrabold' : ''
+                  isActive ? 'text-brand-500 font-extrabold' : ''
                 }`}
               >
                 {tab.label}

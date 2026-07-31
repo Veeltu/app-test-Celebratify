@@ -140,17 +140,17 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-120px)] max-w-md mx-auto bg-slate-50">
-      <div className="px-4 py-3 bg-white/90 border-b border-slate-200 flex items-center gap-3 shadow-sm">
+    <div className="flex flex-col h-[calc(100vh-120px)] max-w-md mx-auto bg-slate-800/60">
+      <div className="px-4 py-3 bg-slate-900/90 border-b border-slate-700 flex items-center gap-3 shadow-sm">
         <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-brand-500 flex items-center justify-center text-white shadow-md">
           <Bot className="w-5 h-5" />
         </div>
         <div>
-          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+          <h2 className="text-sm font-bold text-slate-100 flex items-center gap-1.5">
             Asystent AI PartySpot
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           </h2>
-          <p className="text-[10px] text-slate-500 font-medium">Przekształca opis w konkretne dopasowane oferty</p>
+          <p className="text-[10px] text-slate-400 font-medium">Przekształca opis w konkretne dopasowane oferty</p>
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
           return (
             <div key={msg.id} className={`flex gap-2.5 ${isBot ? 'items-start' : 'items-end justify-end'}`}>
               {isBot && (
-                <div className="w-7 h-7 rounded-full bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center shrink-0 text-xs shadow-sm">
+                <div className="w-7 h-7 rounded-full bg-amber-900/40 border border-amber-700/50 text-amber-400 flex items-center justify-center shrink-0 text-xs shadow-sm">
                   <Bot className="w-4 h-4" />
                 </div>
               )}
@@ -172,7 +172,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
               <div className={`max-w-[85%] space-y-2 ${isBot ? 'text-left' : 'text-right'}`}>
                 <div className={`p-3.5 rounded-2xl text-xs leading-relaxed shadow-sm ${
                   isBot
-                    ? 'bg-white border border-slate-200 text-slate-700'
+                    ? 'bg-slate-900 border border-slate-700 text-slate-300'
                     : 'bg-brand-600 text-white font-medium rounded-br-none shadow-md shadow-brand-500/20'
                 }`}>
                   <p className="whitespace-pre-line">{msg.text}</p>
@@ -184,7 +184,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
                       <div
                         key={rec.id}
                         onClick={() => onSelectVenue(rec)}
-                        className="bg-white border border-brand-200 hover:border-brand-500 rounded-xl p-2.5 flex items-center gap-3 cursor-pointer shadow-md active:scale-98 transition-transform"
+                        className="bg-slate-900 border border-brand-700/50 hover:border-brand-500 rounded-xl p-2.5 flex items-center gap-3 cursor-pointer shadow-md active:scale-98 transition-transform"
                       >
                         <img
                           src={rec.images[0]}
@@ -192,8 +192,8 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
                           className="w-14 h-14 rounded-lg object-cover shrink-0"
                         />
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-xs font-bold text-slate-900 truncate">{rec.name}</h4>
-                          <p className="text-[10px] text-slate-500 flex items-center gap-1">
+                          <h4 className="text-xs font-bold text-slate-100 truncate">{rec.name}</h4>
+                          <p className="text-[10px] text-slate-400 flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-brand-600" /> {rec.city}
                           </p>
                           <span className="text-xs font-extrabold text-brand-600 mt-0.5 block">
@@ -213,7 +213,7 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         })}
 
         {isTyping && (
-          <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200 w-fit shadow-sm">
+          <div className="flex items-center gap-2 text-xs text-amber-400 bg-amber-900/40 p-2.5 rounded-xl border border-amber-700/50 w-fit shadow-sm">
             <Sparkles className="w-4 h-4 animate-spin" />
             <span className="font-medium">AI analizuje ofertę i wolne terminy...</span>
           </div>
@@ -222,26 +222,26 @@ export const MobileAIChatView: React.FC<Props> = ({ venues, onSelectVenue, onApp
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="px-4 py-2 bg-white flex gap-2 overflow-x-auto no-scrollbar border-t border-slate-200 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
+      <div className="px-4 py-2 bg-slate-900 flex gap-2 overflow-x-auto no-scrollbar border-t border-slate-700 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
         {quickPrompts.map((prompt, i) => (
           <button
             key={i}
             onClick={() => handleSend(prompt)}
-            className="shrink-0 bg-slate-50 hover:bg-slate-100 text-slate-600 text-[11px] px-3 py-1.5 rounded-full border border-slate-200 whitespace-nowrap font-medium transition-colors"
+            className="shrink-0 bg-slate-800/60 hover:bg-slate-700 text-slate-400 text-[11px] px-3 py-1.5 rounded-full border border-slate-700 whitespace-nowrap font-medium transition-colors"
           >
             💬 {prompt}
           </button>
         ))}
       </div>
 
-      <div className="p-3 bg-white border-t border-slate-200 flex items-center gap-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
+      <div className="p-3 bg-slate-900 border-t border-slate-700 flex items-center gap-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
         <input
           type="text"
           placeholder="Napisz np. Wesele 100 osób Kraków w sierpniu..."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          className="flex-1 bg-slate-50 text-xs text-slate-900 placeholder-slate-400 rounded-xl px-3.5 py-2.5 border border-slate-200 outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
+          className="flex-1 bg-slate-800/60 text-xs text-slate-100 placeholder-slate-500 rounded-xl px-3.5 py-2.5 border border-slate-700 outline-none focus:border-brand-500 focus:bg-slate-900 transition-all shadow-inner"
         />
         <button
           onClick={() => handleSend()}
